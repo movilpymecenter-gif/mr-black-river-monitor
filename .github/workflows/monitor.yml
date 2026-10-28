@@ -1,0 +1,39 @@
+name: Monitor Mr Black
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monitor-mr-black
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Consultar altura del INA
+        run: python monitor.py
+
+      - name: Publicar ultima medicion
+        run: |
+          git config user.name "Mr Black Monitor"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ultimo_estado.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Actualizar altura Dique Lujan"
+            git push
+          fi
