@@ -3,7 +3,7 @@
   "estacion": "Dique Lujan",
   "siteCode": 50,
   "seriesId": 50,
-  "consulta_utc": "2026-10-29T18:55:30.381164+00:00",
+  "consulta_utc": "2026-10-29T19:38:35.640075+00:00",
   "altura_m": 1.2,
   "fecha_medicion": "2026-10-29T00:00:00",
   "fecha_actualizacion": "2026-10-29T10:33:07.31779",
@@ -23,18 +23,18 @@
     "alerta": false,
     "umbral_alerta_m": 0.5
   },
-  "ultima_consulta_ina_utc": "2026-10-29T18:55:30.381164+00:00",
+  "ultima_consulta_ina_utc": "2026-10-29T19:38:35.640075+00:00",
   "error_ina": null,
   "san_fernando": {
     "estacion": "San Fernando",
     "fuente": "Servicio de Hidrografia Naval",
-    "altura_m": 1.01,
-    "fecha_medicion": "2026-10-29T14:45:00",
-    "altura_anterior_m": 1.09,
-    "diferencia_m": -0.08,
+    "altura_m": 0.91,
+    "fecha_medicion": "2026-10-29T15:45:00",
+    "altura_anterior_m": 1.01,
+    "diferencia_m": -0.1,
     "tendencia": "BAJANDO",
-    "cantidad_mediciones": 239
+    "cantidad_mediciones": 240
   },
-  "ultima_consulta_shn_utc": "2026-10-29T18:55:30.381164+00:00",
+  "ultima_consulta_shn_utc": "2026-10-29T19:38:35.640075+00:00",
   "error_shn": null
 }
