@@ -855,18 +855,31 @@ function renderRiver(data) {
 }
 
 async function getJSON(filename) {
-  const response = await fetch(
-    filename + "?t=" + Date.now(),
-    { cache: "no-store" }
-  );
+  const repo =
+    "https://raw.githubusercontent.com/" +
+    "movilpymecenter-gif/" +
+    "mr-black-river-monitor/main/";
 
-  if (!response.ok) {
-    throw new Error(
-      filename + ": HTTP " + response.status
-    );
+  const urls = [repo + filename, filename];
+  let ultimoError = null;
+
+  for (const url of urls) {
+    try {
+      const response = await fetch(
+        url + "?t=" + Date.now(),
+        { cache: "no-store" }
+      );
+      if (!response.ok) {
+        throw new Error("HTTP " + response.status);
+      }
+      return await response.json();
+    } catch (error) {
+      ultimoError = error;
+      console.warn("No se pudo consultar:", url, error);
+    }
   }
 
-  return response.json();
+  throw ultimoError || new Error("No se pudieron obtener los datos");
 }
 
 /*
