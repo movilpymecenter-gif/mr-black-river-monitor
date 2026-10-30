@@ -18,18 +18,31 @@ URL_PRONOSTICO_SHN = "https://www.hidro.gov.ar/oceanografia/pronostico.asp"
 ARCHIVO = Path("ultimo_estado.json")
 HISTORIAL = Path("historial_san_fernando.json")
 PRONOSTICO = Path("pronostico_san_fernando.json")
+
 UMBRAL_ALERTA = 0.50
+UMBRAL_ANTIGUEDAD_SHN_MIN = 60
+
 ZONA_ARGENTINA = ZoneInfo("America/Argentina/Buenos_Aires")
 
 
-def descargar(url):
+def descargar(url, evitar_cache=False):
+    if evitar_cache:
+        separador = "&" if "?" in url else "?"
+        url = (
+            f"{url}{separador}_mrblack_ts="
+            f"{int(datetime.now(timezone.utc).timestamp())}"
+        )
+
     solicitud = urllib.request.Request(
         url,
         headers={
             "User-Agent": "Mozilla/5.0",
-            "Accept": "*/*"
+            "Accept": "*/*",
+            "Cache-Control": "no-cache, no-store, max-age=0",
+            "Pragma": "no-cache"
         }
     )
+
     with urllib.request.urlopen(solicitud, timeout=30) as respuesta:
         return respuesta.read()
 
@@ -49,6 +62,7 @@ def consultar_ina():
     )
 
     respuesta = json.loads(descargar(url).decode("utf-8"))
+
     datos = [
         d for d in respuesta.get("data", [])
         if d.get("valor") is not None and d.get("timestart")
@@ -63,6 +77,7 @@ def consultar_ina():
     anterior = datos[-2] if len(datos) > 1 else None
 
     altura = float(ultimo["valor"])
+
     diferencia = (
         round(altura - float(anterior["valor"]), 2)
         if anterior else None
@@ -92,7 +107,7 @@ def consultar_ina():
 
 
 def consultar_san_fernando():
-    contenido = descargar(URL_SHN)
+    contenido = descargar(URL_SHN, evitar_cache=True)
 
     # El CSV del SHN utiliza Windows-1252 y punto y coma.
     texto = contenido.decode("cp1252")
@@ -145,8 +160,24 @@ def consultar_san_fernando():
     else:
         tendencia = "ESTABLE"
 
+    ahora_local = datetime.now(ZONA_ARGENTINA)
+
+    fecha_ultima = datetime.fromisoformat(
+        ultimo["fecha"]
+    ).replace(tzinfo=ZONA_ARGENTINA)
+
+    antiguedad_min = round(
+        (ahora_local - fecha_ultima).total_seconds() / 60,
+        1
+    )
+
+    antigua = antiguedad_min > UMBRAL_ANTIGUEDAD_SHN_MIN
+
     return {
         "estacion": "San Fernando",
+        "antiguedad_min": antiguedad_min,
+        "medicion_antigua": antigua,
+        "umbral_antiguedad_min": UMBRAL_ANTIGUEDAD_SHN_MIN,
         "fuente": "Servicio de Hidrografia Naval",
         "altura_m": ultimo["altura_m"],
         "fecha_medicion": ultimo["fecha"],
@@ -184,7 +215,9 @@ class LectorTablasSHN(HTMLParser):
 
     def handle_endtag(self, tag):
         if tag in ("td", "th") and self.en_celda:
-            self.celdas.append(" ".join("".join(self.texto_celda).split()))
+            self.celdas.append(
+                " ".join("".join(self.texto_celda).split())
+            )
             self.en_celda = False
         elif tag == "tr" and self.en_fila:
             if self.celdas:
@@ -307,6 +340,13 @@ def consultar_pronostico_shn():
 def ejecutar():
     ahora = datetime.now(timezone.utc)
 
+    print("INICIO EJECUCION UTC:", ahora.isoformat(), flush=True)
+    print(
+        "INICIO EJECUCION ARG:",
+        ahora.astimezone(ZONA_ARGENTINA).isoformat(),
+        flush=True
+    )
+
     # Conservamos los datos existentes si alguna fuente falla.
     if ARCHIVO.exists():
         try:
@@ -387,6 +427,16 @@ def ejecutar():
         )
         print("Fecha:", san_fernando["fecha_medicion"])
         print("Tendencia:", san_fernando["tendencia"])
+        print(
+            "Antiguedad SHN (min):",
+            san_fernando["antiguedad_min"]
+        )
+
+        if san_fernando["medicion_antigua"]:
+            print(
+                "AVISO: MEDICION SHN ANTIGUA "
+                "(mas de 60 minutos)"
+            )
 
     except Exception as error:
         informe["error_shn"] = str(error)
@@ -446,6 +496,10 @@ def ejecutar():
         encoding="utf-8"
     )
 
+    print(
+        "FIN EJECUCION UTC:",
+        datetime.now(timezone.utc).isoformat()
+    )
     print("Archivo actualizado:", ARCHIVO)
     print("Fuentes actualizadas:", fuentes_actualizadas)
 
