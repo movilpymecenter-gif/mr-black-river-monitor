@@ -19,23 +19,19 @@
   --red: #ff7373;
   --green: #76dfae;
 }
-
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
+  min-height: 100vh;
   background: radial-gradient(ellipse at top,#123b54,#071827 65%);
   color: var(--text);
   font: 16px system-ui,Arial,sans-serif;
-  min-height: 100vh;
 }
-
 .wrap {
   max-width: 1080px;
   margin: auto;
   padding: 24px 18px 45px;
 }
-
 header {
   display: flex;
   justify-content: space-between;
@@ -44,24 +40,20 @@ header {
   flex-wrap: wrap;
   margin-bottom: 25px;
 }
-
 .eyebrow {
   font-size: 12px;
   letter-spacing: .2em;
   color: var(--cyan);
   font-weight: 700;
 }
-
 h1 {
   font-size: clamp(28px,5vw,44px);
   margin: 5px 0;
 }
-
 h2 {
   font-size: 19px;
   margin: 0 0 14px;
 }
-
 button {
   background: #1b5e78;
   color: white;
@@ -71,15 +63,13 @@ button {
   cursor: pointer;
   font-weight: 700;
 }
-
 button:hover { background: #257b99; }
-
+button:disabled { opacity: .6; cursor: wait; }
 .grid {
   display: grid;
   grid-template-columns: repeat(2,minmax(0,1fr));
   gap: 18px;
 }
-
 .card {
   background: linear-gradient(160deg,#15354a,#0d2536);
   border: 1px solid var(--border);
@@ -87,16 +77,13 @@ button:hover { background: #257b99; }
   padding: 23px;
   box-shadow: 0 12px 30px #0003;
 }
-
 .wide { margin-top: 18px; }
-
 .tag {
   font-size: 12px;
   color: var(--muted);
   letter-spacing: .13em;
   text-transform: uppercase;
 }
-
 .reading {
   font-size: clamp(56px,9vw,96px);
   font-weight: 800;
@@ -104,19 +91,16 @@ button:hover { background: #257b99; }
   line-height: 1.25;
   font-variant-numeric: tabular-nums;
 }
-
 .reading small {
   font-size: 22px;
   color: var(--muted);
   letter-spacing: 0;
 }
-
 .meta {
   color: var(--muted);
   line-height: 1.8;
   font-size: 14px;
 }
-
 .pill {
   display: inline-block;
   border-radius: 999px;
@@ -127,22 +111,18 @@ button:hover { background: #257b99; }
   background: #244c5e;
   color: var(--cyan);
 }
-
 .pill.ok {
   background: #174839;
   color: var(--green);
 }
-
 .pill.warn {
   background: #534323;
   color: var(--amber);
 }
-
 .pill.danger {
   background: #5d282e;
   color: var(--red);
 }
-
 .row {
   display: flex;
   justify-content: space-between;
@@ -150,21 +130,16 @@ button:hover { background: #257b99; }
   flex-wrap: wrap;
   gap: 14px;
 }
-
 .legend {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.7;
 }
-
 .status {
   color: var(--muted);
   font-size: 13px;
   margin-bottom: 18px;
 }
-
-.error { color: var(--red); }
-
 .notice {
   margin-top: 18px;
   padding: 17px 19px;
@@ -173,14 +148,12 @@ button:hover { background: #257b99; }
   border-radius: 10px;
   line-height: 1.6;
 }
-
 #chart {
   display: block;
   width: 100%;
   height: auto;
   min-height: 200px;
 }
-
 .sponsor {
   display: flex;
   align-items: center;
@@ -188,20 +161,16 @@ button:hover { background: #257b99; }
   gap: 12px;
   margin-top: 11px;
 }
-
 .brand {
   font-size: 17px;
   font-weight: 800;
   color: white;
 }
-
 .brand b { color: #f26969; }
-
 .sponsor small {
   color: var(--muted);
   font-size: 12px;
 }
-
 .about {
   font-size: 12px;
   text-decoration: none;
@@ -211,34 +180,29 @@ button:hover { background: #257b99; }
   color: white;
   background: #16394b;
 }
-
 .tide-grid {
   display: grid;
   grid-template-columns: repeat(2,minmax(0,1fr));
   gap: 12px;
   margin-top: 14px;
 }
-
 .tide-item {
   background: #0b2535;
   border: 1px solid var(--border);
   padding: 12px;
   border-radius: 12px;
 }
-
 .tide-item b {
   display: block;
   font-size: 18px;
   margin: 5px 0;
 }
-
 .planner-fields {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin: 15px 0;
 }
-
 .planner-fields label {
   display: flex;
   flex-direction: column;
@@ -247,7 +211,6 @@ button:hover { background: #257b99; }
   color: var(--muted);
   flex: 1 1 130px;
 }
-
 .planner-fields input {
   width: 100%;
   min-height: 44px;
@@ -258,7 +221,6 @@ button:hover { background: #257b99; }
   border-radius: 10px;
   font-size: 16px;
 }
-
 .signal {
   padding: 18px;
   border-radius: 14px;
@@ -266,61 +228,50 @@ button:hover { background: #257b99; }
   line-height: 1.65;
   background: #223846;
 }
-
 .signal.green {
   background: #123f33;
   border-color: #398b65;
 }
-
 .signal.yellow {
   background: #4b3b20;
   border-color: #bd8e36;
 }
-
 .signal.red {
   background: #55272c;
   border-color: #bd4a53;
 }
-
 .signal.gray {
   background: #273947;
   border-color: #64798a;
 }
-
 .signal strong { font-size: 22px; }
-
 .weather-grid {
   display: grid;
   grid-template-columns: repeat(4,minmax(0,1fr));
   gap: 12px;
   margin: 16px 0;
 }
-
 .weather-tile {
   background: #0b2535;
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 14px;
 }
-
 .weather-number {
   font-size: clamp(20px,3vw,31px);
   font-weight: 750;
   margin: 8px 0;
 }
-
 .weather-sub {
   font-size: 13px;
   color: var(--muted);
 }
-
 .forecast {
   display: grid;
   grid-template-columns: repeat(5,minmax(0,1fr));
   gap: 10px;
   margin-top: 14px;
 }
-
 .forecast-day {
   background: #0b2535;
   border: 1px solid var(--border);
@@ -328,50 +279,40 @@ button:hover { background: #257b99; }
   padding: 13px;
   line-height: 1.65;
 }
-
 .forecast-day strong { display: block; }
-
 .weather-hourly { overflow-x: auto; }
-
 .weather-hourly table {
   width: 100%;
   min-width: 600px;
   border-collapse: collapse;
   font-size: 14px;
 }
-
 .weather-hourly th,
 .weather-hourly td {
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid var(--border);
 }
-
 .weather-hourly th {
   color: var(--muted);
   font-weight: 500;
 }
-
 footer {
   color: var(--muted);
   font-size: 12px;
   margin-top: 22px;
   line-height: 1.7;
 }
-
 a { color: var(--cyan); }
-
 @media(max-width:760px) {
   .weather-grid { grid-template-columns: repeat(2,1fr); }
   .forecast { grid-template-columns: repeat(2,1fr); }
 }
-
 @media(max-width:670px) {
   .grid { grid-template-columns: 1fr; }
   .card { padding: 18px; }
   .wrap { padding: 17px 13px 35px; }
 }
-
 @media(max-width:540px) {
   .tide-grid { grid-template-columns: 1fr; }
 }
@@ -417,16 +358,28 @@ a { color: var(--cyan); }
 
   <article class="card">
     <div class="tag">INA · DIQUE LUJÁN</div>
-    <div class="reading" id="dique-value">— <small>m</small></div>
-    <div class="pill" id="dique-pill">Esperando datos</div>
-    <div class="meta" id="dique-meta">Última medición: —</div>
+    <div class="reading" id="dique-value">
+      — <small>m</small>
+    </div>
+    <div class="pill" id="dique-pill">
+      Esperando datos
+    </div>
+    <div class="meta" id="dique-meta">
+      Última medición: —
+    </div>
   </article>
 
   <article class="card">
     <div class="tag">SHN · SAN FERNANDO</div>
-    <div class="reading" id="sf-value">— <small>m</small></div>
-    <div class="pill" id="sf-pill">Esperando datos</div>
-    <div class="meta" id="sf-meta">Última medición: —</div>
+    <div class="reading" id="sf-value">
+      — <small>m</small>
+    </div>
+    <div class="pill" id="sf-pill">
+      Esperando datos
+    </div>
+    <div class="meta" id="sf-meta">
+      Última medición: —
+    </div>
   </article>
 
 </section>
@@ -439,10 +392,12 @@ a { color: var(--cyan); }
     </span>
   </div>
 
-  <svg id="chart" viewBox="0 0 900 300"
+  <svg id="chart"
+       viewBox="0 0 900 300"
        role="img"
        aria-label="Gráfico de alturas horarias de San Fernando">
-    <text x="450" y="150" fill="#9db7c6"
+    <text x="450" y="150"
+          fill="#9db7c6"
           text-anchor="middle">
       Cargando historial…
     </text>
@@ -477,7 +432,7 @@ a { color: var(--cyan); }
 
   <p class="legend">
     Extremos identificados en las mediciones históricas
-    de San Fernando. No son predicciones de mareas futuras.
+    de San Fernando. No son predicciones futuras.
   </p>
 
   <div class="tide-grid" id="tide-events">
@@ -517,8 +472,10 @@ a { color: var(--cyan); }
 
   </div>
 
-  <div class="signal gray" id="nav-result"
-       role="status" aria-live="polite">
+  <div class="signal gray"
+       id="nav-result"
+       role="status"
+       aria-live="polite">
     <strong>⚪ Esperando pronóstico…</strong>
   </div>
 
@@ -558,19 +515,25 @@ a { color: var(--cyan); }
     <div class="weather-tile">
       <div class="tag">Temperatura</div>
       <div class="weather-number" id="wx-temp">—</div>
-      <div class="weather-sub" id="wx-feels">Sensación: —</div>
+      <div class="weather-sub" id="wx-feels">
+        Sensación: —
+      </div>
     </div>
 
     <div class="weather-tile">
       <div class="tag">Estado del cielo</div>
       <div class="weather-number" id="wx-sky">—</div>
-      <div class="weather-sub" id="wx-cloud">Nubosidad: —</div>
+      <div class="weather-sub" id="wx-cloud">
+        Nubosidad: —
+      </div>
     </div>
 
     <div class="weather-tile">
       <div class="tag">Viento</div>
       <div class="weather-number" id="wx-wind">—</div>
-      <div class="weather-sub" id="wx-direction">Dirección: —</div>
+      <div class="weather-sub" id="wx-direction">
+        Dirección: —
+      </div>
     </div>
 
     <div class="weather-tile">
@@ -609,6 +572,8 @@ a { color: var(--cyan); }
   Para Mr. Black se requiere un mínimo de
   <strong>0,80 m de profundidad real</strong>
   para salir con el margen de seguridad establecido.
+
+  Una medición antigua no permite evaluar el nivel actual.
 </div>
 
 <footer>
@@ -641,10 +606,23 @@ const fmt = value =>
 
 function parseDate(value) {
   if (!value) return null;
-
   const date = new Date(value);
-
   return Number.isNaN(date.getTime()) ? null : date;
+}
+
+/*
+  Las fechas de San Fernando llegan sin zona horaria.
+  Se interpretan como hora argentina (UTC-3).
+*/
+
+function localDate(value) {
+  if (!value) return null;
+
+  const hasZone = /[zZ]|[+-]\d\d:\d\d$/.test(value);
+
+  return parseDate(
+    hasZone ? value : value + "-03:00"
+  );
 }
 
 function when(value) {
@@ -658,21 +636,13 @@ function when(value) {
     month: "2-digit",
     year: "numeric",
     hour: "2-digit",
-    minute: "2-digit"
+    minute: "2-digit",
+    hour12: false
   });
-}
-
-function localDate(value) {
-  if (!value) return null;
-
-  const hasZone = /[zZ]|[+-]\d\d:\d\d$/.test(value);
-
-  return parseDate(hasZone ? value : value + "-03:00");
 }
 
 function localWhen(value) {
   const date = localDate(value);
-
   return date ? when(date.toISOString()) : "No disponible";
 }
 
@@ -681,7 +651,10 @@ function minutesSince(value, local = false) {
 
   if (!date) return Infinity;
 
-  return Math.max(0, (Date.now() - date.getTime()) / 60000);
+  return Math.max(
+    0,
+    (Date.now() - date.getTime()) / 60000
+  );
 }
 
 function ageLabel(minutes) {
@@ -706,19 +679,55 @@ function pill(id, text, kind) {
 }
 
 function setValue(id, number) {
-  $(id).innerHTML = fmt(number) + " <small>m</small>";
+  $(id).innerHTML =
+    fmt(number) + " <small>m</small>";
+}
+
+function trendLabel(value) {
+  const text = String(value || "").toUpperCase();
+
+  if (text === "SUBIENDO" || text === "SUBIO") {
+    return "↗ SUBIENDO";
+  }
+
+  if (text === "BAJANDO" || text === "BAJO") {
+    return "↘ BAJANDO";
+  }
+
+  if (text === "ESTABLE" || text === "SIN CAMBIOS") {
+    return "→ ESTABLE";
+  }
+
+  return "—";
+}
+
+function variationLabel(value) {
+  if (value == null) return "—";
+
+  const number = Number(value);
+
+  return (
+    number > 0 ? "+" : ""
+  ) + fmt(number) + " m";
 }
 
 /*
-  ALERTAS DE ANTIGÜEDAD
+  ALERTAS DE DIQUE LUJÁN
 
-  San Fernando:
-  Verde: hasta 60 minutos
-  Amarillo: más de 60 minutos
-  Rojo: más de 120 minutos
+  Prioridad 1:
+  Última altura inferior a 0,50 m -> rojo.
 
-  Se recalculan cada 15 segundos,
-  independientemente de GitHub Actions.
+  Prioridad 2:
+  Más de 24 horas sin medición -> rojo.
+
+  Prioridad 3:
+  Más de 60 minutos -> amarillo.
+
+  Solo una medición reciente y por encima
+  del umbral puede mostrar indicador verde.
+
+  IMPORTANTE:
+  El indicador no certifica profundidad navegable.
 */
 
 function refreshMeasurementIndicators() {
@@ -733,40 +742,50 @@ function refreshMeasurementIndicators() {
 
   if (dique && dique.altura_m != null) {
     const age = minutesSince(dique.fecha_medicion);
+    const height = Number(dique.altura_m);
 
-    if (age > 36 * 60) {
-      pill(
-        "dique-pill",
-        "⚠ Medición INA antigua",
-        "warn"
-      );
-    } else if (Number(dique.altura_m) < 0.50) {
-      pill(
-        "dique-pill",
-        "🔴 Bajo umbral 0,50 m",
-        "danger"
-      );
+    let text = "";
+    let kind = "";
+
+    if (height < 0.50) {
+      text = "🔴 Última altura bajo 0,50 m";
+      kind = "danger";
+    } else if (!Number.isFinite(age) || age > 24 * 60) {
+      text = "🔴 Medición muy antigua · " + ageLabel(age);
+      kind = "danger";
+    } else if (age > 60) {
+      text = "⚠ Medición antigua · " + ageLabel(age);
+      kind = "warn";
     } else {
-      pill(
-        "dique-pill",
-        "● Sin alerta por umbral",
-        "ok"
-      );
+      text = "● Medición reciente · " + ageLabel(age);
+      kind = "ok";
     }
+
+    pill("dique-pill", text, kind);
+
+    const stale = !Number.isFinite(age) || age > 60;
 
     $("dique-meta").innerHTML =
       "Medición INA: " + when(dique.fecha_medicion) +
       "<br>Antigüedad: " + ageLabel(age) +
-      "<br>Tendencia: " + (dique.tendencia || "—") +
+      "<br>Tendencia: " + trendLabel(dique.tendencia) +
       "<br>Variación: " +
-      (dique.diferencia_m == null
-        ? "—"
-        : fmt(dique.diferencia_m) + " m") +
+      variationLabel(dique.diferencia_m) +
+      (stale
+        ? "<br>⚠ Dato antiguo: no representa necesariamente el nivel actual."
+        : "") +
+      (height < 0.50
+        ? "<br>⚠ Última altura registrada bajo el umbral de alerta."
+        : "") +
       (data.error_ina
-        ? "<br>⚠ La última consulta INA falló"
+        ? "<br>⚠ La última consulta INA falló."
         : "");
+
   } else {
-    pill("dique-pill", "Sin datos", "warn");
+    pill("dique-pill", "⚠ Sin datos", "warn");
+
+    $("dique-meta").textContent =
+      "No hay una medición disponible de Dique Luján.";
   }
 
   // SAN FERNANDO
@@ -774,15 +793,7 @@ function refreshMeasurementIndicators() {
   if (sf && sf.altura_m != null) {
     const age = minutesSince(sf.fecha_medicion, true);
 
-    let trend = "→ Estable";
-
-    if (sf.tendencia === "SUBIENDO") {
-      trend = "↗ Subiendo";
-    } else if (sf.tendencia === "BAJANDO") {
-      trend = "↘ Bajando";
-    }
-
-    if (age > 120) {
+    if (!Number.isFinite(age) || age > 120) {
       pill(
         "sf-pill",
         "🔴 Medición muy antigua · " + ageLabel(age),
@@ -797,8 +808,7 @@ function refreshMeasurementIndicators() {
     } else {
       pill(
         "sf-pill",
-        "● Medición actualizada · " +
-          ageLabel(age) + " · " + trend,
+        "● Medición actualizada · " + ageLabel(age),
         "ok"
       );
     }
@@ -807,16 +817,18 @@ function refreshMeasurementIndicators() {
       "Medición SHN: " + localWhen(sf.fecha_medicion) +
       "<br>Antigüedad: " + ageLabel(age) +
       " (calculada en tiempo real)" +
+      "<br>Tendencia: " + trendLabel(sf.tendencia) +
       "<br>Variación entre lecturas: " +
-      (sf.diferencia_m == null
-        ? "—"
-        : (sf.diferencia_m > 0 ? "+" : "") +
-          fmt(sf.diferencia_m) + " m") +
+      variationLabel(sf.diferencia_m) +
       (data.error_shn
-        ? "<br>⚠ La última consulta SHN falló"
+        ? "<br>⚠ La última consulta SHN falló."
         : "");
+
   } else {
-    pill("sf-pill", "Sin datos", "warn");
+    pill("sf-pill", "⚠ Sin datos", "warn");
+
+    $("sf-meta").textContent =
+      "No hay una medición disponible de San Fernando.";
   }
 }
 
@@ -930,7 +942,9 @@ function renderChart(items) {
   }
 
   const coordinates = points
-    .map((p, i) => `${x(i)},${y(Number(p.altura_m))}`)
+    .map((p, i) =>
+      `${x(i)},${y(Number(p.altura_m))}`
+    )
     .join(" ");
 
   html += `
@@ -1467,7 +1481,6 @@ function renderPlanner() {
       "⚪ Datos incompletos",
       "Elegí fechas y horarios de salida y regreso."
     );
-
     return;
   }
 
@@ -1480,7 +1493,6 @@ function renderPlanner() {
       "⚪ Revisá los horarios",
       "El regreso debe ser posterior a la salida."
     );
-
     return;
   }
 
@@ -1492,7 +1504,6 @@ function renderPlanner() {
       "⚪ Sin pronóstico",
       "No hay datos meteorológicos suficientes."
     );
-
     return;
   }
 
@@ -1507,7 +1518,6 @@ function renderPlanner() {
       "⚪ Fuera del horizonte del pronóstico",
       "Seleccioná fechas cubiertas por los datos disponibles."
     );
-
     return;
   }
 
@@ -1523,7 +1533,6 @@ function renderPlanner() {
       "⚪ Sin datos horarios",
       "No hay pronóstico para el período elegido."
     );
-
     return;
   }
 
@@ -1585,7 +1594,6 @@ function renderPlanner() {
       "⚪ Pronóstico incompleto",
       "Faltan datos meteorológicos en parte del período."
     );
-
     return;
   }
 
@@ -1683,7 +1691,7 @@ function initializePlanner() {
 
 initializePlanner();
 
-// Actualiza la antigüedad visible cada 15 segundos.
+// Actualiza las alertas de antigüedad cada 15 segundos.
 setInterval(
   refreshMeasurementIndicators,
   15 * 1000
@@ -1705,7 +1713,7 @@ $("refresh").addEventListener(
 // Primera carga.
 refreshAll();
 
-// Vuelve a consultar los archivos cada 5 minutos.
+// Consulta los archivos publicados cada 5 minutos.
 setInterval(
   refreshAll,
   5 * 60 * 1000
