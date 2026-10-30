@@ -25,15 +25,23 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Consultar altura del INA y SHN
+      - name: Consultar INA, SHN y predicciones
         run: python monitor.py
 
-      - name: Publicar ultima medicion
+      - name: Publicar mediciones y predicciones
         run: |
           git config user.name "Mr Black Monitor"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add ultimo_estado.json historial_san_fernando.json
+
+          if [ -f pronostico_san_fernando.json ]; then
+            git add pronostico_san_fernando.json
+          else
+            git add -u -- pronostico_san_fernando.json
+          fi
+
           if ! git diff --cached --quiet; then
-            git commit -m "Actualizar alturas del rio"
+            git commit -m "Actualizar mediciones y predicciones Mr Black"
             git push
           fi
