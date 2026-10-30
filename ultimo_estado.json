@@ -3,7 +3,7 @@
   "estacion": "Dique Lujan",
   "siteCode": 50,
   "seriesId": 50,
-  "consulta_utc": "2026-10-30T11:06:28.028419+00:00",
+  "consulta_utc": "2026-10-30T11:46:26.376438+00:00",
   "altura_m": 1.2,
   "fecha_medicion": "2026-10-29T00:00:00",
   "fecha_actualizacion": "2026-10-29T10:33:07.31779",
@@ -23,7 +23,7 @@
     "alerta": false,
     "umbral_alerta_m": 0.5
   },
-  "ultima_consulta_ina_utc": "2026-10-30T11:06:28.028419+00:00",
+  "ultima_consulta_ina_utc": "2026-10-30T11:46:26.376438+00:00",
   "error_ina": null,
   "san_fernando": {
     "estacion": "San Fernando",
@@ -33,8 +33,8 @@
     "altura_anterior_m": 0.7,
     "diferencia_m": -0.04,
     "tendencia": "BAJANDO",
-    "cantidad_mediciones": 240
+    "cantidad_mediciones": 239
   },
-  "ultima_consulta_shn_utc": "2026-10-30T11:06:28.028419+00:00",
+  "ultima_consulta_shn_utc": "2026-10-30T11:46:26.376438+00:00",
   "error_shn": null
 }
