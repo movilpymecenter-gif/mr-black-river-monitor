@@ -1,79 +1,1644 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es-AR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071827"><title>Mr. Black | Monitor del río</title>
-<style>
-:root{color-scheme:dark;--bg:#071827;--panel:#102a3d;--border:#284b60;--text:#eaf5fc;--muted:#9db7c6;--cyan:#55d8ed;--amber:#ffca70;--red:#ff7373;--green:#76dfae}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#123b54,#071827 65%);color:var(--text);font:16px system-ui,-apple-system,sans-serif;min-height:100vh}.wrap{max-width:1080px;margin:auto;padding:24px 18px 45px}header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:25px}.eyebrow{font-size:12px;letter-spacing:.2em;color:var(--cyan);font-weight:700}h1{font-size:clamp(28px,5vw,44px);margin:5px 0 0;letter-spacing:.03em}h2{font-size:19px;margin:0 0 14px}button{background:#1b5e78;color:white;border:1px solid #40839b;padding:12px 18px;border-radius:12px;cursor:pointer;font-weight:700}button:hover{background:#257b99}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:linear-gradient(160deg,#15354a,#0d2536);border:1px solid var(--border);border-radius:20px;padding:23px;box-shadow:0 12px 30px #0003}.tag{font-size:12px;color:var(--muted);letter-spacing:.13em;text-transform:uppercase}.reading{font-size:clamp(56px,9vw,96px);font-weight:800;letter-spacing:-.065em;line-height:1.25;font-variant-numeric:tabular-nums}.reading small{font-size:22px;letter-spacing:0;color:var(--muted)}.meta{color:var(--muted);line-height:1.8;font-size:14px}.pill{display:inline-block;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:750;margin:8px 0 15px;background:#244c5e;color:var(--cyan)}.pill.ok{background:#174839;color:var(--green)}.pill.warn{background:#534323;color:var(--amber)}.pill.danger{background:#5d282e;color:var(--red)}.wide{margin-top:18px}.row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}.legend{color:var(--muted);font-size:13px}.notice{margin-top:18px;padding:17px 19px;border-left:4px solid var(--amber);background:#1d3441;border-radius:10px;color:#dce8ee;line-height:1.6}#chart{display:block;width:100%;height:auto;min-height:200px}.status{font-size:13px;color:var(--muted);margin:0 0 18px}.error{color:var(--red)}footer{color:var(--muted);font-size:12px;margin-top:22px;line-height:1.7}@media(max-width:670px){.grid{grid-template-columns:1fr}.card{padding:18px}.wrap{padding:17px 13px 35px}}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071827">
+<title>MR. BLACK RIVER MONITOR</title>
 
-.weather-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}.weather-tile{background:#0b2535;border:1px solid #284b60;border-radius:14px;padding:14px}.weather-tile .tag{letter-spacing:.04em}.weather-number{font-size:clamp(20px,3vw,31px);font-weight:750;margin:8px 0}.weather-sub{font-size:13px;color:var(--muted)}.forecast{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}.forecast-day{background:#0b2535;border:1px solid #284b60;border-radius:13px;padding:13px;line-height:1.65}.forecast-day strong{display:block}.weather-hourly{overflow-x:auto}.weather-hourly table{width:100%;border-collapse:collapse;min-width:600px;font-size:14px}.weather-hourly th,.weather-hourly td{padding:10px;text-align:center;border-bottom:1px solid #284b60}.weather-hourly th{color:var(--muted);font-weight:500}.weather-hourly td:first-child,.weather-hourly th:first-child{text-align:left}@media(max-width:760px){.weather-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.forecast{grid-template-columns:repeat(2,minmax(0,1fr))}}
+<style>
+:root {
+  --bg:#071827;
+  --panel:#102a3d;
+  --border:#284b60;
+  --text:#eaf5fc;
+  --muted:#9db7c6;
+  --cyan:#55d8ed;
+  --amber:#ffca70;
+  --red:#ff7373;
+  --green:#76dfae;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:radial-gradient(ellipse at top,#123b54,#071827 65%);
+  color:var(--text);
+  font-family:system-ui,-apple-system,sans-serif;
+  min-height:100vh;
+}
+
+.wrap {
+  max-width:1080px;
+  margin:auto;
+  padding:22px 15px 45px;
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.eyebrow {
+  font-size:12px;
+  letter-spacing:.15em;
+  color:var(--cyan);
+  font-weight:700;
+}
+
+h1 {
+  font-size:clamp(27px,5vw,43px);
+  margin:6px 0;
+}
+
+h2 {
+  font-size:19px;
+  margin:0 0 14px;
+}
+
+h3 {
+  font-size:16px;
+  margin:20px 0 10px;
+}
+
+button {
+  background:#1b5e78;
+  color:white;
+  border:1px solid #40839b;
+  padding:12px 17px;
+  border-radius:11px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+button:disabled {
+  opacity:.6;
+  cursor:wait;
+}
+
+button:hover:not(:disabled) {
+  background:#257b99;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:17px;
+}
+
+.card {
+  background:linear-gradient(160deg,#15354a,#0d2536);
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:22px;
+  box-shadow:0 12px 30px #0003;
+}
+
+.wide { margin-top:18px; }
+
+.row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.tag {
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.reading {
+  font-size:clamp(55px,9vw,95px);
+  font-weight:800;
+  letter-spacing:-.06em;
+  line-height:1.3;
+  font-variant-numeric:tabular-nums;
+}
+
+.reading small {
+  font-size:22px;
+  color:var(--muted);
+  letter-spacing:0;
+}
+
+.meta {
+  color:var(--muted);
+  line-height:1.8;
+  font-size:14px;
+}
+
+.legend {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+.status {
+  font-size:13px;
+  color:var(--muted);
+  margin:0 0 18px;
+}
+
+.pill {
+  display:inline-block;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:13px;
+  font-weight:750;
+  margin:8px 0 15px;
+  background:#244c5e;
+  color:var(--cyan);
+}
+
+.pill.ok {
+  background:#174839;
+  color:var(--green);
+}
+
+.pill.warn {
+  background:#534323;
+  color:var(--amber);
+}
+
+.pill.danger {
+  background:#5d282e;
+  color:var(--red);
+}
+
+#chart {
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:180px;
+}
+
+.weather-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin:16px 0;
+}
+
+.weather-tile,
+.tide-item,
+.forecast-day {
+  background:#0b2535;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:14px;
+}
+
+.weather-number {
+  font-size:clamp(20px,3vw,30px);
+  font-weight:750;
+  margin:8px 0;
+}
+
+.weather-sub {
+  font-size:13px;
+  color:var(--muted);
+}
+
+.forecast {
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;
+}
+
+.forecast-day {
+  line-height:1.7;
+  font-size:14px;
+}
+
+.forecast-day strong {
+  display:block;
+  margin-bottom:5px;
+}
+
+.weather-hourly {
+  overflow-x:auto;
+}
+
+.weather-hourly table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:620px;
+  font-size:14px;
+}
+
+.weather-hourly th,
+.weather-hourly td {
+  padding:11px 9px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+}
+
+.weather-hourly th {
+  color:var(--muted);
+}
+
+.weather-hourly td:first-child,
+.weather-hourly th:first-child {
+  text-align:left;
+}
+
+.tide-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:15px;
+}
+
+.tide-item b {
+  display:block;
+  font-size:19px;
+  margin:8px 0;
+}
+
+.planner-fields {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:16px 0;
+}
+
+.planner-fields label {
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  flex:1 1 150px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.planner-fields input,
+.planner-fields select {
+  width:100%;
+  min-height:44px;
+  padding:9px;
+  border:1px solid #46718a;
+  border-radius:10px;
+  background:#092435;
+  color:white;
+  font-size:16px;
+}
+
+.signal {
+  padding:18px;
+  border-radius:14px;
+  line-height:1.7;
+  background:#273947;
+  border:1px solid #64798a;
+}
+
+.signal strong {
+  font-size:21px;
+}
+
+.signal.green {
+  background:#123f33;
+  border-color:#398b65;
+}
+
+.signal.yellow {
+  background:#4b3b20;
+  border-color:#bd8e36;
+}
+
+.signal.red {
+  background:#55272c;
+  border-color:#bd4a53;
+}
+
+.notice {
+  margin-top:18px;
+  padding:17px;
+  border-left:4px solid var(--amber);
+  background:#1d3441;
+  border-radius:10px;
+  line-height:1.7;
+}
+
+.sponsor {
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:9px;
+}
+
+.brand {
+  font-weight:800;
+  font-size:17px;
+}
+
+.brand b { color:#f26969; }
+
+.about {
+  color:white;
+  text-decoration:none;
+  border:1px solid #40839b;
+  padding:7px 11px;
+  border-radius:9px;
+  font-size:12px;
+}
+
+footer {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:25px;
+  line-height:1.8;
+}
+
+@media(max-width:760px) {
+  .weather-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .forecast {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:670px) {
+  .grid,
+  .tide-grid {
+    grid-template-columns:1fr;
+  }
+
+  .card { padding:18px; }
+}
 </style>
 </head>
-<body><main class="wrap">
-<header><div><div class="eyebrow">⚓ SISTEMA NÁUTICO · MONITOREO HIDROMÉTRICO</div><h1>MR. BLACK <span style="color:var(--cyan)">RIVER MONITOR</span></h1></div><button id="refresh" type="button">↻ Actualizar datos</button></header>
-<p class="status" id="status">Cargando mediciones oficiales…</p>
+
+<body>
+<main class="wrap">
+
+<header>
+  <div>
+    <div class="eyebrow">
+      ⚓ SISTEMA NÁUTICO · MONITOREO HIDROMÉTRICO
+    </div>
+
+    <h1>
+      MR. BLACK
+      <span style="color:var(--cyan)">RIVER MONITOR</span>
+    </h1>
+
+    <div class="sponsor">
+      <span class="brand">🔴 Pyme<b>Center</b></span>
+      <span class="legend">
+        Una gentileza de PymeCenter · Ingeniería en Sistemas
+      </span>
+      <a
+        class="about"
+        href="https://www.pymecenter.com.ar/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Acerca de</a>
+    </div>
+  </div>
+
+  <button id="refresh" type="button">
+    ↻ Actualizar datos
+  </button>
+</header>
+
+<p class="status" id="status">
+  Cargando mediciones oficiales…
+</p>
+
 <section class="grid">
-<article class="card"><div class="tag">INA · DIQUE LUJÁN</div><div class="reading" id="dique-value">— <small>m</small></div><div class="pill" id="dique-pill">Esperando datos</div><div class="meta" id="dique-meta">Última medición: —</div></article>
-<article class="card"><div class="tag">SHN · SAN FERNANDO</div><div class="reading" id="sf-value">— <small>m</small></div><div class="pill" id="sf-pill">Esperando datos</div><div class="meta" id="sf-meta">Última medición: —</div></article>
-</section>
-<section class="card wide"><div class="row"><h2>San Fernando · evolución reciente</h2><span class="legend" id="chart-label">Últimas 24 horas disponibles</span></div><svg id="chart" viewBox="0 0 900 300" role="img" aria-label="Gráfico de alturas horarias de San Fernando"><text x="450" y="150" fill="#9db7c6" text-anchor="middle">Cargando historial…</text></svg></section>
 
-<section class="card wide" id="weather-section"><div class="row"><h2>🌤️ Meteorología · Canal Villanueva / Río Luján</h2><span class="legend" id="weather-updated">Consultando pronóstico…</span></div>
-<p class="legend">Pronóstico modelado para la zona de amarre de Mr. Black. Viento a 10 m de altura; no es una medición a bordo.</p>
-<div class="weather-grid">
-<div class="weather-tile"><div class="tag">Temperatura</div><div class="weather-number" id="wx-temp">—</div><div class="weather-sub" id="wx-feels">Sensación: —</div></div>
-<div class="weather-tile"><div class="tag">Estado del cielo</div><div class="weather-number" id="wx-sky">—</div><div class="weather-sub" id="wx-cloud">Nubosidad: —</div></div>
-<div class="weather-tile"><div class="tag">Viento</div><div class="weather-number" id="wx-wind">—</div><div class="weather-sub" id="wx-direction">Dirección: —</div></div>
-<div class="weather-tile"><div class="tag">Ráfagas</div><div class="weather-number" id="wx-gust">—</div><div class="weather-sub" id="wx-gust-kmh">—</div></div>
+  <article class="card">
+    <div class="tag">INA · DIQUE LUJÁN</div>
+
+    <div class="reading" id="dique-value">
+      — <small>m</small>
+    </div>
+
+    <div class="pill" id="dique-pill">
+      Esperando datos
+    </div>
+
+    <div class="meta" id="dique-meta">
+      Última medición: —
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">SHN · SAN FERNANDO</div>
+
+    <div class="reading" id="sf-value">
+      — <small>m</small>
+    </div>
+
+    <div class="pill" id="sf-pill">
+      Esperando datos
+    </div>
+
+    <div class="meta" id="sf-meta">
+      Última medición: —
+    </div>
+  </article>
+
+</section>
+
+<section class="card wide">
+
+  <div class="row">
+    <h2>🌊 Próximas pleamares y bajamares</h2>
+    <span class="legend">Pronóstico SHN · San Fernando</span>
+  </div>
+
+  <p class="legend">
+    Horarios y alturas previstos por el Servicio de Hidrografía
+    Naval. No son mediciones reales ni profundidades del canal.
+  </p>
+
+  <p id="forecast-tides-status" class="legend">
+    Consultando predicciones oficiales…
+  </p>
+
+  <div id="forecast-tides-list" class="tide-grid"></div>
+
+  <p class="legend">
+    Las predicciones pueden diferir de las alturas reales por
+    viento y condiciones meteorológicas.
+  </p>
+
+</section>
+
+<section class="card wide">
+
+  <div class="row">
+    <h2>📈 San Fernando · evolución reciente</h2>
+    <span class="legend" id="chart-label">
+      Últimas 24 mediciones disponibles
+    </span>
+  </div>
+
+  <svg
+    id="chart"
+    viewBox="0 0 900 300"
+    role="img"
+    aria-label="Gráfico de alturas de San Fernando"
+  >
+    <text
+      x="450"
+      y="150"
+      fill="#9db7c6"
+      text-anchor="middle"
+    >Cargando historial…</text>
+  </svg>
+
+</section>
+
+<section class="card wide">
+
+  <h2>⚓ Planificador de navegación · Mr. Black</h2>
+
+  <p class="legend">
+    Evaluación orientativa de viento, ráfagas y meteorología
+    para el período seleccionado.
+  </p>
+
+  <div class="planner-fields">
+
+    <label>
+      Fecha de salida
+      <input type="date" id="nav-date">
+    </label>
+
+    <label>
+      Hora de salida
+      <input type="time" id="nav-start" value="09:00">
+    </label>
+
+    <label>
+      Regreso
+      <select id="nav-return">
+        <option value="today">Hoy</option>
+        <option value="tomorrow">Mañana</option>
+      </select>
+    </label>
+
+    <label>
+      Hora de regreso
+      <input type="time" id="nav-end" value="18:00">
+    </label>
+
+  </div>
+
+  <div class="signal" id="nav-result">
+    <strong>⚪ Esperando pronóstico</strong>
+  </div>
+
+  <p class="legend">
+    El semáforo considera únicamente las condiciones
+    meteorológicas modeladas para la zona de amarre.
+    No comprueba profundidad, mareas durante la ruta,
+    corrientes, visibilidad real ni avisos náuticos.
+    No reemplaza la decisión del capitán.
+  </p>
+
+</section>
+
+<section class="card wide">
+
+  <div class="row">
+    <h2>🌤️ Meteorología · Canal Villanueva / Río Luján</h2>
+    <span class="legend" id="weather-updated">
+      Consultando pronóstico…
+    </span>
+  </div>
+
+  <p class="legend">
+    Pronóstico modelado para la zona de amarre.
+    Viento a 10 metros de altura.
+  </p>
+
+  <div class="weather-grid">
+
+    <div class="weather-tile">
+      <div class="tag">Temperatura</div>
+      <div class="weather-number" id="wx-temp">—</div>
+      <div class="weather-sub" id="wx-feels">Sensación: —</div>
+    </div>
+
+    <div class="weather-tile">
+      <div class="tag">Estado del cielo</div>
+      <div class="weather-number" id="wx-sky">—</div>
+      <div class="weather-sub" id="wx-cloud">Nubosidad: —</div>
+    </div>
+
+    <div class="weather-tile">
+      <div class="tag">Viento</div>
+      <div class="weather-number" id="wx-wind">—</div>
+      <div class="weather-sub" id="wx-direction">Dirección: —</div>
+    </div>
+
+    <div class="weather-tile">
+      <div class="tag">Ráfagas</div>
+      <div class="weather-number" id="wx-gust">—</div>
+      <div class="weather-sub" id="wx-gust-kmh">—</div>
+    </div>
+
+  </div>
+
+  <h3>Próximas 24 horas · evolución cada 3 horas</h3>
+
+  <div class="weather-hourly" id="weather-hourly">
+    Cargando…
+  </div>
+
+  <h3>Pronóstico · próximos 5 días</h3>
+
+  <div class="forecast" id="weather-daily">
+    Cargando…
+  </div>
+
+  <p class="legend">
+    Fuente meteorológica: Open-Meteo.
+    Consultá también los avisos oficiales antes de navegar.
+  </p>
+
+</section>
+
+<div class="notice">
+
+  <strong>⚠️ Referencia para navegación</strong>
+
+  <p>
+    Las alturas de los mareógrafos de San Fernando y
+    Dique Luján no son equivalentes entre sí ni indican
+    la profundidad real bajo el barco.
+  </p>
+
+  <p>
+    Para Mr. Black se requiere al menos
+    <strong>0,80 m de profundidad real</strong>
+    en el paso, considerando su calado de 0,50 m.
+  </p>
+
+  <p>
+    Las mediciones pueden llegar con demora.
+    Comprobá siempre profundidad, meteorología
+    y condiciones reales antes de salir.
+  </p>
+
 </div>
-<h2>Próximas 24 horas · evolución cada 3 horas</h2><div class="weather-hourly" id="weather-hourly">Cargando…</div>
-<h2 style="margin-top:24px">Pronóstico · próximos 5 días</h2><div class="forecast" id="weather-daily">Cargando…</div>
-<p class="legend" style="margin-top:15px">Fuente: Open-Meteo. La probabilidad de lluvia es un pronóstico, no una garantía. Consultá también los avisos meteorológicos oficiales antes de navegar.</p>
-</section>
-<div class="notice"><strong>⚠️ Referencia para navegación:</strong> las alturas de los mareógrafos de San Fernando y Dique Luján no son equivalentes entre sí ni indican la profundidad real bajo el barco. Para Mr. Black se requiere al menos <strong>0,80 m de profundidad real</strong> en el paso. Los datos pueden llegar con demora; comprobá siempre la profundidad y las condiciones actuales.</div>
-<footer>Fuentes: Instituto Nacional del Agua (INA) y Servicio de Hidrografía Naval (SHN). Este panel consulta archivos publicados por el monitor de GitHub; el botón «Actualizar datos» no obliga a los organismos a generar una medición nueva. La automatización puede demorarse.</footer>
+
+<footer>
+  Fuentes hidrométricas: Instituto Nacional del Agua (INA)
+  y Servicio de Hidrografía Naval (SHN).
+  Las actualizaciones dependen de la publicación de
+  nuevos datos oficiales y de la ejecución de GitHub Actions.
+</footer>
+
 </main>
+
 <script>
-const $=id=>document.getElementById(id);
-const fmt=n=>Number.isFinite(Number(n))?Number(n).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
-function parseDate(s){if(!s)return null;const d=new Date(s);return Number.isNaN(d.getTime())?null:d}
-function when(s){const d=parseDate(s);return d?d.toLocaleString('es-AR',{timeZone:'America/Argentina/Buenos_Aires',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'No disponible'}
-function localWhen(s){if(!s)return 'No disponible';const d=new Date(s+'-03:00');return Number.isNaN(d.getTime())?s:d.toLocaleString('es-AR',{timeZone:'America/Argentina/Buenos_Aires',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
-function ageHours(s,local=false){if(!s)return Infinity;const d=local?new Date(s+'-03:00'):parseDate(s);return d?(Date.now()-d.getTime())/36e5:Infinity}
-function pill(id,label,kind){$(id).textContent=label;$(id).className='pill '+kind}
-function value(id,n){$(id).innerHTML=fmt(n)+' <small>m</small>'}
-function render(data){
-const d=data.dique_lujan||data, s=data.san_fernando;
-if(d&&d.altura_m!=null){value('dique-value',d.altura_m);const old=ageHours(d.fecha_medicion);if(old>36)pill('dique-pill','⚠ Medición antigua','warn');else if(Number(d.altura_m)<.5)pill('dique-pill','🔴 Bajo umbral 0,50 m','danger');else pill('dique-pill','● Sin alerta por umbral','ok');$('dique-meta').innerHTML='Medición INA: '+when(d.fecha_medicion)+'<br>Tendencia entre registros: '+(d.tendencia||'—')+'<br>Variación: '+(d.diferencia_m==null?'—':(d.diferencia_m>0?'+':'')+fmt(d.diferencia_m)+' m')+(data.error_ina?'<br>⚠ Última consulta INA falló':'')}
-else{$('dique-meta').textContent='Sin datos disponibles de Dique Luján';pill('dique-pill','Sin datos','warn')}
-if(s&&s.altura_m!=null){value('sf-value',s.altura_m);const old=ageHours(s.fecha_medicion,true);if(old>3)pill('sf-pill','⚠ Medición de más de 3 horas','warn');else pill('sf-pill',s.tendencia==='SUBIENDO'?'↗ Subiendo':s.tendencia==='BAJANDO'?'↘ Bajando':'→ '+(s.tendencia||'Estable'),'ok');$('sf-meta').innerHTML='Medición SHN: '+localWhen(s.fecha_medicion)+'<br>Variación entre lecturas: '+(s.diferencia_m==null?'—':(s.diferencia_m>0?'+':'')+fmt(s.diferencia_m)+' m')+(data.error_shn?'<br>⚠ Última consulta SHN falló':'')}
-else{$('sf-meta').textContent='Sin datos de San Fernando en el archivo';pill('sf-pill','Sin datos','warn')}
-$('status').textContent='Última consulta del monitor: '+when(data.consulta_utc)+' · Los valores corresponden a las fechas indicadas en cada estación.';
-}
-function chart(items){const svg=$('chart');let pts=(items||[]).filter(x=>Number.isFinite(Number(x.altura_m))&&x.fecha).sort((a,b)=>a.fecha.localeCompare(b.fecha)).slice(-24);if(pts.length<2){svg.innerHTML='<text x="450" y="150" fill="#9db7c6" text-anchor="middle">Historial no disponible todavía</text>';return}const W=900,H=300,L=62,R=20,T=25,B=55;const vals=pts.map(x=>Number(x.altura_m));let lo=Math.min(...vals),hi=Math.max(...vals),pad=Math.max(.08,(hi-lo)*.2);lo-=pad;hi+=pad;const x=i=>L+i*(W-L-R)/(pts.length-1),y=v=>T+(hi-v)*(H-T-B)/(hi-lo);let out='';for(let i=0;i<5;i++){let v=lo+(hi-lo)*i/4,Y=y(v);out+=`<line x1="${L}" y1="${Y}" x2="${W-R}" y2="${Y}" stroke="#35566b" stroke-dasharray="4 6"/><text x="${L-12}" y="${Y+5}" fill="#9db7c6" font-size="14" text-anchor="end">${fmt(v)}</text>`}const coords=pts.map((p,i)=>`${x(i)},${y(Number(p.altura_m))}`).join(' ');out+=`<polyline points="${coords}" fill="none" stroke="#55d8ed" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;pts.forEach((p,i)=>{if(i===0||i===pts.length-1||i%6===0){out+=`<text x="${x(i)}" y="${H-19}" fill="#9db7c6" font-size="13" text-anchor="middle">${p.fecha.slice(5,10).replace('-','/')} ${p.fecha.slice(11,16)}</text>`}});let last=pts.length-1;out+=`<circle cx="${x(last)}" cy="${y(vals[last])}" r="7" fill="#55d8ed" stroke="#071827" stroke-width="3"/>`;svg.innerHTML=out;$('chart-label').textContent=`${pts.length} mediciones recientes · hora argentina`}
-async function getJSON(file){const r=await fetch(file+'?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(file+': HTTP '+r.status);return r.json()}
-async function load(){const b=$('refresh');b.disabled=true;$('status').textContent='Consultando archivos publicados…';try{const data=await getJSON('ultimo_estado.json');render(data);try{const history=await getJSON('historial_san_fernando.json');chart(history.mediciones)}catch(e){chart([]);$('chart-label').textContent='Historial no disponible: '+e.message}}catch(e){$('status').innerHTML='<span class="error">No se pudo cargar el archivo del monitor: '+String(e.message).replaceAll('<','&lt;')+'. Comprobá que GitHub Pages esté habilitado.</span>'}finally{b.disabled=false}}
+"use strict";
 
-const WX_URL='https://api.open-meteo.com/v1/forecast?latitude=-34.3604&longitude=-58.6821&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,precipitation_probability,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=5';
-const wxNum=(v,d=0)=>v==null?'—':Number(v).toLocaleString('es-AR',{maximumFractionDigits:d,minimumFractionDigits:d});
-const knots=v=>v==null?'—':wxNum(v/1.852,1);
-function windDir(deg){if(deg==null)return '—';const dirs=['N','NE','E','SE','S','SO','O','NO'];return dirs[Math.round((deg%360)/45)%8]+' ('+Math.round(deg)+'°)'}
-function sky(code){if(code==null)return 'Sin datos';if(code===0)return '☀️ Despejado';if(code===1)return '🌤️ Mayormente despejado';if(code===2)return '⛅ Parcialmente nublado';if(code===3)return '☁️ Cubierto';if([45,48].includes(code))return '🌫️ Niebla';if([51,53,55,56,57].includes(code))return '🌦️ Llovizna';if([61,63,65,66,67,80,81,82].includes(code))return '🌧️ Lluvia';if([95,96,99].includes(code))return '⛈️ Tormenta';if([71,73,75,77,85,86].includes(code))return '❄️ Nieve';return '🌥️ Variable'}
-function renderWeather(w){const c=w.current||{},h=w.hourly||{},d=w.daily||{};
-$('wx-temp').textContent=wxNum(c.temperature_2m,1)+' °C';$('wx-feels').textContent='Sensación: '+wxNum(c.apparent_temperature,1)+' °C';
-$('wx-sky').textContent=sky(c.weather_code);$('wx-cloud').textContent='Nubosidad: '+wxNum(c.cloud_cover)+' %';
-$('wx-wind').textContent=knots(c.wind_speed_10m)+' kn';$('wx-direction').textContent=wxNum(c.wind_speed_10m,1)+' km/h · '+windDir(c.wind_direction_10m);
-$('wx-gust').textContent=knots(c.wind_gusts_10m)+' kn';$('wx-gust-kmh').textContent=wxNum(c.wind_gusts_10m,1)+' km/h';
-$('weather-updated').textContent='Modelo actualizado · válido: '+(c.time?c.time.replace('T',' ')+' h (Argentina)':'sin hora');
-const times=h.time||[];let start=times.findIndex(t=>t>=c.time);if(start<0)start=0;const idx=[];for(let i=start;i<Math.min(start+24,times.length);i+=3)idx.push(i);
-let rows='<table><thead><tr><th>Hora</th>'+idx.map(i=>'<th>'+times[i].slice(11,16)+'</th>').join('')+'</tr></thead><tbody>';
-const line=(label,fn)=>'<tr><td>'+label+'</td>'+idx.map(i=>'<td>'+fn(i)+'</td>').join('')+'</tr>';
-rows+=line('Cielo',i=>sky(h.weather_code?.[i]));rows+=line('Temperatura',i=>wxNum(h.temperature_2m?.[i])+' °C');rows+=line('Viento',i=>knots(h.wind_speed_10m?.[i])+' kn');rows+=line('Dirección',i=>windDir(h.wind_direction_10m?.[i]));rows+=line('Ráfagas',i=>knots(h.wind_gusts_10m?.[i])+' kn');rows+=line('Prob. lluvia',i=>wxNum(h.precipitation_probability?.[i])+' %');
-$('weather-hourly').innerHTML=rows+'</tbody></table>';
-const days=d.time||[];const dayFmt=new Intl.DateTimeFormat('es-AR',{weekday:'short',day:'2-digit',month:'2-digit',timeZone:'UTC'});
-$('weather-daily').innerHTML=days.map((date,i)=>'<div class="forecast-day"><strong>'+dayFmt.format(new Date(date+'T12:00:00Z'))+'</strong><div>'+sky(d.weather_code?.[i])+'</div><div>🌡️ '+wxNum(d.temperature_2m_min?.[i])+'° / '+wxNum(d.temperature_2m_max?.[i])+'°</div><div>🌧️ '+wxNum(d.precipitation_probability_max?.[i])+' %</div><div>💨 '+knots(d.wind_speed_10m_max?.[i])+' kn máx.</div><div>🌬️ '+knots(d.wind_gusts_10m_max?.[i])+' kn ráf.</div></div>').join('');
-}
-async function loadWeather(){try{const r=await fetch(WX_URL+'&_t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(data.error)throw Error(data.reason||'Error del servicio');renderWeather(data)}catch(e){$('weather-updated').textContent='⚠ No se pudo actualizar el pronóstico';$('weather-hourly').textContent='Datos meteorológicos temporalmente no disponibles: '+e.message;$('weather-daily').textContent='Reintentá con «Actualizar datos». No afecta al monitor del río.'}}
+const $ = id => document.getElementById(id);
 
-$('refresh').addEventListener('click',()=>{load();loadWeather()});load();loadWeather();setInterval(()=>{load();loadWeather()},5*60*1000);
-</script></body></html>
+const TZ = "America/Argentina/Buenos_Aires";
+
+let latestWeather = null;
+
+function fmt(n) {
+  if (n === null || n === undefined || n === "") return "—";
+
+  const v = Number(n);
+
+  return Number.isFinite(v)
+    ? v.toLocaleString("es-AR", {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      })
+    : "—";
+}
+
+function num(n, digits=0) {
+  if (n === null || n === undefined) return "—";
+
+  const v = Number(n);
+
+  return Number.isFinite(v)
+    ? v.toLocaleString("es-AR", {
+        minimumFractionDigits:digits,
+        maximumFractionDigits:digits
+      })
+    : "—";
+}
+
+function knots(kmh) {
+  return kmh == null ? "—" : num(kmh / 1.852, 1);
+}
+
+function parseDate(value, local=false) {
+  if (!value) return null;
+
+  let text = String(value);
+
+  if (
+    local &&
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(text) &&
+    !/(Z|[+-]\d{2}:\d{2})$/i.test(text)
+  ) {
+    text += "-03:00";
+  }
+
+  const d = new Date(text);
+
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function when(value, local=false) {
+  const d = parseDate(value, local);
+
+  return d
+    ? d.toLocaleString("es-AR", {
+        timeZone:TZ,
+        day:"2-digit",
+        month:"2-digit",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+      })
+    : "No disponible";
+}
+
+function ageHours(value, local=false) {
+  const d = parseDate(value, local);
+
+  return d ? (Date.now() - d.getTime()) / 3600000 : Infinity;
+}
+
+function setPill(id, label, kind="") {
+  const el = $(id);
+  el.textContent = label;
+  el.className = "pill " + kind;
+}
+
+function setValue(id, value) {
+  $(id).innerHTML = fmt(value) + " <small>m</small>";
+}
+
+async function getJSON(filename) {
+  const response = await fetch(
+    filename + "?t=" + Date.now(),
+    {cache:"no-store"}
+  );
+
+  if (!response.ok) {
+    throw new Error(filename + ": HTTP " + response.status);
+  }
+
+  return response.json();
+}
+
+/* ===================================
+   MEDICIONES INA Y SHN
+=================================== */
+
+function renderMeasurements(data) {
+
+  const d = data.dique_lujan || data;
+  const s = data.san_fernando;
+
+  if (d && d.altura_m != null) {
+
+    setValue("dique-value", d.altura_m);
+
+    const old = ageHours(d.fecha_medicion);
+
+    if (old > 36) {
+      setPill(
+        "dique-pill",
+        "⚠ Medición antigua",
+        "warn"
+      );
+    } else if (Number(d.altura_m) < 0.50) {
+      setPill(
+        "dique-pill",
+        "🔴 Bajo umbral 0,50 m",
+        "danger"
+      );
+    } else {
+      setPill(
+        "dique-pill",
+        "● Sin alerta por umbral",
+        "ok"
+      );
+    }
+
+    $("dique-meta").innerHTML =
+      "Medición INA: " + when(d.fecha_medicion) +
+      "<br>Tendencia: " + (d.tendencia || "—") +
+      "<br>Variación: " +
+      (d.diferencia_m == null
+        ? "—"
+        : fmt(d.diferencia_m) + " m") +
+      (data.error_ina
+        ? "<br>⚠ Última consulta INA falló"
+        : "");
+
+  } else {
+
+    $("dique-meta").textContent =
+      "Sin datos disponibles de Dique Luján";
+
+    setPill("dique-pill", "Sin datos", "warn");
+  }
+
+  if (s && s.altura_m != null) {
+
+    setValue("sf-value", s.altura_m);
+
+    const old = ageHours(s.fecha_medicion, true);
+
+    if (old > 3) {
+      setPill(
+        "sf-pill",
+        "⚠ Medición de más de 3 horas",
+        "warn"
+      );
+    } else {
+
+      let label = "→ Estable";
+
+      if (s.tendencia === "SUBIENDO") {
+        label = "↗ Subiendo";
+      }
+
+      if (s.tendencia === "BAJANDO") {
+        label = "↘ Bajando";
+      }
+
+      setPill("sf-pill", label, "ok");
+    }
+
+    $("sf-meta").innerHTML =
+      "Medición SHN: " + when(s.fecha_medicion, true) +
+      "<br>Variación: " +
+      (s.diferencia_m == null
+        ? "—"
+        : fmt(s.diferencia_m) + " m") +
+      (data.error_shn
+        ? "<br>⚠ Última consulta SHN falló"
+        : "");
+
+  } else {
+
+    $("sf-meta").textContent =
+      "Sin datos de San Fernando";
+
+    setPill("sf-pill", "Sin datos", "warn");
+  }
+
+  $("status").textContent =
+    "Última consulta del monitor: " +
+    when(data.consulta_utc) +
+    " · Las alturas corresponden a las fechas de cada estación.";
+}
+
+/* ===================================
+   GRÁFICO HISTÓRICO
+=================================== */
+
+function renderChart(items) {
+
+  const svg = $("chart");
+
+  const points = (items || [])
+    .filter(x =>
+      x.fecha &&
+      x.altura_m != null &&
+      Number.isFinite(Number(x.altura_m))
+    )
+    .sort((a,b) => a.fecha.localeCompare(b.fecha))
+    .slice(-24);
+
+  if (points.length < 2) {
+
+    svg.innerHTML =
+      '<text x="450" y="150" fill="#9db7c6" ' +
+      'text-anchor="middle">Historial no disponible</text>';
+
+    return;
+  }
+
+  const W=900, H=300;
+  const L=62, R=20, T=25, B=55;
+
+  const values = points.map(p => Number(p.altura_m));
+
+  let low = Math.min(...values);
+  let high = Math.max(...values);
+
+  const padding = Math.max(0.08, (high-low)*0.2);
+
+  low -= padding;
+  high += padding;
+
+  const x = i =>
+    L + i*(W-L-R)/(points.length-1);
+
+  const y = v =>
+    T + (high-v)*(H-T-B)/(high-low);
+
+  let html = "";
+
+  for (let i=0; i<5; i++) {
+
+    const value = low+(high-low)*i/4;
+    const yy = y(value);
+
+    html +=
+      `<line x1="${L}" y1="${yy}"
+       x2="${W-R}" y2="${yy}"
+       stroke="#35566b"
+       stroke-dasharray="4 6"/>`;
+
+    html +=
+      `<text x="${L-12}" y="${yy+5}"
+       fill="#9db7c6" font-size="14"
+       text-anchor="end">${fmt(value)}</text>`;
+  }
+
+  const coords = points.map((p,i) =>
+    `${x(i)},${y(Number(p.altura_m))}`
+  ).join(" ");
+
+  html +=
+    `<polyline points="${coords}"
+     fill="none"
+     stroke="#55d8ed"
+     stroke-width="4"
+     stroke-linecap="round"
+     stroke-linejoin="round"/>`;
+
+  points.forEach((p,i) => {
+
+    if (
+      i===0 ||
+      i===points.length-1 ||
+      i%6===0
+    ) {
+
+      html +=
+        `<text x="${x(i)}" y="${H-19}"
+         fill="#9db7c6"
+         font-size="13"
+         text-anchor="middle">
+         ${p.fecha.slice(5,10).replace("-","/")}
+         ${p.fecha.slice(11,16)}
+         </text>`;
+    }
+  });
+
+  const last = points.length-1;
+
+  html +=
+    `<circle
+      cx="${x(last)}"
+      cy="${y(values[last])}"
+      r="7"
+      fill="#55d8ed"
+      stroke="#071827"
+      stroke-width="3"/>`;
+
+  svg.innerHTML = html;
+
+  $("chart-label").textContent =
+    points.length +
+    " mediciones recientes · hora argentina";
+}
+
+async function loadMeasurements() {
+
+  $("status").textContent =
+    "Consultando archivos publicados…";
+
+  try {
+
+    const data = await getJSON("ultimo_estado.json");
+
+    renderMeasurements(data);
+
+    try {
+
+      const history =
+        await getJSON("historial_san_fernando.json");
+
+      renderChart(history.mediciones);
+
+    } catch (e) {
+
+      renderChart([]);
+
+      $("chart-label").textContent =
+        "Historial no disponible";
+    }
+
+  } catch (e) {
+
+    $("status").textContent =
+      "⚠ No se pudieron cargar las mediciones: " +
+      e.message;
+  }
+}
+
+/* ===================================
+   PLEAMARES Y BAJAMARES PREVISTAS
+=================================== */
+
+async function loadTideForecast() {
+
+  const status = $("forecast-tides-status");
+  const list = $("forecast-tides-list");
+
+  status.textContent =
+    "Consultando predicciones oficiales…";
+
+  try {
+
+    const data =
+      await getJSON("pronostico_san_fernando.json");
+
+    const now = new Date();
+
+    const validUntil =
+      parseDate(data.valido_hasta, true);
+
+    if (!validUntil || now > validUntil) {
+
+      status.textContent =
+        "⚠ El boletín disponible está vencido. " +
+        "Esperando una nueva publicación del SHN.";
+
+      list.innerHTML = "";
+
+      return;
+    }
+
+    const events = (data.eventos || [])
+      .filter(event => {
+
+        if (
+          !event.fecha ||
+          !["PLEAMAR","BAJAMAR"].includes(event.tipo) ||
+          event.altura_m == null
+        ) {
+          return false;
+        }
+
+        const date = parseDate(event.fecha, true);
+
+        return (
+          date &&
+          date > now &&
+          Number.isFinite(Number(event.altura_m))
+        );
+      })
+      .sort((a,b) =>
+        parseDate(a.fecha,true) -
+        parseDate(b.fecha,true)
+      );
+
+    status.textContent =
+      "Boletín SHN vigente hasta: " +
+      when(data.valido_hasta, true);
+
+    if (!events.length) {
+
+      list.textContent =
+        "No quedan eventos futuros en el boletín vigente.";
+
+      return;
+    }
+
+    list.innerHTML = "";
+
+    for (const event of events) {
+
+      const item = document.createElement("div");
+
+      item.className = "tide-item";
+
+      const label = document.createElement("div");
+
+      label.className = "tag";
+
+      label.textContent =
+        event.tipo === "PLEAMAR"
+          ? "🌊 PLEAMAR PREVISTA"
+          : "📉 BAJAMAR PREVISTA";
+
+      const date = document.createElement("b");
+
+      date.textContent = when(event.fecha, true);
+
+      const height = document.createElement("span");
+
+      height.className = "legend";
+
+      height.textContent =
+        fmt(event.altura_m) +
+        " m · altura prevista en San Fernando";
+
+      item.append(label,date,height);
+
+      list.appendChild(item);
+    }
+
+  } catch (e) {
+
+    status.textContent =
+      "⚠ No se pudo cargar el pronóstico de mareas.";
+
+    list.textContent =
+      "Las mediciones actuales siguen disponibles.";
+  }
+}
+
+/* ===================================
+   METEOROLOGÍA OPEN-METEO
+=================================== */
+
+const WX_URL =
+  "https://api.open-meteo.com/v1/forecast" +
+  "?latitude=-34.3604" +
+  "&longitude=-58.6821" +
+  "&current=temperature_2m,apparent_temperature," +
+  "weather_code,cloud_cover,wind_speed_10m," +
+  "wind_direction_10m,wind_gusts_10m" +
+  "&hourly=temperature_2m,precipitation_probability," +
+  "weather_code,cloud_cover,wind_speed_10m," +
+  "wind_direction_10m,wind_gusts_10m" +
+  "&daily=weather_code,temperature_2m_max," +
+  "temperature_2m_min,precipitation_probability_max," +
+  "wind_speed_10m_max,wind_gusts_10m_max" +
+  "&timezone=America%2FArgentina%2FBuenos_Aires" +
+  "&forecast_days=5";
+
+function windDirection(degrees) {
+
+  if (degrees == null) return "—";
+
+  const directions =
+    ["N","NE","E","SE","S","SO","O","NO"];
+
+  const index =
+    Math.round((degrees%360)/45)%8;
+
+  return directions[index] +
+    " (" + Math.round(degrees) + "°)";
+}
+
+function sky(code) {
+
+  if (code == null) return "Sin datos";
+
+  if (code===0) return "☀️ Despejado";
+  if (code===1) return "🌤️ Mayormente despejado";
+  if (code===2) return "⛅ Parcialmente nublado";
+  if (code===3) return "☁️ Cubierto";
+
+  if ([45,48].includes(code)) return "🌫️ Niebla";
+
+  if ([51,53,55,56,57].includes(code))
+    return "🌦️ Llovizna";
+
+  if ([61,63,65,66,67,80,81,82].includes(code))
+    return "🌧️ Lluvia";
+
+  if ([95,96,99].includes(code))
+    return "⛈️ Tormenta";
+
+  if ([71,73,75,77,85,86].includes(code))
+    return "❄️ Nieve";
+
+  return "🌥️ Variable";
+}
+
+function renderWeather(data) {
+
+  latestWeather = data;
+
+  const c = data.current || {};
+  const h = data.hourly || {};
+  const d = data.daily || {};
+
+  $("wx-temp").textContent =
+    num(c.temperature_2m,1) + " °C";
+
+  $("wx-feels").textContent =
+    "Sensación: " +
+    num(c.apparent_temperature,1) + " °C";
+
+  $("wx-sky").textContent =
+    sky(c.weather_code);
+
+  $("wx-cloud").textContent =
+    "Nubosidad: " + num(c.cloud_cover) + " %";
+
+  $("wx-wind").textContent =
+    knots(c.wind_speed_10m) + " kn";
+
+  $("wx-direction").textContent =
+    num(c.wind_speed_10m,1) +
+    " km/h · " +
+    windDirection(c.wind_direction_10m);
+
+  $("wx-gust").textContent =
+    knots(c.wind_gusts_10m) + " kn";
+
+  $("wx-gust-kmh").textContent =
+    num(c.wind_gusts_10m,1) + " km/h";
+
+  $("weather-updated").textContent =
+    "Modelo válido: " +
+    (c.time
+      ? c.time.replace("T"," ") + " h (Argentina)"
+      : "sin hora");
+
+  const times = h.time || [];
+
+  let start = times.findIndex(t => t >= c.time);
+
+  if (start < 0) start = 0;
+
+  const indices = [];
+
+  for (
+    let i=start;
+    i<Math.min(start+24,times.length);
+    i+=3
+  ) {
+    indices.push(i);
+  }
+
+  let table =
+    "<table><thead><tr><th>Hora</th>";
+
+  table += indices.map(i =>
+    "<th>" + times[i].slice(11,16) + "</th>"
+  ).join("");
+
+  table += "</tr></thead><tbody>";
+
+  const row = (label,fn) =>
+    "<tr><td>" + label + "</td>" +
+    indices.map(i =>
+      "<td>" + fn(i) + "</td>"
+    ).join("") +
+    "</tr>";
+
+  table += row("Cielo",
+    i => sky(h.weather_code?.[i]));
+
+  table += row("Temperatura",
+    i => num(h.temperature_2m?.[i]) + " °C");
+
+  table += row("Viento",
+    i => knots(h.wind_speed_10m?.[i]) + " kn");
+
+  table += row("Dirección",
+    i => windDirection(h.wind_direction_10m?.[i]));
+
+  table += row("Ráfagas",
+    i => knots(h.wind_gusts_10m?.[i]) + " kn");
+
+  table += row("Prob. lluvia",
+    i => num(h.precipitation_probability?.[i]) + " %");
+
+  table += "</tbody></table>";
+
+  $("weather-hourly").innerHTML = table;
+
+  const days = d.time || [];
+
+  const dayFormat = new Intl.DateTimeFormat(
+    "es-AR",
+    {
+      weekday:"short",
+      day:"2-digit",
+      month:"2-digit",
+      timeZone:"UTC"
+    }
+  );
+
+  $("weather-daily").innerHTML =
+    days.map((date,i) => {
+
+      const label = dayFormat.format(
+        new Date(date + "T12:00:00Z")
+      );
+
+      return `
+        <div class="forecast-day">
+          <strong>${label}</strong>
+          <div>${sky(d.weather_code?.[i])}</div>
+          <div>
+            🌡️ ${num(d.temperature_2m_min?.[i])}°
+            /
+            ${num(d.temperature_2m_max?.[i])}°
+          </div>
+          <div>
+            🌧️ ${num(d.precipitation_probability_max?.[i])} %
+          </div>
+          <div>
+            💨 ${knots(d.wind_speed_10m_max?.[i])} kn máx.
+          </div>
+          <div>
+            🌬️ ${knots(d.wind_gusts_10m_max?.[i])} kn ráf.
+          </div>
+        </div>
+      `;
+    }).join("");
+
+  renderPlanner();
+}
+
+async function loadWeather() {
+
+  try {
+
+    const response = await fetch(
+      WX_URL + "&_t=" + Date.now(),
+      {cache:"no-store"}
+    );
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.reason || "Error del servicio");
+    }
+
+    renderWeather(data);
+
+  } catch (e) {
+
+    latestWeather = null;
+
+    $("weather-updated").textContent =
+      "⚠ Pronóstico no disponible";
+
+    $("weather-hourly").textContent =
+      "No se pudieron cargar los datos meteorológicos.";
+
+    $("weather-daily").textContent =
+      "Reintentá con Actualizar datos.";
+
+    renderPlanner();
+  }
+}
+
+/* ===================================
+   PLANIFICADOR DE NAVEGACIÓN
+=================================== */
+
+function renderPlanner() {
+
+  const box = $("nav-result");
+
+  const date = $("nav-date").value;
+  const start = $("nav-start").value;
+  const end = $("nav-end").value;
+  const returnDay = $("nav-return").value;
+
+  function show(kind,title,detail) {
+
+    box.className = "signal " + kind;
+
+    box.innerHTML = "";
+
+    const strong = document.createElement("strong");
+    strong.textContent = title;
+
+    const body = document.createElement("div");
+    body.textContent = detail;
+
+    box.append(strong,body);
+  }
+
+  if (!date || !start || !end) {
+
+    show(
+      "",
+      "⚪ Datos incompletos",
+      "Elegí fecha y horarios."
+    );
+
+    return;
+  }
+
+  const returnDate = new Date(
+    date + "T12:00:00Z"
+  );
+
+  if (returnDay === "tomorrow") {
+    returnDate.setUTCDate(
+      returnDate.getUTCDate()+1
+    );
+  }
+
+  const begin = date + "T" + start;
+
+  const finish =
+    returnDate.toISOString().slice(0,10) +
+    "T" + end;
+
+  if (finish <= begin) {
+
+    show(
+      "",
+      "⚪ Revisá los horarios",
+      "El regreso debe ser posterior a la salida."
+    );
+
+    return;
+  }
+
+  const h = latestWeather?.hourly;
+
+  if (!h?.time?.length) {
+
+    show(
+      "",
+      "⚪ Sin pronóstico",
+      "No hay datos suficientes para evaluar la navegación."
+    );
+
+    return;
+  }
+
+  const times = h.time;
+
+  if (
+    begin < times[0] ||
+    finish > times[times.length-1]
+  ) {
+
+    show(
+      "",
+      "⚪ Fuera del horizonte del pronóstico",
+      "Elegí fechas cubiertas por los datos disponibles."
+    );
+
+    return;
+  }
+
+  const indices = times
+    .map((t,i) =>
+      t>=begin && t<=finish ? i : -1
+    )
+    .filter(i => i>=0);
+
+  if (!indices.length) {
+
+    show(
+      "",
+      "⚪ Sin datos horarios",
+      "No hay pronóstico para el período seleccionado."
+    );
+
+    return;
+  }
+
+  let risk = 0;
+  let maxWind = 0;
+  let maxGust = 0;
+
+  let storm = false;
+  let rain = false;
+  let missing = false;
+
+  for (const i of indices) {
+
+    const w = h.wind_speed_10m?.[i];
+    const g = h.wind_gusts_10m?.[i];
+    const code = h.weather_code?.[i];
+    const pop = h.precipitation_probability?.[i];
+
+    if (
+      w == null ||
+      g == null ||
+      code == null
+    ) {
+      missing = true;
+      continue;
+    }
+
+    const wind = w/1.852;
+    const gust = g/1.852;
+
+    maxWind = Math.max(maxWind,wind);
+    maxGust = Math.max(maxGust,gust);
+
+    if ([95,96,99].includes(code)) {
+      risk = 2;
+      storm = true;
+    }
+
+    if (wind>15 || gust>20) {
+      risk = 2;
+    } else if (wind>10 || gust>15) {
+      risk = Math.max(risk,1);
+    }
+
+    if (
+      [63,65,67,81,82].includes(code) ||
+      pop>=70
+    ) {
+      risk = Math.max(risk,1);
+      rain = true;
+    }
+  }
+
+  if (missing) {
+
+    show(
+      "",
+      "⚪ Pronóstico incompleto",
+      "Faltan datos meteorológicos en parte del período."
+    );
+
+    return;
+  }
+
+  let summary =
+    "Viento máximo previsto: " +
+    num(maxWind,1) +
+    " kn. Ráfagas máximas: " +
+    num(maxGust,1) +
+    " kn. ";
+
+  if (storm) {
+    summary += "Se pronostican tormentas.";
+  } else if (rain) {
+    summary += "Se prevé lluvia relevante.";
+  } else {
+    summary +=
+      "Sin tormentas identificadas en el pronóstico horario.";
+  }
+
+  if (risk===2) {
+
+    show(
+      "red",
+      "🔴 SE RECOMIENDA NO SALIR",
+      summary
+    );
+
+  } else if (risk===1) {
+
+    show(
+      "yellow",
+      "🟡 NAVEGAR CON PRECAUCIÓN",
+      summary
+    );
+
+  } else {
+
+    show(
+      "green",
+      "🟢 CONDICIONES METEOROLÓGICAS FAVORABLES",
+      summary
+    );
+  }
+}
+
+/* ===================================
+   INICIALIZACIÓN
+=================================== */
+
+function initializePlanner() {
+
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat(
+      "en-US",
+      {
+        timeZone:TZ,
+        year:"numeric",
+        month:"2-digit",
+        day:"2-digit"
+      }
+    ).formatToParts(new Date())
+      .map(p => [p.type,p.value])
+  );
+
+  $("nav-date").value =
+    parts.year + "-" +
+    parts.month + "-" +
+    parts.day;
+
+  [
+    "nav-date",
+    "nav-start",
+    "nav-end",
+    "nav-return"
+  ].forEach(id => {
+
+    $(id).addEventListener(
+      "change",
+      renderPlanner
+    );
+  });
+
+  renderPlanner();
+}
+
+async function refreshAll() {
+
+  const button = $("refresh");
+
+  button.disabled = true;
+
+  try {
+
+    await Promise.allSettled([
+      loadMeasurements(),
+      loadTideForecast(),
+      loadWeather()
+    ]);
+
+  } finally {
+
+    button.disabled = false;
+  }
+}
+
+$("refresh").addEventListener(
+  "click",
+  refreshAll
+);
+
+initializePlanner();
+
+refreshAll();
+
+setInterval(
+  refreshAll,
+  5*60*1000
+);
+
+</script>
+</body>
+</html>
