@@ -2,9 +2,7 @@ name: Monitor Mr Black
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/5 * * * *'
-
+  
 permissions:
   contents: write
 
