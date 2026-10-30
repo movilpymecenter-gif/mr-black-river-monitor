@@ -1,151 +1,1716 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es-AR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071827"><title>Mr. Black | Monitor del río</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071827">
+<title>Mr. Black | River Monitor</title>
+
 <style>
-:root{color-scheme:dark;--bg:#071827;--panel:#102a3d;--border:#284b60;--text:#eaf5fc;--muted:#9db7c6;--cyan:#55d8ed;--amber:#ffca70;--red:#ff7373;--green:#76dfae}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#123b54,#071827 65%);color:var(--text);font:16px system-ui,-apple-system,sans-serif;min-height:100vh}.wrap{max-width:1080px;margin:auto;padding:24px 18px 45px}header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:25px}.eyebrow{font-size:12px;letter-spacing:.2em;color:var(--cyan);font-weight:700}h1{font-size:clamp(28px,5vw,44px);margin:5px 0 0;letter-spacing:.03em}h2{font-size:19px;margin:0 0 14px}button{background:#1b5e78;color:white;border:1px solid #40839b;padding:12px 18px;border-radius:12px;cursor:pointer;font-weight:700}button:hover{background:#257b99}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:linear-gradient(160deg,#15354a,#0d2536);border:1px solid var(--border);border-radius:20px;padding:23px;box-shadow:0 12px 30px #0003}.tag{font-size:12px;color:var(--muted);letter-spacing:.13em;text-transform:uppercase}.reading{font-size:clamp(56px,9vw,96px);font-weight:800;letter-spacing:-.065em;line-height:1.25;font-variant-numeric:tabular-nums}.reading small{font-size:22px;letter-spacing:0;color:var(--muted)}.meta{color:var(--muted);line-height:1.8;font-size:14px}.pill{display:inline-block;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:750;margin:8px 0 15px;background:#244c5e;color:var(--cyan)}.pill.ok{background:#174839;color:var(--green)}.pill.warn{background:#534323;color:var(--amber)}.pill.danger{background:#5d282e;color:var(--red)}.wide{margin-top:18px}.row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}.legend{color:var(--muted);font-size:13px}.notice{margin-top:18px;padding:17px 19px;border-left:4px solid var(--amber);background:#1d3441;border-radius:10px;color:#dce8ee;line-height:1.6}#chart{display:block;width:100%;height:auto;min-height:200px}.status{font-size:13px;color:var(--muted);margin:0 0 18px}.error{color:var(--red)}footer{color:var(--muted);font-size:12px;margin-top:22px;line-height:1.7}@media(max-width:670px){.grid{grid-template-columns:1fr}.card{padding:18px}.wrap{padding:17px 13px 35px}}
+:root {
+  color-scheme: dark;
+  --bg: #071827;
+  --panel: #102a3d;
+  --border: #284b60;
+  --text: #eaf5fc;
+  --muted: #9db7c6;
+  --cyan: #55d8ed;
+  --amber: #ffca70;
+  --red: #ff7373;
+  --green: #76dfae;
+}
 
-.weather-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}.weather-tile{background:#0b2535;border:1px solid #284b60;border-radius:14px;padding:14px}.weather-tile .tag{letter-spacing:.04em}.weather-number{font-size:clamp(20px,3vw,31px);font-weight:750;margin:8px 0}.weather-sub{font-size:13px;color:var(--muted)}.forecast{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}.forecast-day{background:#0b2535;border:1px solid #284b60;border-radius:13px;padding:13px;line-height:1.65}.forecast-day strong{display:block}.weather-hourly{overflow-x:auto}.weather-hourly table{width:100%;border-collapse:collapse;min-width:600px;font-size:14px}.weather-hourly th,.weather-hourly td{padding:10px;text-align:center;border-bottom:1px solid #284b60}.weather-hourly th{color:var(--muted);font-weight:500}.weather-hourly td:first-child,.weather-hourly th:first-child{text-align:left}@media(max-width:760px){.weather-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.forecast{grid-template-columns:repeat(2,minmax(0,1fr))}}
+* { box-sizing: border-box; }
 
-.sponsor{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:11px}.brand{font-size:16px;font-weight:800;letter-spacing:-.02em;color:#fff}.brand-mark{width:42px;height:38px;object-fit:contain;display:block;flex:none}.brand b{color:#f26969}.sponsor small{color:var(--muted);font-size:12px}.about{font-size:12px;text-decoration:none;border:1px solid #40839b;border-radius:9px;padding:7px 10px;color:#eaf5fc;background:#16394b}.planner-fields{display:flex;flex-wrap:wrap;gap:12px;margin:15px 0}.planner-fields label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);flex:1 1 130px}.planner-fields input,.planner-fields select{width:100%;min-height:44px;padding:9px;background:#092435;color:white;border:1px solid #46718a;border-radius:10px;font-size:16px}.signal{padding:18px;border-radius:14px;border:1px solid #567;line-height:1.65;background:#223846}.signal.green{background:#123f33;border-color:#398b65}.signal.yellow{background:#4b3b20;border-color:#bd8e36}.signal.red{background:#55272c;border-color:#bd4a53}.signal.gray{background:#273947;border-color:#64798a}.signal strong{font-size:22px}.tide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tide-item{background:#0b2535;border:1px solid var(--border);padding:12px;border-radius:12px}.tide-item b{display:block;font-size:18px;margin:5px 0}@media(max-width:540px){.tide-grid{grid-template-columns:1fr}}
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top,#123b54,#071827 65%);
+  color: var(--text);
+  font: 16px system-ui,Arial,sans-serif;
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 1080px;
+  margin: auto;
+  padding: 24px 18px 45px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: .2em;
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(28px,5vw,44px);
+  margin: 5px 0;
+}
+
+h2 {
+  font-size: 19px;
+  margin: 0 0 14px;
+}
+
+button {
+  background: #1b5e78;
+  color: white;
+  border: 1px solid #40839b;
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+button:hover { background: #257b99; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 18px;
+}
+
+.card {
+  background: linear-gradient(160deg,#15354a,#0d2536);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 23px;
+  box-shadow: 0 12px 30px #0003;
+}
+
+.wide { margin-top: 18px; }
+
+.tag {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.reading {
+  font-size: clamp(56px,9vw,96px);
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+}
+
+.reading small {
+  font-size: 22px;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+
+.meta {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 750;
+  margin: 8px 0 15px;
+  background: #244c5e;
+  color: var(--cyan);
+}
+
+.pill.ok {
+  background: #174839;
+  color: var(--green);
+}
+
+.pill.warn {
+  background: #534323;
+  color: var(--amber);
+}
+
+.pill.danger {
+  background: #5d282e;
+  color: var(--red);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.legend {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.error { color: var(--red); }
+
+.notice {
+  margin-top: 18px;
+  padding: 17px 19px;
+  border-left: 4px solid var(--amber);
+  background: #1d3441;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+
+#chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+}
+
+.sponsor {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 11px;
+}
+
+.brand {
+  font-size: 17px;
+  font-weight: 800;
+  color: white;
+}
+
+.brand b { color: #f26969; }
+
+.sponsor small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.about {
+  font-size: 12px;
+  text-decoration: none;
+  border: 1px solid #40839b;
+  border-radius: 9px;
+  padding: 7px 10px;
+  color: white;
+  background: #16394b;
+}
+
+.tide-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.tide-item {
+  background: #0b2535;
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.tide-item b {
+  display: block;
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.planner-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.planner-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+  flex: 1 1 130px;
+}
+
+.planner-fields input {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px;
+  background: #092435;
+  color: white;
+  border: 1px solid #46718a;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.signal {
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid #567;
+  line-height: 1.65;
+  background: #223846;
+}
+
+.signal.green {
+  background: #123f33;
+  border-color: #398b65;
+}
+
+.signal.yellow {
+  background: #4b3b20;
+  border-color: #bd8e36;
+}
+
+.signal.red {
+  background: #55272c;
+  border-color: #bd4a53;
+}
+
+.signal.gray {
+  background: #273947;
+  border-color: #64798a;
+}
+
+.signal strong { font-size: 22px; }
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.weather-tile {
+  background: #0b2535;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.weather-number {
+  font-size: clamp(20px,3vw,31px);
+  font-weight: 750;
+  margin: 8px 0;
+}
+
+.weather-sub {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.forecast {
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.forecast-day {
+  background: #0b2535;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 13px;
+  line-height: 1.65;
+}
+
+.forecast-day strong { display: block; }
+
+.weather-hourly { overflow-x: auto; }
+
+.weather-hourly table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.weather-hourly th,
+.weather-hourly td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.weather-hourly th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+footer {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 22px;
+  line-height: 1.7;
+}
+
+a { color: var(--cyan); }
+
+@media(max-width:760px) {
+  .weather-grid { grid-template-columns: repeat(2,1fr); }
+  .forecast { grid-template-columns: repeat(2,1fr); }
+}
+
+@media(max-width:670px) {
+  .grid { grid-template-columns: 1fr; }
+  .card { padding: 18px; }
+  .wrap { padding: 17px 13px 35px; }
+}
+
+@media(max-width:540px) {
+  .tide-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
-<body><main class="wrap">
-<header><div><div class="eyebrow">⚓ SISTEMA NÁUTICO · MONITOREO HIDROMÉTRICO</div><h1>MR. BLACK <span style="color:var(--cyan)">RIVER MONITOR</span></h1><div class="sponsor"><img class="brand-mark" alt="Símbolo de PymeCenter" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGYAAABUCAYAAABwbULEAAAlsklEQVR4nO2da5CcV3nnf+ec99ZvT8+MLj0yvmnA2BgJAgpINk42mmSBGDns7hc52SRbdja1VRs7m6qtjfmK+USVSW1t1capzSbZwIaEGCUBbOxwM5FCwFjCwdhINjYWM7YlWTOaa/d7P5f98Pbb07rZXGx5Qu1T1TU9PT39nnP+73P7P885LZxzbByxOCwGRwmxg7ZCLHiANzJMIyBHdg1MC0hCOBZYCRZQgHidhv8qivd6D+BcETgUlhBSIFVIcNSLjqD+VQISAYmCWQVgXsdBvway4YABEA6UbQAZuf2FBCERAhQsCEgCSJVlABz1//x/jXkNxAmwsrZXjvo51KCo9bcJQEGqYB2UnyKRr/cAzhInwXngfMCrn1vZxYkYAUgwEjRgIHYOygIQ4Ep2IAEHF/ObG8ufvrxsLI0RYC1Iuf47ioXGdmkBJcQK0nCgLc6By223whAoHwQIIYYgnAuGEP8y7JzYSHeRASqGZgpBbc0MUMIOC10FswHMBRZIi+1ItYDvpUhLmic74nbn2Os3g1dPNpYpAyzEGroaKIEctuewt4B9BjMdoOeCPI3JixjLFFW1m/mT/4DOurGrdrsqxxiDtec7no10E76SbEiN0bDdGjdlsNNGue3gELi0hfl4tLp2jzy9fCfRplmSbJonv8MXH/4Cb/65d3HNv/3gvVkl0iqIDvi+f8T3faSUCCGw1uKcw/M2lvW+mGyoUUpAWqDSWFN2nXKxlHJBCrHgUc3GzsygvGNUwPe/N51/4ct87dDDPHtqlla+wjW/8HN3+mHncOEFB51zMZDKgcNSSr3MlTeebChghINAWzytU+3sUStc2+ESgZmWVX4H/eIWCjnPk0/Dw9/guQe+QDB/kj2Xb6J14hQsLeO9YTyVUi4459rGmFQI8S8OFNhgwAAgJVKFCwEClO4aUc6oMr2DpZUZFnvwtcenn/jD/0N69GkuI+LKLZs4kyQ88Y+HePuJE7Dt8t2FLfe1ComhpAz8g17gH/I8D08KhJSArdMlQDVutrHoGyRo23jACEAKkizb1+6IRJHeAckM3zpM8qnP89xnv8w27RFIRWlXUH2LNT2uuaILCy/AxM8dLIzet6n0U5dXM0z4dxF6h5wVCCWhMqAclXJoXNzCS4Ub8GyODcO1bbioDAGmotv244NUZpqTJ2ZO/cVf8cIf/RkLD36Ra7Vmc5kQ2hQfTWBL2tqgllZZ+efvgK52e0IcE0ZPSwvauXap7d6q0tupAOto1MNB2za0wZCP2xiy4TTGCVCV3s3i8oMcP8pL33yY5+6/n87j32ObrmgFbRJyMlHTnQ7LOArTKzlx6AiTS8lUZ3NroXRlTOjPFk63XZXfYiyzkRMHlbQLKLHgK4GFBYerNaR5bBDZWMCIOgDAuTazL/DdP/0Ui49+jfjkCa6yHps9H3RJgSOTDt9TOGOIpQ/W8uL35+D5U7THN3fXhE1tJA7kUu+TyAVXma4WKpG27ArnHXDSm5MSrJA177nBgNlwpsw6wBZdlvusfuso7bnTTFfQcVDqlNLpOt/xQAdQWgNY2irAzwt44nuQFPuM1NN5TLeUZqdQIhE4rK529tP8Tp0X+0Wpt0ttY4erKwaSDeNfYAMCI6WFIttHleHlOVMypIOgdBkVYKQjaAmkBOcM2mkyW2E9SYDixCPfgpXelKNEh25HiUb6ckEpNau13lFV1bTWdqfQrq2cSJ0VGAZeZ4OAAhsOmEFhxXPHGA/REVQR9CkogailKCTIUCFKkIXFSuijWfEMBIoXjjwGC0tIV2KkmTa2xPPk0UDJWWfMtBMgpVxAqEQwYAVwdVC2cUiQjQYMVLqMGY/v5aptuPGQLHAUniMD+saQN0GUAVmBErLm1KRD+pLV547D6iphWSJthbMaT3JMSrlQGTetlD+vpD+P9BcQEinqJbAMzOgGkQ0HjOf5Kabaw5bO7DU37mJBpxQtjx6QCJAhlIlmMxADRhuEhKIq8XBcPTbO0/f+L1qbNjNmXTsWUGbpzPLy8oNBFB5odzofUq3oEyiVImpGQFCH0NbpIaf2esuGAqZOJQTgYiRMXnk5hRDIMET59XuEBenqcNJjUCJwEBiItCXKc+aPHYPjP8BfXml3UKzOL9w11onvKspyxglShErqMvX6teVGcjBsMGBAYpBUxrVx0HrztTgNfqWIHPgalK7BGRXPQbtyTBSGjnPkp0/Q+8dHGMth3FiUMYR+cMQKkhoU0nrmbnBVAIvk9deURjYUMBYwSDRyASfn2f5GhArp91PQIEztW6yty8uDEgEOCIAAR2ArJqXH0194GHoFUVJy2eSWA2tra/fK0H8IJWdRdUXUDWYv2WALwcYbDwDSbx8gDB9i2xSTl1/OminRgCcE1g0rmuTU9eVCSjQChyV1KRO+YuHId+Ebj0NhiYPgYJKlO1XgHxFKzSIlToAWdZNAk77IDVR23nDASCBoBdDufISx9t3X7n43KYoCifNCNLWWFECmBIkv6PuOHDf4myVwhvF+znMPfhmWe5Dn+8fHxw5E7fiAEyJF1trWtKJtHDjWZUMB05h9C+B74Itky8zPUYzFJFLRV46SWlsqAbkS9IL6kUpBPshHfAFbrMfJx77LqW/9M7qfzoyPj9+pvDpvcYCG2EC3vrIFt4EYTDYCMG79IQadFw4opAXsFDvfStXpkHo+ma7pEwsUEippa//gQEtJIQQ5IITDswnuzDxPfeXLeKsrBEV6hysLlKh5MQlp3fc08DDCITCIDUIxXzpgBotvKn0WGEDtzQe5g60KBGCkiAnlPBObSVSEH09SakGkfJSEQtUJ4UTumCwUzipSFBngAomhYgsF1Xe/zXN/+ynwbTc06X6dZ3vLHHwHISz0c72/rK+MNcVuITdGi9Ml15jzyrzOnUXttlo+pU7jM2vzR5M0vZN2a/6mW/Zxpp+hwphqEAAIWz/8yuFVFucExgk8DyqtCYDQVaiXTjH/yKPwyDfvZHn5035V7g4CwECWsqPdCg5IJL3e2oel7x+51OtxMbn0pqy5G62tH6OvUTeMZ3m5P1/uTye9ZJoymbry5vcyr9cotCGVtRmLNLSq2t9k0mJdnYdIK0jTEqHqWn+Qa5a++zQnvnAIllOEp44BlA6cR1tS50HSqlmcx0aw7vB6jcK5dcZwBBRrDKv93r4sK26PpA9astrrwXXX0L3izaw6SyYklQOf+mGBYrB5Q2CRtubOrJRoW9FBEi33OXnoEfj2k2Cqafr9vZ4PQcARndcf0u5s/oQu9Hpy8zrLpR+FczUXJcR6L6xzmKIgSZK9y6trDxZFNRPK6KCTikRJ2DR+8Mb9/4bVKCCnbjZvcg/tmiTTIIGWF+ADJZa10hDj2KQ1S489zlOfOgDff+5e8rW7fCzauu393uqHra6HsbKW3rNRYudLDowxg+xhBJSqKEjT9I4sy24PvPBg4IWHy0LPZIVGRDHoYmbr3ptYbHmUwkO6YNg7URc8hwUDMOAjKG3NSCtgi4qJyHn+699k9eA/QFXOYArKZGVm06aJj0gf1nrF3rgzcfelXo+LySUHRgixHvUMQMmy7LY8z/frspzxhDzaarU+kVWatKrwojhZSzO4+jLG3rGTUgQIFBWKsvlM1wR4gtzlKLxh0Fvh8H3FFAFRv8cTDzwEjz7aZnnx0UkpFpQaUDueNx20vHSjsGWXHBgp5dCvOGMoy3JvWZYzWusd1tpuv792p5RyweJwyiOIOx/LpMJ2N/PW9/8SqedTyoBSBlRCDgEwAqx0WBxKeShZtzOsAStVgu8pAqeZ/cYjPPGZB2D2+T1SyYVkdfGO1TT9/bitPtHkSBtBXjNgXONLzn5x2Oxtq4qVlZUPr62t3WuMmVZKzQJEYXhwaeHMpz2pGO9MzqZa76z8kNm1Nd54wx4611zDCVuwaCsq6VEByqsByqxBoChNiTEG3xfoCJY8zaLNQGiuDgK++5kHWPvqIVhZ/fN2IJL2WPQHhWOvGxm7tfaCjemXql7zmgFjrcUYM+y8t4PnQgiqsiRJkv1VVe0WQiRSygUhRKqUml1eXpyxpqIdxwfDMHqwsOxLnEW0OrSvuJKrbtpDNjZJH4kNQgqgMBaLoAAqLBUGrMAJyGS9UTPxQKMZt45WusYX/+TP4ev/tBOgf+alz0ttFrRlO9TmVkqJlOvL45xb94+XQF6T9qWXu6OstSRJclvS691jjJkSQlCW5R6rDRbDxKbxWVPpaZEXM0QSF/ltodrIpE8vzdiyZxcrX/x71vovEWaCCkAqIqnwqrq1qd5X47BOUQlHIR2lsUQOugK2AE9+/1m+9Xef5d1vufbj3Te96XaUOJaVJc6T2HNAacbtnLtkrMCPrDGNibrYY3QCnuehlBpOstEirfVOIUQaBMFh3/cPN/+rlCIM1KzAoqsCq/UOzwuORlFrNvBa85UK2bJnF9t/6eeJtlzBKhaHj1QheaVRfjAkOQ0Og8NZiTWOyoFxkJYpHRTXR22+84Uv8dhf/TVUZpqyICiyvcKcX152zp2nQa+1vOpXauzy6CSqqiJN0929Xu/3T5486ZaXl+8qy3J69P+UUoRheHRleXHGmZIoChJfqoWyl+7MVrJpadVUvGnzQS5/w51v/8D7ufLdu8hlgBe2kdJnGUvp1tnnErDGITUElcIb5CqrODIMk4GPWVrh0U/ex8lPfupufnDcKSlSJSVKqeGeGq01WtdgXUoO7Uc2Za/k+JrBN1pQVRVZlu1Lev178jzfWRRFrUW+jxAiBfA8b1442lK49tZNk7NVWU5XZdWuCruzzA1pmrOa50hRzaytnZxpry7Ti0OWcUyUmvEgqFnmMESbatgHYC34tqnnSySWAEGJY21thWuiNs++eIrP/MH/4Dc6k0xeeRWMhvMw9JFyANil0ppX3ceM7t4ydTi8uyiKfVVV7dRaMzExcRTAar1zbW1tJs9z8jwnS1KyvNdeOP08S6srLK7l2ErRKjyyXHMqXaZXrLJtPGRblbOtSmDzONmZM1B4tGWbxFT1RmcHxoDnLAESDzUoFwhc7GHLgkpDN/CZtopvz/6Axz7/Bf71m685zDt2TVmpFpqdaOc+LpW8+s7fOpyxGGNirfVOq80OicDzvFlgure6urMsS86cOcPJkydZXFxkZWWFhdPznJk/SdzycAKMH+ET0MoUxkLV9ojHO6wmS1T9Ht2tm+i85c30zvRYxSL8kMU8YWsI2DqvKR00mYkcdI2vpAUBsFUqFtdWaKmY7SLi21/+EhPXXcO7r57+vLSd36UVHRGeh/IlzkqU8FCy7jmgOYJgMGUJI3WcV0ejfmhgGhMmpURrPbTDaZrGzrl2FEULSkjStLdXCJF6nne01OXuM/Pz9y4tLTE/P8+JEyeYf+k0S0tLrKysUFUVUGuZ7/tMbt6KMyXOWFTlcKaiwkKg8DyLMyV4Em/TOC8WBa0A4qu6FC8tMl4UjBOhLBhbYIVDq5ozUzikdci6BoMHGGuI8CiwhIFiwpZ88U/+GNVq7dn1e78Ltuouz89/3t+6+VYnvLaSHMNBkZY78NQxr6UGrbWOqkh3tIU8Jn1/UL2Q563bj6pt5wFzocRwVI211lRVNayrxHGcAqkxhl6vt7cz3jl05tRLn3/hhRduOXnyJMePH+fUqVOsra2RJAm+75Pn9c7iIAjwPG94TWNMbeOlRDmBVHVd3qApS42RdR/NcpljTMVUp42a2kyVZIjllBiFNhphJRaLUQ6ralpGAJ6BiHrtzGDxtLU4awgL6DjL1z75Ka6+avrwlr03sunyqWkn/bkCxVqe3WYL2w2Ff6gTKRxQVjZGaOKwdUxi6K2t3dYZn/zEuWv34ySkP9au5TzPKctydxAER4IgQEpJr9fbcerEyaMvzP2AY8eO8cILL5CmKWtra6Rpiud5BEGAEGKYaAZBgFIKrTVlWWfrwqtvgtB5KClxVlA6Q46hchq/5VP1VphwgumwxabVlOrZWfyXVpiylk7aI6DOZ4yogXECsHX7U0DTLFizBRWSAksBpMpj3vjseN97ufpf3cD2X7iBzT/7jjuLTvuPNFHX4KbztXT/5lb7Q8M7WoKzGuvXXWkScV7z4I+T/7wiMOd+aFVVeJ43fG1xcfGO48eP3/vUU0/xzDPPcOalUywsLKC1JoqiYe7i11EYrVZrGH421x7mN05jRB0BhXgo4SGEwuIosRRYvEBQ9hPGMFzVGqNbGDgxjz1xmvHVhG1JnxY5FoEVIBRYYTFu0O/sQIo6aqtnIAZMtSBHQXsrS0pht21l87vfzsS73s7kO3Zw+TvfzuTWK24NUQ8GhlSs5HeoIDxIII4hIVcaIT2ks/hCvuwa/ljANAs2+npDUTQRl5QSYwzPPvus+8pXvsJjjz3GmTNnKIoC5eq/t9ttPM+jLMuhKUzTFN/3z/p8KeUQaC0MhalwAnwnkSgUqm4EVAojLaXRCFfh65pe6VrJWF5iTy+jTpzkmqJkosgHrt7V7cnCYTAY56gGrIpivc3WAxQCg0elxjhpEmRrC2bbZk6Oh9g3Xcm2n9/N1bvewfVv/RmuecN2EWogczt0r3ePbEcfqzrBocJWu0OhjviCnzisPg+YqqqG6F4sTHz00UfdN77xDY4ePcpzzz1HlmVMTk7S6XRYXVki9PyhZhRFQavVIooiyrKk3+/j+/4weGgyaucchS0hUBgMqhJgLMLWwDipsEqgcXi+RFQFMs+ZRLBZ+LjVPvLFk1zT7zOZpohK4zlLiEQKg8WisRSWYSOZAiIHIYJgcFJaH8U8OW02kbVCXlSWpa3jJNPbiK57E7Yzxp4bbuJ9e2bmr7rsym1NQ4kN6xO8bGVQ8ic/V+BlTdkIhYIxZrsxZvrFF188eN999/Hwww9TliWTk5PEcQxAURRsmhwnTdMhPZOmae0zwhCo1brxLaPJmzGGUheoVjAERliHNPUErVRYIcFTWGnBaDyniZ2k5UAVmnhlman502xK+gRZSVBq2k4Q4pBYDBYt3PAEJ+XAs3VAEFD3G5R+i+UqYYw2CZZCRqTdSZ6NJOkVW5lveSwJx9Xb38QH3ncLN8+87+OXTW35LWcgL3WsPFKlfvKzBS4aLhtjqKqKoij2pml6Z57n+we/k+f5MGQGhkA0mf7a2hpCCDqdDlEUURQFxhiUUhRFMTSXZVmeBZRzjiRJkAiUE3hOINzAlBpwwlFWFVlVIqSjFQY4LP2sRFnDljhCtgO084mMpa0d0tRbaAMUCocSikLUXsXhhvnOYCMGuc4ZC2K2xBO4lUWsTWktKsZ9S6fTIdMlWaj43tNHeXbueb555PDtv3LzB2//hXe959bxiehAWVavStvABYEp6vr7bVVV7c6y7PYkSdrWWoIgYGJigpWVFVqtFs45sizD9316vR5hGJIkahh59Xq9UVoGz/MIw5Cqqs46iKcoCgCcsHiBhzMGZ6ByDmcdUgjcgMavrEVKAVJQmIJK1CcpCAdOV5jxmEoYJkRAGBhcarFZjqFAIRBWEAqfUllKXWEcCCVxDkprKZ1BVDnlyjw+PmN45LrichSnZ09w1fTlmEqzefvlzKU9HvjSQ6ylCd3xyU/f8O5dQqjBoWkDadKLKIp+pADgPGDKsmRxcfHzKysrtzSMr1IK3/fxfZ/V1VXSNKUsy6FvaLQLYNXWoa/WegiE53k0B+4kSQKc77+cczhryfsZzlmkEzXf5TQKhRAK4xye8jDOYdxge56oF1Yqj9KDpTyn5wlSaamsxWjNBBXjQAtFiM+aSeiZ9f2wpa2jNqg7bwBKBZWwKFtvL4i1o5s71l5aYjyAJAwYDxX9UBGFPkE7oNAanEMId1aRrdVqDef4w4JzHjCDvGJnlmUAxHE89AHGmOHpRaMmKYqielK+jx94KM9r/BLaGKpBEJDn+fDOaQjBJgFzro5nPc8bUBy1WBzO6WFvsS00xlkqB9qa2uEOoiAhDe22RxjHeC4gVoY+BX5fElaWSEh6rocFxvEJ4ogCS1IkWKAdhoi0AidJBGhpQNYtUaG2jGmHWO5zmbLMOxDbNpEaQ4xlbCxiqbf86S0Tk7cGXjBcz3OLbT8RMEEQHIyi6PZmsRutsNZSluVQIxoH3/geIQRJUvuehjKXUhKGIVEUDcPiBpBmsOvhs6zBHoxdAs6aekK2TtyUUkgn8XFI6aOFq/2DEBgJS2lGaB1CKYKWh29rrXZZhTUWoRU+ASDIsoLMaXJqzasqQzwgPI1zFFisAF9aAuEROoNvBNIJqqUeYRCwZHPG0pTuWPvjXiv4eJGle/2x8UOj89NaD2/cH1bOA6ax977vD6MygDAMabVaDz755JO3rK2tobUmDMNhPpLnOVVVMTW1tS4fVxVa6yH9EkXR0BQ2IXJjyhpTqZTi5KkXkQPzOaQznEOi8ER9FowQtbY5qbDOoZ2lso7KWcY2tymdYdUacJYcw7LUrFKy2TmuGBtH5gWF7qFdTczEyscIBuY4qosExiAEOFk3sldS41mH7xyTRGRFSbLUZ8WVbFpJmTSuTRgdyrNyx2Atdksp533fn0vTdL+Ucn5iYuLQjw3MoGD1UBiG+9I0ncqyDGst4+PjhGH4kOd5t4wCIYQgjmOiKKLVajE7Ozv0LU22nyQJ/X5/GCI3d1MTigN1tdP3uOrqq5GhjxfWVI+j3lAUCB9fKmxe1pGaFVTWUJSaJM/IyopCVywurGCqAlFVjEnBhIBJDEUkcBr6/QXegM+UN84YlkoXaFMhhcSXLbQVOBwKQaAFSIeQDi0spbA4p/GsoIPFS3IuEzB2pkfvyWP7O+/8mQ9Hk5s+gvIwxsxrrXfGcTwXRdGBqqp2/9DqciFgPM9jbGzsgJRyXil1j9Z6T5IkZFlGlmW3hWE41Ig8z4emyRiDlJKpqSl6vd5Q86AOKKy1hGHIrl276HQ6dLtdpqammJqaYtu2bXS7XToT45TWoKKAIApB1tkHQCAVvlSzsfQfVMa1nYGqqnbnZbUzzXPysqLSFqU8lpeXOX1mnpWleVbnT7H6whzV8ycIziwzsdLHnJpnJc/YKkMkghSDcYZxpygHbJePwwci69B2wFSLulwtyfAJELaii4/5/gsc+r/3sfmJo3df+4Gb7+5ef50YGxubS5IklVISRRHOuaM/ETBNJDY2NnbI9/1fdM4dds7tHICx58yZM8PIKgxDrLUURcHi4iKLi4uMj49x4sQJtLZMT1/Nrl272LVrFzfccANve9vbDsdx/Ee+7x8JguBYE1Y752IpZSo9RWF01/ODhWaTt4XYorsKNadwKFfzXYLBRpeGYh/4JV1AqauuUXTDyD8msdiyv1ufXjisFpdxz5/kgT/+Mw4/dD+JLdgedxlPFSUpAYqCanjejxvcFkZAKeqDbgKhcNoQAg5NDKy+MMuhv32R9neOcOLECW7+tVtd57rr9rSz7DaM+YTw1ayP7YI9xjlbcC8WClyQK7PWDm18lmXMz8+fTpJkSkrJ8ePH+ehHP8rTTz9NVVVDuuX555/H930uv/xybrrpJj74wQ9y0003Hb3iiiveJqUcAtgwABcT0TRunD0qmtKwaICw63xbHbnVzz2nMDiqOsPvWkFXYBPfublQWzCmmx3+1vw//OVfc/hzD2Dn59keTzBmIc3PIIAYSYbl9ACUsa0TlNqwvNxni/QZEz6hFZSurDdQtTyWyFnLHC0rkWHMb/+3/8qbPrgPrrv2TvLkLqLoAJs2fQihhiUHYCQCPbvQdkFgmqxeKUVZliwvL/9hlmW3CyGSRx55ZOqjH/0ozzzzDGVZN6m+8Y1v5Nprr+Wmm27i1ltvZcuWLXdt3rz5DxpAGi2Ekd7lH1NeLtyUTWkRhxGSUjo0Ygf15BMfN+flaVeVeod75pmD3/zM/XzjwN+y8OxTbCVg+8QE2epCXQBTAjPWYqksWM4MLR+u2LSNfGmVwAqUNWgqUhylABdDyw/p0ub4yhJeqwOXX8be3/w13vPrvwrbp6ecdTGteK4BptH3CwFznilrIqGGQvF9n3a7/THf948IIdKxsbFPl2WJ53nceOONzMzMcPPNN3P99dfPnBt1DOossZQybXzRK8mPUoY4j2R1QFUHE04M9g5KiZWiK4Roa+fSSpvpsTg6JHa8dfo9nc7s1NbN/NP9D3D88cd5fGWBa8YmKPpr9I2D1ZTA87giijCVZmX+NBMqorIZJXVNpyUV0mqyBFIK8rExMkDnJaeO/4An/vefcv93vsO/+0+/PX/DBz4gmjbcV1qJC5KYVVXhnBtGVaPR03333ee++tWvcv3117Nv3z6mp6f3jI+PHwFIkqRbluVMGIYPBkGQjlbvBtTEjna7/bIHVr9SAnZuOeKs5w4o6uzbSkklHJWU250SbQtdJdysb+ycyJO9gbFTeGqWothXHj589/1/+Zd8/cG/J1jpsSVoEXkKSo0tcyQOrz5ieHA6oxwc1N2EJhIzKLZpFDYah00TLAWSzlvezLv23cwNN/8yb3jLdcLgYVjXlAFFOzLDi5iyZvIN63tuIiilZGFh4cObN2/+iFKKxcXFO8IwfHBsbGzuZVcUhjTNqyXnNeUN93XKoZ0wYv2QBjs4fl5hcGmy27flXvzgEFWxb+mJ79z99COHefLLhzj5+FF6p+e5Iu6wRQWkvTNINJOizRmXMOm1IAg4k66SUGc+k8EkJgw5VRT0fIWZHOddv/xe3v8ffp2p99wo8BVZVcZ+GKeNxpwFjOOsfoGXpf3PpRAacJIk2RFF0bGGFWjes7y8vH9iYuJAU1Ab7cd6reSsopsdbIhqwJH1BrG6b2CgUMbsjZQ6pLCkveU7hC72dTrtjyHsFMv9DxdPze78yqf+hi/f9zdkSyfZTsxW5SNNTYQKwBcRpXSkxmBRBEFMVWpeIsGNdbn6Xe/kbe95D7/4m/8etl85nae9u1IlF8a3dD8y6knWz60bbGcX0HiXVwRmtMtjkCx2oyhaaJx4o10NUXcxaczhK0VlP2xD4QXFupEd0PU9aYSo6/7UtEtaVPtboX9AAKXOdginiXz/GNhYpPl+1Stn7KmF25/++jf5+ufu5/g3H8XrrbIJSTyo72doKsD32sjWGCWCvNT0PZ833XQjv/F7d9L5mbfNsmVyD87ExNGckXJ4czSacrbjbyC7CDCN028WqQGgCZ8b6ff7233fnwvDsKnPbB8bG5tr/r/hiJoe5ldLGtb2gg14jpGDFBr6XdR9YGJ9+nlld1hrukHoH2qC88yk+0yS7/BTs3Pcj44A6Kefuvfrn/0c//TZv2PlueOMK4XQBQYICBFxm4U0pY/jzW/fxbtmZvilX/1VeNvOGXor9zDR/i0jXEK7NVdAjBAoRCqoWeyzo7FXAOaV5Ce6oy+JNCfNnRP3DG14DZJxzVHLrmaoMV2sw9NqwbMWZXUM1TT9/t3L//yt/V/6i09y8DOfI84qxsMYIQNS4IwzvOWG3fzaf/4drvrZn4VNW+5GygWkWLCeOFr64pgJ/K6UaqEJjyWD5XeMHCX1Uw6MG8kHRP1C84dz3zjUIgM4Z3FIvMHBDmVVbveo0sgDiuw2/b1nP7Z49Fn+4r//T9L5JY6/OIsKx3nne3+RX/mPt/HGfe8XKA9yswMEToikVMxpT3TxFELIpPmGqEF/SC0jwLgBHQQ/ZcCMtq3CiA13I4/RN5/z3AhIinK39WW3pJpxVHE7UB8bgxRtplnq3YPzjz567x/f+dDnHuTn3/8+3vdffmeWqU1vJJDMLy19empi6lasQAuHlmAkXaREIhYaUNTo9QfANGOXTTPvRjhm8NWSVwSGc36e+5qoDw+yHtTfYeN2OKp2CA8Fpuqqfr6fihgvOoZhGk8eJfAOZenKh8uJ1kHfi4+0kKmwtRZq4TCCWOBSiUTi8Bt2ormmrEc82CWC+mkEBs63WDBCFF5Ia0bBEYA3WFSggu3g8BBzPhZlgbTcjhfMUZR7EaTEwRG8+uw0kPjUGlFn+HUtR2Cpu+TqkvnwugIQ9dlp1WAYTVCwMY6BeBVFjDwaGVqyUe/bvGn0uXCgDRiDNJrAurkQMedRtzZpJyGO5vAlibNtxqIjeJLlXn9/URZ7m49eV0CHxCEQeAMPciFNHT2zoNH4nzqNOZdTbybrRozcOh7yAr5mYFTs2SG+NpBbtqdldef4hP+h5nVriUNZO/W0n2xvtaM5hBgu9uBd61HYcPUbdkLW1dPBOxuNuwAw526hbk6wuPjk65+v7v6QH1tG/EXDZ13I78jh20bnZ6kP3XQDW+SBEzFSpPhgVA1bqtlfGb17LPTuVpBm/WTfZLv9EMZgB83R7iydtfX31Di7/r2egzEi5JA2AgbdCOcBMwgenQUxMgUnR2+9c2wktQMTdnih1xMch8VizxtuM1R/GEafvUDrac45edA5+U8DcvPyEOCRG6L5+7o0dSR7fn41otWw/h2sF0jJ7fl3vxhcSXL2QZLDh11//rqKHThahx0OWpznTi4UIazPeADc0BKsv2eddLyAiJf7Va7/vMAaXehzLwBM/SFuUC9scGhKKUKuT3D0rhzsgBuhGl4HGWi2EBYl6ijIDfbBXFSHz/HHG0UuAMz6vdV8C/goxTb6rmYyFhk7bFvBguVl7qpLIXZgSgdmVQhQYmBChD0PgXNzn40iZwPT+BJACIk3UsswEDtoX+yDBCSv4Th/eDk3Lxn6PThLb8TZGm+xg79ujAzibOff2CQ4y4cY0SRMdbGpebuEVAysedMoMbTRr4eMjn/EaZ/l/wbPRzWlXoFmHhvjlP/zgWlUBM5Lwppvcm+kLvRYzio0yAs7uEsmF6JaYB0QcbGEwA6GvTE05nwf04AxOrmB91TirF/rELFxQBvA+ztqrgsxIAsvYNbOTvxGqogXys1eR/l/dRP8UljNcAIAAAAASUVORK5CYII="><span class="brand" aria-label="PymeCenter">Pyme<b>Center</b></span><small>Una gentileza de PymeCenter · Ingeniería en Sistemas</small><a class="about" href="https://www.pymecenter.com.ar/" target="_blank" rel="noopener noreferrer">Acerca de ↗</a></div></div><button id="refresh" type="button">↻ Actualizar datos</button></header>
-<p class="status" id="status">Cargando mediciones oficiales…</p>
+
+<body>
+<main class="wrap">
+
+<header>
+  <div>
+    <div class="eyebrow">
+      ⚓ SISTEMA NÁUTICO · MONITOREO HIDROMÉTRICO
+    </div>
+
+    <h1>
+      MR. BLACK
+      <span style="color:var(--cyan)">RIVER MONITOR</span>
+    </h1>
+
+    <div class="sponsor">
+      <span class="brand">Pyme<b>Center</b></span>
+      <small>Una gentileza de PymeCenter · Ingeniería en Sistemas</small>
+      <a class="about"
+         href="https://www.pymecenter.com.ar/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Acerca de ↗
+      </a>
+    </div>
+  </div>
+
+  <button id="refresh" type="button">
+    ↻ Actualizar datos
+  </button>
+</header>
+
+<p class="status" id="status">
+  Cargando mediciones oficiales…
+</p>
+
 <section class="grid">
-<article class="card"><div class="tag">INA · DIQUE LUJÁN</div><div class="reading" id="dique-value">— <small>m</small></div><div class="pill" id="dique-pill">Esperando datos</div><div class="meta" id="dique-meta">Última medición: —</div></article>
-<article class="card"><div class="tag">SHN · SAN FERNANDO</div><div class="reading" id="sf-value">— <small>m</small></div><div class="pill" id="sf-pill">Esperando datos</div><div class="meta" id="sf-meta">Última medición: —</div></article>
-</section>
-<section class="card wide"><div class="row"><h2>San Fernando · evolución reciente</h2><span class="legend" id="chart-label">Últimas 24 horas disponibles</span></div><svg id="chart" viewBox="0 0 900 300" role="img" aria-label="Gráfico de alturas horarias de San Fernando"><text x="450" y="150" fill="#9db7c6" text-anchor="middle">Cargando historial…</text></svg></section>
 
-<section class="card wide" id="forecast-tides"><h2>🌊 Próximas pleamares y bajamares · San Fernando</h2><p class="legend">Pronóstico mareológico oficial del SHN. Horarios de Argentina; no representan profundidad en Canal Villanueva.</p><div id="forecast-tides-status" class="legend">Consultando boletín oficial…</div><div id="forecast-tides-list" class="tide-events"></div><p class="legend"><a href="https://www.hidro.gov.ar/oceanografia/pronostico.asp" target="_blank" rel="noopener noreferrer">Ver boletín oficial del SHN ↗</a></p></section>
-<section class="card wide" id="tide-section"><h2>🌊 Pleamares y bajamares · San Fernando</h2><p class="legend">Extremos <strong>observados</strong> en las mediciones horarias SHN; <strong>no son predicciones</strong> de futuras mareas. Las horas son aproximadas (resolución de 1 hora).</p><div class="tide-grid" id="tide-events">Cargando mediciones…</div><p class="legend" style="margin-top:14px">Para planificar futuras pleamares y bajamares, consultá las <a href="https://www.hidro.gov.ar/" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)">tablas y pronósticos oficiales del SHN ↗</a>. No extrapolamos horarios futuros a partir de mediciones pasadas.</p></section>
-<section class="card wide" id="planner-section"><h2>🚦 Planificador de navegación</h2><p class="legend">Evaluación orientativa del pronóstico meteorológico para toda la ventana seleccionada. Prioriza tormentas, viento y ráfagas; no evalúa la profundidad navegable.</p><div class="planner-fields"><label>Fecha de salida<input type="date" id="nav-date"></label><label>Hora de salida<input type="time" id="nav-start" value="09:00"></label><label>Fecha de regreso<input type="date" id="nav-return"></label><label>Hora de regreso<input type="time" id="nav-end" value="18:00"></label></div><div class="signal gray" id="nav-result" role="status" aria-live="polite"><strong>⚪ Esperando pronóstico…</strong></div><p class="legend" style="margin-top:13px">Umbrales orientativos: amarillo si viento &gt;10 kn o ráfagas &gt;15 kn; rojo si viento &gt;15 kn o ráfagas &gt;20 kn, o si se pronostican tormentas. La lluvia intensa o una probabilidad alta de lluvia requieren precaución. Verificá siempre alertas oficiales y condiciones locales antes de zarpar.</p><p class="legend">Avisos oficiales: <a href="https://www.smn.gob.ar/alertas" target="_blank" rel="noopener noreferrer" style="color:var(--cyan)">Servicio Meteorológico Nacional ↗</a>. Este tablero todavía no integra automáticamente esos avisos.</p></section>
-<section class="card wide" id="weather-section"><div class="row"><h2>🌤️ Meteorología · Canal Villanueva / Río Luján</h2><span class="legend" id="weather-updated">Consultando pronóstico…</span></div>
-<p class="legend">Pronóstico modelado para la zona de amarre de Mr. Black. Viento a 10 m de altura; no es una medición a bordo.</p>
-<div class="weather-grid">
-<div class="weather-tile"><div class="tag">Temperatura</div><div class="weather-number" id="wx-temp">—</div><div class="weather-sub" id="wx-feels">Sensación: —</div></div>
-<div class="weather-tile"><div class="tag">Estado del cielo</div><div class="weather-number" id="wx-sky">—</div><div class="weather-sub" id="wx-cloud">Nubosidad: —</div></div>
-<div class="weather-tile"><div class="tag">Viento</div><div class="weather-number" id="wx-wind">—</div><div class="weather-sub" id="wx-direction">Dirección: —</div></div>
-<div class="weather-tile"><div class="tag">Ráfagas</div><div class="weather-number" id="wx-gust">—</div><div class="weather-sub" id="wx-gust-kmh">—</div></div>
+  <article class="card">
+    <div class="tag">INA · DIQUE LUJÁN</div>
+    <div class="reading" id="dique-value">— <small>m</small></div>
+    <div class="pill" id="dique-pill">Esperando datos</div>
+    <div class="meta" id="dique-meta">Última medición: —</div>
+  </article>
+
+  <article class="card">
+    <div class="tag">SHN · SAN FERNANDO</div>
+    <div class="reading" id="sf-value">— <small>m</small></div>
+    <div class="pill" id="sf-pill">Esperando datos</div>
+    <div class="meta" id="sf-meta">Última medición: —</div>
+  </article>
+
+</section>
+
+<section class="card wide">
+  <div class="row">
+    <h2>San Fernando · evolución reciente</h2>
+    <span class="legend" id="chart-label">
+      Últimas 24 mediciones disponibles
+    </span>
+  </div>
+
+  <svg id="chart" viewBox="0 0 900 300"
+       role="img"
+       aria-label="Gráfico de alturas horarias de San Fernando">
+    <text x="450" y="150" fill="#9db7c6"
+          text-anchor="middle">
+      Cargando historial…
+    </text>
+  </svg>
+</section>
+
+<section class="card wide">
+  <h2>🌊 Próximas pleamares y bajamares · San Fernando</h2>
+
+  <p class="legend">
+    Pronóstico mareológico oficial del SHN.
+    Las alturas no representan la profundidad real
+    en Canal Villanueva.
+  </p>
+
+  <div id="forecast-tides-status" class="legend">
+    Consultando boletín oficial…
+  </div>
+
+  <div id="forecast-tides-list" class="tide-grid"></div>
+
+  <p class="legend">
+    <a href="https://www.hidro.gov.ar/oceanografia/pronostico.asp"
+       target="_blank" rel="noopener noreferrer">
+      Ver boletín oficial del SHN ↗
+    </a>
+  </p>
+</section>
+
+<section class="card wide">
+  <h2>🌊 Pleamares y bajamares observadas</h2>
+
+  <p class="legend">
+    Extremos identificados en las mediciones históricas
+    de San Fernando. No son predicciones de mareas futuras.
+  </p>
+
+  <div class="tide-grid" id="tide-events">
+    Cargando mediciones…
+  </div>
+</section>
+
+<section class="card wide">
+  <h2>🚦 Planificador de navegación</h2>
+
+  <p class="legend">
+    Evaluación meteorológica orientativa del período
+    completo de navegación. No evalúa profundidad navegable.
+  </p>
+
+  <div class="planner-fields">
+
+    <label>
+      Fecha de salida
+      <input type="date" id="nav-date">
+    </label>
+
+    <label>
+      Hora de salida
+      <input type="time" id="nav-start" value="09:00">
+    </label>
+
+    <label>
+      Fecha de regreso
+      <input type="date" id="nav-return">
+    </label>
+
+    <label>
+      Hora de regreso
+      <input type="time" id="nav-end" value="18:00">
+    </label>
+
+  </div>
+
+  <div class="signal gray" id="nav-result"
+       role="status" aria-live="polite">
+    <strong>⚪ Esperando pronóstico…</strong>
+  </div>
+
+  <p class="legend">
+    Umbrales orientativos: precaución con viento superior
+    a 10 kn o ráfagas superiores a 15 kn.
+    Se recomienda no salir con viento superior a 15 kn,
+    ráfagas superiores a 20 kn o tormentas previstas.
+  </p>
+
+  <p class="legend">
+    Consultar también
+    <a href="https://www.smn.gob.ar/alertas"
+       target="_blank" rel="noopener noreferrer">
+      alertas oficiales del SMN ↗
+    </a>.
+    El planificador no integra automáticamente esas alertas.
+  </p>
+</section>
+
+<section class="card wide">
+
+  <div class="row">
+    <h2>🌤️ Meteorología · Canal Villanueva / Río Luján</h2>
+    <span class="legend" id="weather-updated">
+      Consultando pronóstico…
+    </span>
+  </div>
+
+  <p class="legend">
+    Pronóstico modelado para la zona de amarre de Mr. Black.
+    El viento corresponde a 10 metros de altura.
+  </p>
+
+  <div class="weather-grid">
+
+    <div class="weather-tile">
+      <div class="tag">Temperatura</div>
+      <div class="weather-number" id="wx-temp">—</div>
+      <div class="weather-sub" id="wx-feels">Sensación: —</div>
+    </div>
+
+    <div class="weather-tile">
+      <div class="tag">Estado del cielo</div>
+      <div class="weather-number" id="wx-sky">—</div>
+      <div class="weather-sub" id="wx-cloud">Nubosidad: —</div>
+    </div>
+
+    <div class="weather-tile">
+      <div class="tag">Viento</div>
+      <div class="weather-number" id="wx-wind">—</div>
+      <div class="weather-sub" id="wx-direction">Dirección: —</div>
+    </div>
+
+    <div class="weather-tile">
+      <div class="tag">Ráfagas</div>
+      <div class="weather-number" id="wx-gust">—</div>
+      <div class="weather-sub" id="wx-gust-kmh">—</div>
+    </div>
+
+  </div>
+
+  <h2>Próximas 24 horas · cada 3 horas</h2>
+  <div class="weather-hourly" id="weather-hourly">
+    Cargando…
+  </div>
+
+  <h2 style="margin-top:24px">
+    Pronóstico · próximos 5 días
+  </h2>
+
+  <div class="forecast" id="weather-daily">
+    Cargando…
+  </div>
+
+  <p class="legend">
+    Fuente meteorológica: Open-Meteo.
+    Verificá las condiciones reales antes de navegar.
+  </p>
+</section>
+
+<div class="notice">
+  <strong>⚠️ Referencia para navegación:</strong>
+  las alturas de San Fernando y Dique Luján corresponden
+  a estaciones diferentes y no indican la profundidad
+  real bajo el barco.
+
+  Para Mr. Black se requiere un mínimo de
+  <strong>0,80 m de profundidad real</strong>
+  para salir con el margen de seguridad establecido.
 </div>
-<h2>Próximas 24 horas · evolución cada 3 horas</h2><div class="weather-hourly" id="weather-hourly">Cargando…</div>
-<h2 style="margin-top:24px">Pronóstico · próximos 5 días</h2><div class="forecast" id="weather-daily">Cargando…</div>
-<p class="legend" style="margin-top:15px">Fuente: Open-Meteo. La probabilidad de lluvia es un pronóstico, no una garantía. Consultá también los avisos meteorológicos oficiales antes de navegar.</p>
-</section>
-<div class="notice"><strong>⚠️ Referencia para navegación:</strong> las alturas de los mareógrafos de San Fernando y Dique Luján no son equivalentes entre sí ni indican la profundidad real bajo el barco. Para Mr. Black se requiere al menos <strong>0,80 m de profundidad real</strong> en el paso. Los datos pueden llegar con demora; comprobá siempre la profundidad y las condiciones actuales.</div>
-<footer>Fuentes: Instituto Nacional del Agua (INA) y Servicio de Hidrografía Naval (SHN). Este panel consulta archivos publicados por el monitor de GitHub; el botón «Actualizar datos» no obliga a los organismos a generar una medición nueva. La automatización puede demorarse.</footer>
+
+<footer>
+  Fuentes: Instituto Nacional del Agua (INA),
+  Servicio de Hidrografía Naval (SHN) y Open-Meteo.
+
+  Las mediciones pueden publicarse con retraso.
+  El botón «Actualizar datos» consulta los archivos
+  disponibles, pero no obliga a los organismos
+  a generar mediciones nuevas.
+</footer>
+
 </main>
+
 <script>
-const $=id=>document.getElementById(id);
-let latestForecast=null;
-const fmt=n=>Number.isFinite(Number(n))?Number(n).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
-function parseDate(s){if(!s)return null;const d=new Date(s);return Number.isNaN(d.getTime())?null:d}
-function when(s){const d=parseDate(s);return d?d.toLocaleString('es-AR',{timeZone:'America/Argentina/Buenos_Aires',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'No disponible'}
-function localWhen(s){if(!s)return 'No disponible';const d=new Date(s+'-03:00');return Number.isNaN(d.getTime())?s:d.toLocaleString('es-AR',{timeZone:'America/Argentina/Buenos_Aires',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
-function ageHours(s,local=false){if(!s)return Infinity;const d=local?new Date(s+'-03:00'):parseDate(s);return d?(Date.now()-d.getTime())/36e5:Infinity}
-function pill(id,label,kind){$(id).textContent=label;$(id).className='pill '+kind}
-function value(id,n){$(id).innerHTML=fmt(n)+' <small>m</small>'}
-function render(data){
-const d=data.dique_lujan||data, s=data.san_fernando;
-if(d&&d.altura_m!=null){value('dique-value',d.altura_m);const old=ageHours(d.fecha_medicion);if(old>36)pill('dique-pill','⚠ Medición antigua','warn');else if(Number(d.altura_m)<.5)pill('dique-pill','🔴 Bajo umbral 0,50 m','danger');else pill('dique-pill','● Sin alerta por umbral','ok');$('dique-meta').innerHTML='Medición INA: '+when(d.fecha_medicion)+'<br>Tendencia entre registros: '+(d.tendencia||'—')+'<br>Variación: '+(d.diferencia_m==null?'—':(d.diferencia_m>0?'+':'')+fmt(d.diferencia_m)+' m')+(data.error_ina?'<br>⚠ Última consulta INA falló':'')}
-else{$('dique-meta').textContent='Sin datos disponibles de Dique Luján';pill('dique-pill','Sin datos','warn')}
-if(s&&s.altura_m!=null){value('sf-value',s.altura_m);const old=ageHours(s.fecha_medicion,true);if(old>3)pill('sf-pill','⚠ Medición de más de 3 horas','warn');else pill('sf-pill',s.tendencia==='SUBIENDO'?'↗ Subiendo':s.tendencia==='BAJANDO'?'↘ Bajando':'→ '+(s.tendencia||'Estable'),'ok');$('sf-meta').innerHTML='Medición SHN: '+localWhen(s.fecha_medicion)+'<br>Variación entre lecturas: '+(s.diferencia_m==null?'—':(s.diferencia_m>0?'+':'')+fmt(s.diferencia_m)+' m')+(data.error_shn?'<br>⚠ Última consulta SHN falló':'')}
-else{$('sf-meta').textContent='Sin datos de San Fernando en el archivo';pill('sf-pill','Sin datos','warn')}
-$('status').textContent='Última consulta del monitor: '+when(data.consulta_utc)+' · Los valores corresponden a las fechas indicadas en cada estación.';
-}
-function chart(items){const svg=$('chart');let pts=(items||[]).filter(x=>Number.isFinite(Number(x.altura_m))&&x.fecha).sort((a,b)=>a.fecha.localeCompare(b.fecha)).slice(-24);if(pts.length<2){svg.innerHTML='<text x="450" y="150" fill="#9db7c6" text-anchor="middle">Historial no disponible todavía</text>';return}const W=900,H=300,L=62,R=20,T=25,B=55;const vals=pts.map(x=>Number(x.altura_m));let lo=Math.min(...vals),hi=Math.max(...vals),pad=Math.max(.08,(hi-lo)*.2);lo-=pad;hi+=pad;const x=i=>L+i*(W-L-R)/(pts.length-1),y=v=>T+(hi-v)*(H-T-B)/(hi-lo);let out='';for(let i=0;i<5;i++){let v=lo+(hi-lo)*i/4,Y=y(v);out+=`<line x1="${L}" y1="${Y}" x2="${W-R}" y2="${Y}" stroke="#35566b" stroke-dasharray="4 6"/><text x="${L-12}" y="${Y+5}" fill="#9db7c6" font-size="14" text-anchor="end">${fmt(v)}</text>`}const coords=pts.map((p,i)=>`${x(i)},${y(Number(p.altura_m))}`).join(' ');out+=`<polyline points="${coords}" fill="none" stroke="#55d8ed" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;pts.forEach((p,i)=>{if(i===0||i===pts.length-1||i%6===0){out+=`<text x="${x(i)}" y="${H-19}" fill="#9db7c6" font-size="13" text-anchor="middle">${p.fecha.slice(5,10).replace('-','/')} ${p.fecha.slice(11,16)}</text>`}});let last=pts.length-1;out+=`<circle cx="${x(last)}" cy="${y(vals[last])}" r="7" fill="#55d8ed" stroke="#071827" stroke-width="3"/>`;svg.innerHTML=out;$('chart-label').textContent=`${pts.length} mediciones recientes · hora argentina`}
-async function getJSON(file){const r=await fetch(file+'?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(file+': HTTP '+r.status);return r.json()}
-async function load(){const b=$('refresh');b.disabled=true;$('status').textContent='Consultando archivos publicados…';try{const data=await getJSON('ultimo_estado.json');render(data);try{const history=await getJSON('historial_san_fernando.json');chart(history.mediciones);renderTideEvents(history.mediciones)}catch(e){chart([]);renderTideEvents([]);$('chart-label').textContent='Historial no disponible: '+e.message}}catch(e){$('status').innerHTML='<span class="error">No se pudo cargar el archivo del monitor: '+String(e.message).replaceAll('<','&lt;')+'. Comprobá que GitHub Pages esté habilitado.</span>'}finally{b.disabled=false}}
+"use strict";
 
-const WX_URL='https://api.open-meteo.com/v1/forecast?latitude=-34.3604&longitude=-58.6821&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,precipitation_probability,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=5';
-const wxNum=(v,d=0)=>v==null?'—':Number(v).toLocaleString('es-AR',{maximumFractionDigits:d,minimumFractionDigits:d});
-const knots=v=>v==null?'—':wxNum(v/1.852,1);
-function windDir(deg){if(deg==null)return '—';const dirs=['N','NE','E','SE','S','SO','O','NO'];return dirs[Math.round((deg%360)/45)%8]+' ('+Math.round(deg)+'°)'}
-function sky(code){if(code==null)return 'Sin datos';if(code===0)return '☀️ Despejado';if(code===1)return '🌤️ Mayormente despejado';if(code===2)return '⛅ Parcialmente nublado';if(code===3)return '☁️ Cubierto';if([45,48].includes(code))return '🌫️ Niebla';if([51,53,55,56,57].includes(code))return '🌦️ Llovizna';if([61,63,65,66,67,80,81,82].includes(code))return '🌧️ Lluvia';if([95,96,99].includes(code))return '⛈️ Tormenta';if([71,73,75,77,85,86].includes(code))return '❄️ Nieve';return '🌥️ Variable'}
-function renderWeather(w){const c=w.current||{},h=w.hourly||{},d=w.daily||{};latestForecast=w;renderPlanner();
-$('wx-temp').textContent=wxNum(c.temperature_2m,1)+' °C';$('wx-feels').textContent='Sensación: '+wxNum(c.apparent_temperature,1)+' °C';
-$('wx-sky').textContent=sky(c.weather_code);$('wx-cloud').textContent='Nubosidad: '+wxNum(c.cloud_cover)+' %';
-$('wx-wind').textContent=knots(c.wind_speed_10m)+' kn';$('wx-direction').textContent=wxNum(c.wind_speed_10m,1)+' km/h · '+windDir(c.wind_direction_10m);
-$('wx-gust').textContent=knots(c.wind_gusts_10m)+' kn';$('wx-gust-kmh').textContent=wxNum(c.wind_gusts_10m,1)+' km/h';
-$('weather-updated').textContent='Modelo actualizado · válido: '+(c.time?c.time.replace('T',' ')+' h (Argentina)':'sin hora');
-const times=h.time||[];let start=times.findIndex(t=>t>=c.time);if(start<0)start=0;const idx=[];for(let i=start;i<Math.min(start+24,times.length);i+=3)idx.push(i);
-let rows='<table><thead><tr><th>Hora</th>'+idx.map(i=>'<th>'+times[i].slice(11,16)+'</th>').join('')+'</tr></thead><tbody>';
-const line=(label,fn)=>'<tr><td>'+label+'</td>'+idx.map(i=>'<td>'+fn(i)+'</td>').join('')+'</tr>';
-rows+=line('Cielo',i=>sky(h.weather_code?.[i]));rows+=line('Temperatura',i=>wxNum(h.temperature_2m?.[i])+' °C');rows+=line('Viento',i=>knots(h.wind_speed_10m?.[i])+' kn');rows+=line('Dirección',i=>windDir(h.wind_direction_10m?.[i]));rows+=line('Ráfagas',i=>knots(h.wind_gusts_10m?.[i])+' kn');rows+=line('Prob. lluvia',i=>wxNum(h.precipitation_probability?.[i])+' %');
-$('weather-hourly').innerHTML=rows+'</tbody></table>';
-const days=d.time||[];const dayFmt=new Intl.DateTimeFormat('es-AR',{weekday:'short',day:'2-digit',month:'2-digit',timeZone:'UTC'});
-$('weather-daily').innerHTML=days.map((date,i)=>'<div class="forecast-day"><strong>'+dayFmt.format(new Date(date+'T12:00:00Z'))+'</strong><div>'+sky(d.weather_code?.[i])+'</div><div>🌡️ '+wxNum(d.temperature_2m_min?.[i])+'° / '+wxNum(d.temperature_2m_max?.[i])+'°</div><div>🌧️ '+wxNum(d.precipitation_probability_max?.[i])+' %</div><div>💨 '+knots(d.wind_speed_10m_max?.[i])+' kn máx.</div><div>🌬️ '+knots(d.wind_gusts_10m_max?.[i])+' kn ráf.</div></div>').join('');
-}
-async function loadWeather(){try{const r=await fetch(WX_URL+'&_t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(data.error)throw Error(data.reason||'Error del servicio');renderWeather(data)}catch(e){latestForecast=null;renderPlanner();$('weather-updated').textContent='⚠ No se pudo actualizar el pronóstico';$('weather-hourly').textContent='Datos meteorológicos temporalmente no disponibles: '+e.message;$('weather-daily').textContent='Reintentá con «Actualizar datos». No afecta al monitor del río.'}}
+const $ = id => document.getElementById(id);
 
+let latestRiverData = null;
+let latestForecast = null;
 
+const fmt = value =>
+  value == null || !Number.isFinite(Number(value))
+    ? "—"
+    : Number(value).toLocaleString("es-AR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
 
-async function loadTideForecast(){
- const status=$('forecast-tides-status'),list=$('forecast-tides-list');
- try{
-  const p=await getJSON('pronostico_san_fernando.json');
-  const until=parseDate(p.valido_hasta),now=new Date();
-  if(!until||now>until){status.textContent='⚠ El último boletín del SHN está vencido. Consultá el enlace oficial.';list.innerHTML='';return;}
-  const events=(p.eventos||[]).filter(e=>e.fecha&&['PLEAMAR','BAJAMAR'].includes(e.tipo)&&Number.isFinite(Number(e.altura_m))&&parseDate(e.fecha)>now);
-  status.textContent='Boletín vigente hasta '+when(p.valido_hasta)+' · Fuente: SHN';
-  list.innerHTML=events.length?events.map(e=>'<div class="tide-item"><span class="tag">'+(e.tipo==='PLEAMAR'?'🌊 Pleamar':'📉 Bajamar')+'</span><b>'+when(e.fecha)+'</b><span class="legend">'+fmt(e.altura_m)+' m · previsto en San Fernando</span></div>').join(''):'No quedan eventos futuros en el boletín vigente. Consultá la próxima emisión del SHN.';
- }catch(e){status.textContent='⚠ Pronóstico no disponible. Verificá el boletín oficial del SHN.';list.innerHTML='';}
+function parseDate(value) {
+  if (!value) return null;
+
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function renderTideEvents(items){
- const el=$('tide-events');const a=(items||[]).filter(x=>x.fecha&&Number.isFinite(Number(x.altura_m))).sort((x,y)=>x.fecha.localeCompare(y.fecha));
- if(a.length<5){el.textContent='No hay suficientes mediciones para identificar extremos observados.';return;}
- const events=[];
- for(let i=2;i<a.length-2;i++){
-  const v=Number(a[i].altura_m),prev=[Number(a[i-2].altura_m),Number(a[i-1].altura_m)],next=[Number(a[i+1].altura_m),Number(a[i+2].altura_m)];
-  const hi=prev.every(x=>v>x)&&next.every(x=>v>=x),lo=prev.every(x=>v<x)&&next.every(x=>v<=x);
-  if(hi||lo)events.push({kind:hi?'Pleamar observada':'Bajamar observada',date:a[i].fecha,value:v});
- }
- const recent=events.slice(-6).reverse();
- el.innerHTML=recent.length?recent.map(e=>'<div class="tide-item"><span class="tag">'+e.kind+'</span><b>'+e.date.slice(8,10)+'/'+e.date.slice(5,7)+' · '+e.date.slice(11,16)+' h</b><span class="legend">San Fernando · '+fmt(e.value)+' m · hora argentina</span></div>').join(''):'No se detectaron extremos claros en los datos recientes.';
-}
-function renderPlanner(){
- const box=$('nav-result'),date=$('nav-date').value,start=$('nav-start').value,end=$('nav-end').value,ret=$('nav-return').value;
- const show=(kind,title,detail)=>{box.className='signal '+kind;box.innerHTML='<strong>'+title+'</strong><div>'+detail+'</div>'};
- if(!date||!start||!end||!ret){show('gray','⚪ Datos incompletos','Elegí las fechas y horarios de salida y regreso.');return}
- const begin=date+'T'+start;
- const finish=ret+'T'+end;
- if(finish<=begin){show('gray','⚪ Revisá los horarios','El regreso debe ser posterior a la salida.');return}
- const h=latestForecast?.hourly;if(!h?.time?.length){show('gray','⚪ Sin pronóstico','No es posible recomendar navegar sin datos meteorológicos.');return}
- const times=h.time;const first=times[0],last=times[times.length-1];
- if(begin<first||finish>last){show('gray','⚪ Fuera del horizonte del pronóstico','Seleccioná fechas cubiertas por el pronóstico horario disponible.');return}
- const indices=times.map((t,i)=>t>=begin&&t<=finish?i:-1).filter(i=>i>=0);
- if(!indices.length){show('gray','⚪ Sin datos horarios','No hay datos para el período elegido.');return}
- let risk=0,maxWind=0,maxGust=0,storm=false,missing=false,wet=false;
- for(const i of indices){const w=h.wind_speed_10m?.[i],g=h.wind_gusts_10m?.[i],code=h.weather_code?.[i],pop=h.precipitation_probability?.[i];
-  if(w==null||g==null||code==null){missing=true;continue}
-  const wn=w/1.852,gn=g/1.852;maxWind=Math.max(maxWind,wn);maxGust=Math.max(maxGust,gn);
-  if([95,96,99].includes(code)){risk=2;storm=true}
-  if(wn>15||gn>20)risk=2;else if(wn>10||gn>15)risk=Math.max(risk,1);
-  if([63,65,67,81,82].includes(code)||pop>=70){risk=Math.max(risk,1);wet=true}
- }
- if(missing){show('gray','⚪ Pronóstico incompleto','Faltan datos de viento, ráfagas o condiciones del cielo en parte del período.');return}
- const summary='Viento máximo previsto: '+wxNum(maxWind,1)+' kn · Ráfagas máximas: '+wxNum(maxGust,1)+' kn. '+(storm?'⛈️ Se pronostican tormentas durante el período.':wet?'🌧️ Se prevé lluvia relevante.':'No se identificaron tormentas en el pronóstico horario.');
- if(risk===2)show('red','🔴 SE RECOMIENDA NO SALIR',summary);
- else if(risk===1)show('yellow','🟡 NAVEGAR CON PRECAUCIÓN',summary);
- else show('green','🟢 CONDICIONES METEOROLÓGICAS FAVORABLES',summary);
-}
-(function initPlanner(){
- const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/Argentina/Buenos_Aires',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).map(p=>[p.type,p.value]));const today=parts.year+'-'+parts.month+'-'+parts.day;
- $('nav-date').value=today;
- $('nav-return').value=today;
- $('nav-return').min=today;
- $('nav-date').addEventListener('change',()=>{
-   $('nav-return').min=$('nav-date').value;
-   if($('nav-return').value<$('nav-date').value)$('nav-return').value=$('nav-date').value;
-   renderPlanner();
- });
- ['nav-start','nav-end','nav-return'].forEach(id=>$(id).addEventListener('change',renderPlanner));
- renderPlanner();
-})();
+function when(value) {
+  const date = parseDate(value);
 
-$('refresh').addEventListener('click',()=>{load();loadWeather();loadTideForecast()});load();loadWeather();loadTideForecast();setInterval(()=>{load();loadWeather();loadTideForecast()},5*60*1000);
-</script></body></html>
+  if (!date) return "No disponible";
+
+  return date.toLocaleString("es-AR", {
+    timeZone: "America/Argentina/Buenos_Aires",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function localDate(value) {
+  if (!value) return null;
+
+  const hasZone = /[zZ]|[+-]\d\d:\d\d$/.test(value);
+
+  return parseDate(hasZone ? value : value + "-03:00");
+}
+
+function localWhen(value) {
+  const date = localDate(value);
+
+  return date ? when(date.toISOString()) : "No disponible";
+}
+
+function minutesSince(value, local = false) {
+  const date = local ? localDate(value) : parseDate(value);
+
+  if (!date) return Infinity;
+
+  return Math.max(0, (Date.now() - date.getTime()) / 60000);
+}
+
+function ageLabel(minutes) {
+  if (!Number.isFinite(minutes)) {
+    return "sin fecha disponible";
+  }
+
+  if (minutes < 60) {
+    return Math.floor(minutes) + " min";
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const rest = Math.floor(minutes % 60);
+
+  return hours + " h " +
+    String(rest).padStart(2, "0") + " min";
+}
+
+function pill(id, text, kind) {
+  $(id).textContent = text;
+  $(id).className = "pill " + kind;
+}
+
+function setValue(id, number) {
+  $(id).innerHTML = fmt(number) + " <small>m</small>";
+}
+
+/*
+  ALERTAS DE ANTIGÜEDAD
+
+  San Fernando:
+  Verde: hasta 60 minutos
+  Amarillo: más de 60 minutos
+  Rojo: más de 120 minutos
+
+  Se recalculan cada 15 segundos,
+  independientemente de GitHub Actions.
+*/
+
+function refreshMeasurementIndicators() {
+  const data = latestRiverData;
+
+  if (!data) return;
+
+  const dique = data.dique_lujan || data;
+  const sf = data.san_fernando;
+
+  // DIQUE LUJÁN
+
+  if (dique && dique.altura_m != null) {
+    const age = minutesSince(dique.fecha_medicion);
+
+    if (age > 36 * 60) {
+      pill(
+        "dique-pill",
+        "⚠ Medición INA antigua",
+        "warn"
+      );
+    } else if (Number(dique.altura_m) < 0.50) {
+      pill(
+        "dique-pill",
+        "🔴 Bajo umbral 0,50 m",
+        "danger"
+      );
+    } else {
+      pill(
+        "dique-pill",
+        "● Sin alerta por umbral",
+        "ok"
+      );
+    }
+
+    $("dique-meta").innerHTML =
+      "Medición INA: " + when(dique.fecha_medicion) +
+      "<br>Antigüedad: " + ageLabel(age) +
+      "<br>Tendencia: " + (dique.tendencia || "—") +
+      "<br>Variación: " +
+      (dique.diferencia_m == null
+        ? "—"
+        : fmt(dique.diferencia_m) + " m") +
+      (data.error_ina
+        ? "<br>⚠ La última consulta INA falló"
+        : "");
+  } else {
+    pill("dique-pill", "Sin datos", "warn");
+  }
+
+  // SAN FERNANDO
+
+  if (sf && sf.altura_m != null) {
+    const age = minutesSince(sf.fecha_medicion, true);
+
+    let trend = "→ Estable";
+
+    if (sf.tendencia === "SUBIENDO") {
+      trend = "↗ Subiendo";
+    } else if (sf.tendencia === "BAJANDO") {
+      trend = "↘ Bajando";
+    }
+
+    if (age > 120) {
+      pill(
+        "sf-pill",
+        "🔴 Medición muy antigua · " + ageLabel(age),
+        "danger"
+      );
+    } else if (age > 60) {
+      pill(
+        "sf-pill",
+        "⚠ Medición antigua · " + ageLabel(age),
+        "warn"
+      );
+    } else {
+      pill(
+        "sf-pill",
+        "● Medición actualizada · " +
+          ageLabel(age) + " · " + trend,
+        "ok"
+      );
+    }
+
+    $("sf-meta").innerHTML =
+      "Medición SHN: " + localWhen(sf.fecha_medicion) +
+      "<br>Antigüedad: " + ageLabel(age) +
+      " (calculada en tiempo real)" +
+      "<br>Variación entre lecturas: " +
+      (sf.diferencia_m == null
+        ? "—"
+        : (sf.diferencia_m > 0 ? "+" : "") +
+          fmt(sf.diferencia_m) + " m") +
+      (data.error_shn
+        ? "<br>⚠ La última consulta SHN falló"
+        : "");
+  } else {
+    pill("sf-pill", "Sin datos", "warn");
+  }
+}
+
+function renderRiver(data) {
+  latestRiverData = data;
+
+  const dique = data.dique_lujan || data;
+  const sf = data.san_fernando;
+
+  if (dique && dique.altura_m != null) {
+    setValue("dique-value", dique.altura_m);
+  }
+
+  if (sf && sf.altura_m != null) {
+    setValue("sf-value", sf.altura_m);
+  }
+
+  refreshMeasurementIndicators();
+
+  $("status").textContent =
+    "Última consulta del monitor: " +
+    when(data.consulta_utc) +
+    " · Cada estación muestra la fecha real de su medición.";
+}
+
+async function getJSON(filename) {
+  const response = await fetch(
+    filename + "?t=" + Date.now(),
+    { cache: "no-store" }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      filename + ": HTTP " + response.status
+    );
+  }
+
+  return response.json();
+}
+
+/*
+  GRÁFICO DE SAN FERNANDO
+*/
+
+function renderChart(items) {
+  const svg = $("chart");
+
+  const points = (items || [])
+    .filter(item =>
+      item.fecha &&
+      item.altura_m != null &&
+      Number.isFinite(Number(item.altura_m))
+    )
+    .sort((a, b) => a.fecha.localeCompare(b.fecha))
+    .slice(-24);
+
+  if (points.length < 2) {
+    svg.innerHTML =
+      '<text x="450" y="150" fill="#9db7c6" ' +
+      'text-anchor="middle">Historial no disponible</text>';
+
+    return;
+  }
+
+  const W = 900;
+  const H = 300;
+  const L = 62;
+  const R = 20;
+  const T = 25;
+  const B = 55;
+
+  const values = points.map(p => Number(p.altura_m));
+
+  let low = Math.min(...values);
+  let high = Math.max(...values);
+
+  const padding = Math.max(
+    0.08,
+    (high - low) * 0.2
+  );
+
+  low -= padding;
+  high += padding;
+
+  const x = i =>
+    L + i * (W - L - R) / (points.length - 1);
+
+  const y = v =>
+    T + (high - v) * (H - T - B) / (high - low);
+
+  let html = "";
+
+  for (let i = 0; i < 5; i++) {
+    const v = low + (high - low) * i / 4;
+    const Y = y(v);
+
+    html += `
+      <line
+        x1="${L}" y1="${Y}"
+        x2="${W - R}" y2="${Y}"
+        stroke="#35566b"
+        stroke-dasharray="4 6"
+      />
+      <text
+        x="${L - 12}" y="${Y + 5}"
+        fill="#9db7c6"
+        font-size="14"
+        text-anchor="end"
+      >${fmt(v)}</text>
+    `;
+  }
+
+  const coordinates = points
+    .map((p, i) => `${x(i)},${y(Number(p.altura_m))}`)
+    .join(" ");
+
+  html += `
+    <polyline
+      points="${coordinates}"
+      fill="none"
+      stroke="#55d8ed"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  `;
+
+  points.forEach((p, i) => {
+    if (
+      i === 0 ||
+      i === points.length - 1 ||
+      i % 6 === 0
+    ) {
+      html += `
+        <text
+          x="${x(i)}"
+          y="${H - 19}"
+          fill="#9db7c6"
+          font-size="13"
+          text-anchor="middle"
+        >
+          ${p.fecha.slice(5, 10).replace("-", "/")}
+          ${p.fecha.slice(11, 16)}
+        </text>
+      `;
+    }
+  });
+
+  const last = points.length - 1;
+
+  html += `
+    <circle
+      cx="${x(last)}"
+      cy="${y(values[last])}"
+      r="7"
+      fill="#55d8ed"
+      stroke="#071827"
+      stroke-width="3"
+    />
+  `;
+
+  svg.innerHTML = html;
+
+  $("chart-label").textContent =
+    points.length +
+    " mediciones recientes · hora argentina";
+}
+
+/*
+  PLEAMARES Y BAJAMARES OBSERVADAS
+*/
+
+function renderTideEvents(items) {
+  const container = $("tide-events");
+
+  const measurements = (items || [])
+    .filter(item =>
+      item.fecha &&
+      item.altura_m != null &&
+      Number.isFinite(Number(item.altura_m))
+    )
+    .sort((a, b) => a.fecha.localeCompare(b.fecha));
+
+  if (measurements.length < 5) {
+    container.textContent =
+      "No hay suficientes mediciones para identificar extremos.";
+
+    return;
+  }
+
+  const events = [];
+
+  for (let i = 2; i < measurements.length - 2; i++) {
+    const current = Number(measurements[i].altura_m);
+
+    const previous = [
+      Number(measurements[i - 2].altura_m),
+      Number(measurements[i - 1].altura_m)
+    ];
+
+    const next = [
+      Number(measurements[i + 1].altura_m),
+      Number(measurements[i + 2].altura_m)
+    ];
+
+    const high =
+      previous.every(v => current > v) &&
+      next.every(v => current >= v);
+
+    const low =
+      previous.every(v => current < v) &&
+      next.every(v => current <= v);
+
+    if (high || low) {
+      events.push({
+        type: high
+          ? "Pleamar observada"
+          : "Bajamar observada",
+        date: measurements[i].fecha,
+        value: current
+      });
+    }
+  }
+
+  const recent = events.slice(-6).reverse();
+
+  container.innerHTML = recent.length
+    ? recent.map(event => `
+        <div class="tide-item">
+          <span class="tag">${event.type}</span>
+          <b>
+            ${event.date.slice(8, 10)}/
+            ${event.date.slice(5, 7)}
+            · ${event.date.slice(11, 16)} h
+          </b>
+          <span class="legend">
+            San Fernando · ${fmt(event.value)} m
+          </span>
+        </div>
+      `).join("")
+    : "No se detectaron extremos claros.";
+}
+
+/*
+  PRONÓSTICO OFICIAL DE MAREAS
+*/
+
+async function loadTideForecast() {
+  const status = $("forecast-tides-status");
+  const list = $("forecast-tides-list");
+
+  try {
+    const forecast = await getJSON(
+      "pronostico_san_fernando.json"
+    );
+
+    const now = new Date();
+    const until = parseDate(forecast.valido_hasta);
+
+    if (!until || now > until) {
+      status.textContent =
+        "⚠ El último boletín del SHN está vencido.";
+
+      list.innerHTML = "";
+      return;
+    }
+
+    const events = (forecast.eventos || [])
+      .filter(event =>
+        event.fecha &&
+        ["PLEAMAR", "BAJAMAR"].includes(event.tipo) &&
+        event.altura_m != null &&
+        Number.isFinite(Number(event.altura_m)) &&
+        parseDate(event.fecha) > now
+      );
+
+    status.textContent =
+      "Boletín vigente hasta " +
+      when(forecast.valido_hasta) +
+      " · Fuente: SHN";
+
+    list.innerHTML = events.length
+      ? events.map(event => `
+          <div class="tide-item">
+            <span class="tag">
+              ${event.tipo === "PLEAMAR"
+                ? "🌊 Pleamar"
+                : "📉 Bajamar"}
+            </span>
+            <b>${when(event.fecha)}</b>
+            <span class="legend">
+              ${fmt(event.altura_m)} m
+              · previsto en San Fernando
+            </span>
+          </div>
+        `).join("")
+      : "No quedan eventos futuros en el boletín vigente.";
+
+  } catch (error) {
+    status.textContent =
+      "⚠ Pronóstico SHN no disponible.";
+
+    list.innerHTML = "";
+  }
+}
+
+/*
+  CARGA DE MEDICIONES
+*/
+
+async function loadRiver() {
+  const button = $("refresh");
+
+  button.disabled = true;
+
+  $("status").textContent =
+    "Consultando archivos publicados…";
+
+  try {
+    const data = await getJSON("ultimo_estado.json");
+
+    renderRiver(data);
+
+    try {
+      const history = await getJSON(
+        "historial_san_fernando.json"
+      );
+
+      renderChart(history.mediciones);
+      renderTideEvents(history.mediciones);
+
+    } catch (error) {
+      renderChart([]);
+      renderTideEvents([]);
+
+      $("chart-label").textContent =
+        "Historial no disponible";
+    }
+
+  } catch (error) {
+    $("status").textContent =
+      "⚠ No se pudieron cargar las mediciones: " +
+      error.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+
+/*
+  METEOROLOGÍA
+*/
+
+const WX_URL =
+  "https://api.open-meteo.com/v1/forecast" +
+  "?latitude=-34.3604" +
+  "&longitude=-58.6821" +
+  "&current=temperature_2m,apparent_temperature," +
+  "weather_code,cloud_cover,wind_speed_10m," +
+  "wind_direction_10m,wind_gusts_10m" +
+  "&hourly=temperature_2m,precipitation_probability," +
+  "weather_code,cloud_cover,wind_speed_10m," +
+  "wind_direction_10m,wind_gusts_10m" +
+  "&daily=weather_code,temperature_2m_max," +
+  "temperature_2m_min,precipitation_probability_max," +
+  "wind_speed_10m_max,wind_gusts_10m_max" +
+  "&timezone=America%2FArgentina%2FBuenos_Aires" +
+  "&forecast_days=5";
+
+function wxNum(value, decimals = 0) {
+  if (value == null) return "—";
+
+  return Number(value).toLocaleString("es-AR", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals
+  });
+}
+
+function knots(value) {
+  return value == null
+    ? "—"
+    : wxNum(value / 1.852, 1);
+}
+
+function windDir(degrees) {
+  if (degrees == null) return "—";
+
+  const directions = [
+    "N", "NE", "E", "SE",
+    "S", "SO", "O", "NO"
+  ];
+
+  const direction =
+    directions[Math.round((degrees % 360) / 45) % 8];
+
+  return direction + " (" + Math.round(degrees) + "°)";
+}
+
+function sky(code) {
+  if (code == null) return "Sin datos";
+  if (code === 0) return "☀️ Despejado";
+  if (code === 1) return "🌤️ Mayormente despejado";
+  if (code === 2) return "⛅ Parcialmente nublado";
+  if (code === 3) return "☁️ Cubierto";
+
+  if ([45, 48].includes(code)) return "🌫️ Niebla";
+
+  if ([51, 53, 55, 56, 57].includes(code)) {
+    return "🌦️ Llovizna";
+  }
+
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
+    return "🌧️ Lluvia";
+  }
+
+  if ([95, 96, 99].includes(code)) {
+    return "⛈️ Tormenta";
+  }
+
+  return "🌥️ Variable";
+}
+
+function renderWeather(data) {
+  latestForecast = data;
+
+  const current = data.current || {};
+  const hourly = data.hourly || {};
+  const daily = data.daily || {};
+
+  $("wx-temp").textContent =
+    wxNum(current.temperature_2m, 1) + " °C";
+
+  $("wx-feels").textContent =
+    "Sensación: " +
+    wxNum(current.apparent_temperature, 1) + " °C";
+
+  $("wx-sky").textContent = sky(current.weather_code);
+
+  $("wx-cloud").textContent =
+    "Nubosidad: " +
+    wxNum(current.cloud_cover) + " %";
+
+  $("wx-wind").textContent =
+    knots(current.wind_speed_10m) + " kn";
+
+  $("wx-direction").textContent =
+    wxNum(current.wind_speed_10m, 1) +
+    " km/h · " +
+    windDir(current.wind_direction_10m);
+
+  $("wx-gust").textContent =
+    knots(current.wind_gusts_10m) + " kn";
+
+  $("wx-gust-kmh").textContent =
+    wxNum(current.wind_gusts_10m, 1) + " km/h";
+
+  $("weather-updated").textContent =
+    "Pronóstico válido: " +
+    (current.time
+      ? current.time.replace("T", " ") + " h"
+      : "sin hora");
+
+  const times = hourly.time || [];
+
+  let start = times.findIndex(
+    time => time >= current.time
+  );
+
+  if (start < 0) start = 0;
+
+  const indices = [];
+
+  for (
+    let i = start;
+    i < Math.min(start + 24, times.length);
+    i += 3
+  ) {
+    indices.push(i);
+  }
+
+  let table =
+    "<table><thead><tr><th>Hora</th>" +
+    indices.map(i =>
+      "<th>" + times[i].slice(11, 16) + "</th>"
+    ).join("") +
+    "</tr></thead><tbody>";
+
+  const row = (label, functionValue) =>
+    "<tr><td>" + label + "</td>" +
+    indices.map(i =>
+      "<td>" + functionValue(i) + "</td>"
+    ).join("") +
+    "</tr>";
+
+  table += row(
+    "Cielo",
+    i => sky(hourly.weather_code?.[i])
+  );
+
+  table += row(
+    "Temperatura",
+    i => wxNum(hourly.temperature_2m?.[i]) + " °C"
+  );
+
+  table += row(
+    "Viento",
+    i => knots(hourly.wind_speed_10m?.[i]) + " kn"
+  );
+
+  table += row(
+    "Dirección",
+    i => windDir(hourly.wind_direction_10m?.[i])
+  );
+
+  table += row(
+    "Ráfagas",
+    i => knots(hourly.wind_gusts_10m?.[i]) + " kn"
+  );
+
+  table += row(
+    "Prob. lluvia",
+    i => wxNum(
+      hourly.precipitation_probability?.[i]
+    ) + " %"
+  );
+
+  $("weather-hourly").innerHTML =
+    table + "</tbody></table>";
+
+  const days = daily.time || [];
+
+  const dayFormat = new Intl.DateTimeFormat(
+    "es-AR",
+    {
+      weekday: "short",
+      day: "2-digit",
+      month: "2-digit",
+      timeZone: "UTC"
+    }
+  );
+
+  $("weather-daily").innerHTML =
+    days.map((date, i) => `
+      <div class="forecast-day">
+        <strong>
+          ${dayFormat.format(
+            new Date(date + "T12:00:00Z")
+          )}
+        </strong>
+
+        <div>${sky(daily.weather_code?.[i])}</div>
+
+        <div>
+          🌡️
+          ${wxNum(daily.temperature_2m_min?.[i])}° /
+          ${wxNum(daily.temperature_2m_max?.[i])}°
+        </div>
+
+        <div>
+          🌧️
+          ${wxNum(
+            daily.precipitation_probability_max?.[i]
+          )} %
+        </div>
+
+        <div>
+          💨
+          ${knots(daily.wind_speed_10m_max?.[i])}
+          kn máx.
+        </div>
+
+        <div>
+          🌬️
+          ${knots(daily.wind_gusts_10m_max?.[i])}
+          kn ráf.
+        </div>
+      </div>
+    `).join("");
+
+  renderPlanner();
+}
+
+async function loadWeather() {
+  try {
+    const response = await fetch(
+      WX_URL + "&_t=" + Date.now(),
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(
+        data.reason || "Error del servicio"
+      );
+    }
+
+    renderWeather(data);
+
+  } catch (error) {
+    latestForecast = null;
+
+    $("weather-updated").textContent =
+      "⚠ Pronóstico no disponible";
+
+    $("weather-hourly").textContent =
+      "No se pudieron obtener los datos meteorológicos.";
+
+    $("weather-daily").textContent =
+      "Reintentá con Actualizar datos.";
+
+    renderPlanner();
+  }
+}
+
+/*
+  PLANIFICADOR DE NAVEGACIÓN
+*/
+
+function renderPlanner() {
+  const box = $("nav-result");
+
+  const date = $("nav-date").value;
+  const start = $("nav-start").value;
+  const returnDate = $("nav-return").value;
+  const end = $("nav-end").value;
+
+  function show(kind, title, detail) {
+    box.className = "signal " + kind;
+
+    box.innerHTML = "";
+
+    const heading = document.createElement("strong");
+    heading.textContent = title;
+
+    const description = document.createElement("div");
+    description.textContent = detail;
+
+    box.append(heading, description);
+  }
+
+  if (!date || !start || !returnDate || !end) {
+    show(
+      "gray",
+      "⚪ Datos incompletos",
+      "Elegí fechas y horarios de salida y regreso."
+    );
+
+    return;
+  }
+
+  const begin = date + "T" + start;
+  const finish = returnDate + "T" + end;
+
+  if (finish <= begin) {
+    show(
+      "gray",
+      "⚪ Revisá los horarios",
+      "El regreso debe ser posterior a la salida."
+    );
+
+    return;
+  }
+
+  const hourly = latestForecast?.hourly;
+
+  if (!hourly?.time?.length) {
+    show(
+      "gray",
+      "⚪ Sin pronóstico",
+      "No hay datos meteorológicos suficientes."
+    );
+
+    return;
+  }
+
+  const times = hourly.time;
+
+  if (
+    begin < times[0] ||
+    finish > times[times.length - 1]
+  ) {
+    show(
+      "gray",
+      "⚪ Fuera del horizonte del pronóstico",
+      "Seleccioná fechas cubiertas por los datos disponibles."
+    );
+
+    return;
+  }
+
+  const indices = times
+    .map((time, index) =>
+      time >= begin && time <= finish ? index : -1
+    )
+    .filter(index => index >= 0);
+
+  if (!indices.length) {
+    show(
+      "gray",
+      "⚪ Sin datos horarios",
+      "No hay pronóstico para el período elegido."
+    );
+
+    return;
+  }
+
+  let risk = 0;
+  let maxWind = 0;
+  let maxGust = 0;
+  let storm = false;
+  let rain = false;
+  let missing = false;
+
+  for (const index of indices) {
+    const wind = hourly.wind_speed_10m?.[index];
+    const gust = hourly.wind_gusts_10m?.[index];
+    const code = hourly.weather_code?.[index];
+    const probability =
+      hourly.precipitation_probability?.[index];
+
+    if (
+      wind == null ||
+      gust == null ||
+      code == null
+    ) {
+      missing = true;
+      continue;
+    }
+
+    const windKnots = wind / 1.852;
+    const gustKnots = gust / 1.852;
+
+    maxWind = Math.max(maxWind, windKnots);
+    maxGust = Math.max(maxGust, gustKnots);
+
+    if ([95, 96, 99].includes(code)) {
+      risk = 2;
+      storm = true;
+    }
+
+    if (windKnots > 15 || gustKnots > 20) {
+      risk = 2;
+    } else if (
+      windKnots > 10 ||
+      gustKnots > 15
+    ) {
+      risk = Math.max(risk, 1);
+    }
+
+    if (
+      [63, 65, 67, 81, 82].includes(code) ||
+      probability >= 70
+    ) {
+      risk = Math.max(risk, 1);
+      rain = true;
+    }
+  }
+
+  if (missing) {
+    show(
+      "gray",
+      "⚪ Pronóstico incompleto",
+      "Faltan datos meteorológicos en parte del período."
+    );
+
+    return;
+  }
+
+  let summary =
+    "Viento máximo previsto: " +
+    wxNum(maxWind, 1) +
+    " kn. Ráfagas máximas: " +
+    wxNum(maxGust, 1) +
+    " kn. ";
+
+  if (storm) {
+    summary += "Se pronostican tormentas.";
+  } else if (rain) {
+    summary += "Se prevé lluvia relevante.";
+  } else {
+    summary +=
+      "Sin tormentas identificadas en el pronóstico horario.";
+  }
+
+  if (risk === 2) {
+    show(
+      "red",
+      "🔴 SE RECOMIENDA NO SALIR",
+      summary
+    );
+  } else if (risk === 1) {
+    show(
+      "yellow",
+      "🟡 NAVEGAR CON PRECAUCIÓN",
+      summary
+    );
+  } else {
+    show(
+      "green",
+      "🟢 CONDICIONES METEOROLÓGICAS FAVORABLES",
+      summary
+    );
+  }
+}
+
+function initializePlanner() {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat(
+      "en-US",
+      {
+        timeZone: "America/Argentina/Buenos_Aires",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }
+    )
+    .formatToParts(new Date())
+    .map(part => [part.type, part.value])
+  );
+
+  const today =
+    parts.year + "-" +
+    parts.month + "-" +
+    parts.day;
+
+  $("nav-date").value = today;
+  $("nav-return").value = today;
+  $("nav-return").min = today;
+
+  $("nav-date").addEventListener(
+    "change",
+    () => {
+      $("nav-return").min = $("nav-date").value;
+
+      if (
+        $("nav-return").value <
+        $("nav-date").value
+      ) {
+        $("nav-return").value = $("nav-date").value;
+      }
+
+      renderPlanner();
+    }
+  );
+
+  ["nav-start", "nav-end", "nav-return"]
+    .forEach(id => {
+      $(id).addEventListener(
+        "change",
+        renderPlanner
+      );
+    });
+
+  renderPlanner();
+}
+
+/*
+  INICIALIZACIÓN Y ACTUALIZACIONES
+*/
+
+initializePlanner();
+
+// Actualiza la antigüedad visible cada 15 segundos.
+setInterval(
+  refreshMeasurementIndicators,
+  15 * 1000
+);
+
+async function refreshAll() {
+  await Promise.all([
+    loadRiver(),
+    loadWeather(),
+    loadTideForecast()
+  ]);
+}
+
+$("refresh").addEventListener(
+  "click",
+  refreshAll
+);
+
+// Primera carga.
+refreshAll();
+
+// Vuelve a consultar los archivos cada 5 minutos.
+setInterval(
+  refreshAll,
+  5 * 60 * 1000
+);
+
+</script>
+</body>
+</html>
