@@ -84,6 +84,13 @@ button:disabled { opacity: .6; cursor: wait; }
   letter-spacing: .13em;
   text-transform: uppercase;
 }
+.station-title {
+  color: var(--cyan);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: .055em;
+  margin-bottom: 8px;
+}
 .reading {
   font-size: clamp(56px,9vw,96px);
   font-weight: 800;
@@ -355,9 +362,9 @@ a { color: var(--cyan); }
 </p>
 
 <section class="grid" style="grid-template-columns:repeat(auto-fit,minmax(270px,1fr))">
-  <article class="card"><div class="tag">SHN · SAN FERNANDO</div><div class="reading" id="sf-value">— <small>m</small></div><div class="pill" id="sf-pill">Esperando datos</div><div class="meta" id="sf-meta">Última medición: —</div></article>
-  <article class="card"><div class="tag">SHN · PILOTE NORDEN</div><div class="reading" id="pn-value">— <small>m</small></div><div class="pill" id="pn-pill">Esperando datos</div><div class="meta" id="pn-meta">Última medición: —</div></article>
-  <article class="card"><div class="tag">SHN · MARTÍN GARCÍA</div><div class="reading" id="mg-value">— <small>m</small></div><div class="pill" id="mg-pill">Esperando datos</div><div class="meta" id="mg-meta">Última medición: —</div></article>
+  <article class="card"><div class="tag station-title">SHN · SAN FERNANDO</div><div class="reading" id="sf-value">— <small>m</small></div><div class="pill" id="sf-pill">Esperando datos</div><div class="meta" id="sf-meta">Última medición: —</div></article>
+  <article class="card"><div class="tag station-title">SHN · PILOTE NORDEN</div><div class="reading" id="pn-value">— <small>m</small></div><div class="pill" id="pn-pill">Esperando datos</div><div class="meta" id="pn-meta">Última medición: —</div></article>
+  <article class="card"><div class="tag station-title">SHN · MARTÍN GARCÍA</div><div class="reading" id="mg-value">— <small>m</small></div><div class="pill" id="mg-pill">Esperando datos</div><div class="meta" id="mg-meta">Última medición: —</div></article>
 </section>
 
 <section class="card wide">
