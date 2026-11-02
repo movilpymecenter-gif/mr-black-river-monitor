@@ -2,7 +2,7 @@ name: Monitor Mr Black
 
 on:
   workflow_dispatch:
-  
+
 permissions:
   contents: write
 
@@ -23,23 +23,30 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Consultar INA, SHN y predicciones
+      - name: Consultar estaciones SHN y predicciones
         run: python monitor.py
 
-      - name: Publicar mediciones y predicciones
+      - name: Publicar mediciones, historiales y predicciones
         run: |
           git config user.name "Mr Black Monitor"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add ultimo_estado.json historial_san_fernando.json
+          git add ultimo_estado.json
 
-          if [ -f pronostico_san_fernando.json ]; then
-            git add pronostico_san_fernando.json
-          else
-            git add -u -- pronostico_san_fernando.json
-          fi
+          for archivo in \
+            historial_san_fernando.json \
+            historial_pilote_norden.json \
+            historial_martin_garcia.json \
+            pronostico_san_fernando.json
+          do
+            if [ -f "$archivo" ]; then
+              git add "$archivo"
+            else
+              git add -u -- "$archivo"
+            fi
+          done
 
           if ! git diff --cached --quiet; then
-            git commit -m "Actualizar mediciones y predicciones Mr Black"
+            git commit -m "Actualizar mediciones e historiales SHN Mr Black"
             git push
           fi
