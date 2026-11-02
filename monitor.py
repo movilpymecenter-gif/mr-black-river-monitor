@@ -1,4 +1,5 @@
 import csv
+import unicodedata
 import io
 import json
 import re
@@ -9,9 +10,8 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 # MR. BLACK RIVER MONITOR
-# Fuentes: INA y Servicio de Hidrografia Naval
+# Fuente: Servicio de Hidrografia Naval
 
-URL_INA = "https://alerta.ina.gob.ar/pub/datos/datos"
 URL_SHN = "https://www.hidro.gov.ar/oceanografia/AlturasHorarias.asp?export=csv"
 URL_PRONOSTICO_SHN = "https://www.hidro.gov.ar/oceanografia/pronostico.asp"
 
@@ -47,147 +47,85 @@ def descargar(url, evitar_cache=False):
         return respuesta.read()
 
 
-def consultar_ina():
-    hoy = datetime.now(ZONA_ARGENTINA).date()
-    inicio = hoy - timedelta(days=10)
-    fin = hoy + timedelta(days=1)
-
-    url = (
-        f"{URL_INA}&timeStart={inicio}"
-        f"&timeEnd={fin}"
-        "&seriesId=50"
-        "&siteCode=50"
-        "&varId=2"
-        "&format=json"
-    )
-
-    respuesta = json.loads(descargar(url).decode("utf-8"))
-
-    datos = [
-        d for d in respuesta.get("data", [])
-        if d.get("valor") is not None and d.get("timestart")
-    ]
-
-    if not datos:
-        raise RuntimeError("INA no devolvio mediciones")
-
-    datos.sort(key=lambda d: d["timestart"])
-
-    ultimo = datos[-1]
-    anterior = datos[-2] if len(datos) > 1 else None
-
-    altura = float(ultimo["valor"])
-
-    diferencia = (
-        round(altura - float(anterior["valor"]), 2)
-        if anterior else None
-    )
-
-    if diferencia is None:
-        tendencia = "SIN DATOS ANTERIORES"
-    elif diferencia > 0:
-        tendencia = "SUBIO"
-    elif diferencia < 0:
-        tendencia = "BAJO"
-    else:
-        tendencia = "SIN CAMBIOS"
-
-    return {
-        "altura_m": altura,
-        "fecha_medicion": ultimo["timestart"],
-        "fecha_actualizacion": ultimo.get("timeupdate"),
-        "altura_anterior_m": (
-            float(anterior["valor"]) if anterior else None
-        ),
-        "diferencia_m": diferencia,
-        "tendencia": tendencia,
-        "alerta": altura < UMBRAL_ALERTA,
-        "umbral_alerta_m": UMBRAL_ALERTA
-    }
+def normalizar_columna(texto):
+    texto = unicodedata.normalize("NFKD", texto or "")
+    return "".join(c for c in texto if not unicodedata.combining(c)).casefold().strip()
 
 
-def consultar_san_fernando():
+def consultar_estaciones_shn():
     contenido = descargar(URL_SHN, evitar_cache=True)
-
-    # El CSV del SHN utiliza Windows-1252 y punto y coma.
-    texto = contenido.decode("cp1252")
+    texto = contenido.decode("cp1252").lstrip("\ufeff")
     lector = csv.DictReader(io.StringIO(texto), delimiter=";")
+    columnas = lector.fieldnames or []
+    columnas_normalizadas = {normalizar_columna(c): c for c in columnas}
+    fecha_col = columnas_normalizadas.get("fecha y hora")
+    if not fecha_col:
+        raise RuntimeError("SHN: falta columna Fecha y hora")
 
-    if not lector.fieldnames or "San Fernando" not in lector.fieldnames:
-        raise RuntimeError("No se encontro la columna San Fernando")
+    estaciones = {
+        "san_fernando": ("San Fernando", ["san fernando"]),
+        "pilote_norden": ("Pilote Norden", ["pilote norden", "pilote nordern"]),
+        "martin_garcia": ("Martín García", ["martin garcia", "isla martin garcia"]),
+    }
+    seleccion = {}
+    for clave, (nombre, alternativas) in estaciones.items():
+        columna = next((columnas_normalizadas[a] for a in alternativas
+                        if a in columnas_normalizadas), None)
+        if columna is None:
+            print(f"AVISO SHN: no se encontro columna {nombre}. Disponibles: {columnas}")
+        seleccion[clave] = columna
 
-    mediciones = []
-
+    mediciones = {clave: [] for clave in estaciones}
     for fila in lector:
-        fecha_texto = (fila.get("Fecha y hora") or "").strip()
-        altura_texto = (fila.get("San Fernando") or "").strip()
-
-        if not fecha_texto or not altura_texto:
-            continue
-
         try:
-            fecha = datetime.strptime(
-                fecha_texto, "%d/%m/%Y %H:%M"
-            )
-            altura = float(altura_texto.replace(",", "."))
+            fecha = datetime.strptime((fila.get(fecha_col) or "").strip(), "%d/%m/%Y %H:%M")
         except ValueError:
             continue
+        for clave, columna in seleccion.items():
+            if not columna:
+                continue
+            valor = (fila.get(columna) or "").strip()
+            try:
+                altura = float(valor.replace(",", "."))
+            except ValueError:
+                continue
+            if not (-5 < altura < 10):
+                continue
+            mediciones[clave].append({"fecha": fecha.isoformat(), "altura_m": altura})
 
-        mediciones.append({
-            "fecha": fecha.isoformat(),
-            "altura_m": altura
-        })
-
-    if not mediciones:
-        raise RuntimeError("SHN no devolvio alturas de San Fernando")
-
-    mediciones.sort(key=lambda x: x["fecha"])
-
-    ultimo = mediciones[-1]
-    anterior = mediciones[-2] if len(mediciones) > 1 else None
-
-    diferencia = (
-        round(ultimo["altura_m"] - anterior["altura_m"], 2)
-        if anterior else None
-    )
-
-    if diferencia is None:
-        tendencia = "SIN DATOS ANTERIORES"
-    elif diferencia > 0:
-        tendencia = "SUBIENDO"
-    elif diferencia < 0:
-        tendencia = "BAJANDO"
-    else:
-        tendencia = "ESTABLE"
-
-    ahora_local = datetime.now(ZONA_ARGENTINA)
-
-    fecha_ultima = datetime.fromisoformat(
-        ultimo["fecha"]
-    ).replace(tzinfo=ZONA_ARGENTINA)
-
-    antiguedad_min = round(
-        (ahora_local - fecha_ultima).total_seconds() / 60,
-        1
-    )
-
-    antigua = antiguedad_min > UMBRAL_ANTIGUEDAD_SHN_MIN
-
-    return {
-        "estacion": "San Fernando",
-        "antiguedad_min": antiguedad_min,
-        "medicion_antigua": antigua,
-        "umbral_antiguedad_min": UMBRAL_ANTIGUEDAD_SHN_MIN,
-        "fuente": "Servicio de Hidrografia Naval",
-        "altura_m": ultimo["altura_m"],
-        "fecha_medicion": ultimo["fecha"],
-        "altura_anterior_m": (
-            anterior["altura_m"] if anterior else None
-        ),
-        "diferencia_m": diferencia,
-        "tendencia": tendencia,
-        "cantidad_mediciones": len(mediciones)
-    }, mediciones
+    resultado = {}
+    ahora = datetime.now(ZONA_ARGENTINA)
+    for clave, (nombre, _) in estaciones.items():
+        datos = sorted(mediciones[clave], key=lambda x: x["fecha"])
+        if not datos:
+            resultado[clave] = None
+            print(f"AVISO SHN: {nombre} sin mediciones disponibles")
+            continue
+        ultimo = datos[-1]
+        anterior = datos[-2] if len(datos) > 1 else None
+        diferencia = round(ultimo["altura_m"] - anterior["altura_m"], 2) if anterior else None
+        tendencia = ("SIN DATOS ANTERIORES" if diferencia is None else
+                     "SUBIENDO" if diferencia > 0 else
+                     "BAJANDO" if diferencia < 0 else "ESTABLE")
+        fecha_ultima = datetime.fromisoformat(ultimo["fecha"]).replace(tzinfo=ZONA_ARGENTINA)
+        antiguedad = round((ahora - fecha_ultima).total_seconds() / 60, 1)
+        resultado[clave] = {
+            "estacion": nombre,
+            "fuente": "Servicio de Hidrografia Naval",
+            "altura_m": ultimo["altura_m"],
+            "fecha_medicion": ultimo["fecha"],
+            "altura_anterior_m": anterior["altura_m"] if anterior else None,
+            "diferencia_m": diferencia,
+            "tendencia": tendencia,
+            "antiguedad_min": antiguedad,
+            "medicion_antigua": antiguedad > UMBRAL_ANTIGUEDAD_SHN_MIN,
+            "umbral_antiguedad_min": UMBRAL_ANTIGUEDAD_SHN_MIN,
+            "cantidad_mediciones": len(datos),
+        }
+        print(f"SHN {nombre}: {ultimo['altura_m']} m; Fecha: {ultimo['fecha']}; Tendencia: {tendencia}")
+    if not any(resultado.values()):
+        raise RuntimeError("SHN no devolvio mediciones para ninguna de las tres estaciones")
+    return resultado, mediciones["san_fernando"]
 
 
 class LectorTablasSHN(HTMLParser):
@@ -363,81 +301,34 @@ def ejecutar():
     informe["umbral_alerta_m"] = UMBRAL_ALERTA
 
     informe["advertencia"] = (
-        "Las alturas de San Fernando y Dique Lujan "
-        "corresponden a estaciones diferentes. "
-        "No equivalen a la profundidad real "
-        "disponible para navegar."
+        "Las alturas de las estaciones SHN no equivalen a la profundidad "
+        "real disponible para navegar en Canal Villanueva."
     )
 
+    # Eliminamos las claves INA heredadas de ejecuciones anteriores.
+    for clave in ("dique_lujan", "error_ina", "ultima_consulta_ina_utc",
+                  "siteCode", "seriesId", "altura_m", "fecha_medicion",
+                  "fecha_actualizacion", "altura_anterior_m", "diferencia_m",
+                  "tendencia", "alerta", "estacion"):
+        informe.pop(clave, None)
+
     fuentes_actualizadas = 0
-
-    # DIQUE LUJAN - INA
     try:
-        dique = consultar_ina()
-
-        informe.update(dique)
-        informe["estacion"] = "Dique Lujan"
-        informe["siteCode"] = 50
-        informe["seriesId"] = 50
-        informe["dique_lujan"] = dique
-        informe["ultima_consulta_ina_utc"] = ahora.isoformat()
-        informe["error_ina"] = None
-
-        fuentes_actualizadas += 1
-
-        print(
-            "DIQUE LUJAN:",
-            dique["altura_m"],
-            "m"
-        )
-        print("Fecha:", dique["fecha_medicion"])
-
-    except Exception as error:
-        informe["error_ina"] = str(error)
-        print("ERROR INA:", error)
-
-    # SAN FERNANDO - HIDROGRAFIA NAVAL
-    try:
-        san_fernando, mediciones = consultar_san_fernando()
-
-        informe["san_fernando"] = san_fernando
+        estaciones, mediciones = consultar_estaciones_shn()
+        for clave, valor in estaciones.items():
+            # No publicar datos anteriores si la estación no está en el CSV.
+            informe[clave] = valor
         informe["ultima_consulta_shn_utc"] = ahora.isoformat()
         informe["error_shn"] = None
-
         HISTORIAL.write_text(
-            json.dumps(
-                {
-                    "estacion": "San Fernando",
-                    "fuente": "Servicio de Hidrografia Naval",
-                    "consulta_utc": ahora.isoformat(),
-                    "mediciones": mediciones
-                },
-                ensure_ascii=False,
-                indent=2
-            ),
-            encoding="utf-8"
+            json.dumps({
+                "estacion": "San Fernando",
+                "fuente": "Servicio de Hidrografia Naval",
+                "consulta_utc": ahora.isoformat(),
+                "mediciones": mediciones,
+            }, ensure_ascii=False, indent=2), encoding="utf-8"
         )
-
         fuentes_actualizadas += 1
-
-        print(
-            "SAN FERNANDO:",
-            san_fernando["altura_m"],
-            "m"
-        )
-        print("Fecha:", san_fernando["fecha_medicion"])
-        print("Tendencia:", san_fernando["tendencia"])
-        print(
-            "Antiguedad SHN (min):",
-            san_fernando["antiguedad_min"]
-        )
-
-        if san_fernando["medicion_antigua"]:
-            print(
-                "AVISO: MEDICION SHN ANTIGUA "
-                "(mas de 60 minutos)"
-            )
-
     except Exception as error:
         informe["error_shn"] = str(error)
         print("ERROR SHN:", error)
