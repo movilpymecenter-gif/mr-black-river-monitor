@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#071827">
 <title>Mr. Black | River Monitor</title>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 :root {
   color-scheme: dark;
@@ -174,12 +173,10 @@ button:disabled { opacity: .6; cursor: wait; }
   margin-top: 14px;
   background: #123b54;
 }
-/* Resguardo para que los mosaicos del mapa nunca desborden el panel. */
-#mareografos-map .leaflet-container { width: 100%; height: 100%; }
-#mareografos-map .leaflet-pane,
-#mareografos-map .leaflet-map-pane,
-#mareografos-map .leaflet-tile-pane { position: absolute; left: 0; top: 0; }
-#mareografos-map .leaflet-tile { max-width: none !important; max-height: none !important; }
+#mareografos-map iframe { display:block; width:100%; height:100%; border:0; border-radius:14px; }
+.map-stations { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+.map-stations a { display:inline-block; padding:9px 12px; border:1px solid #49728b; border-radius:10px; color:#8cddff; text-decoration:none; background:#153c52; font-weight:600; }
+.map-stations a:hover { background:#20516b; }
 @media (max-width: 600px) { #mareografos-map { height: 310px; } }
 .map-note { margin-top: 12px; }
 .sponsor {
@@ -422,7 +419,14 @@ a { color: var(--cyan); }
 
 <section class="card wide">
   <h2>📍 Ubicación de los mareógrafos</h2>
-  <div id="mareografos-map" aria-label="Mapa de estaciones mareográficas"></div>
+  <div id="mareografos-map" aria-label="Mapa geográfico del Río de la Plata">
+    <iframe title="Mapa del Río de la Plata - OpenStreetMap" loading="lazy" referrerpolicy="no-referrer" src="https://www.openstreetmap.org/export/embed.html?bbox=-58.75%2C-34.85%2C-57.70%2C-33.98&amp;layer=mapnik"></iframe>
+  </div>
+  <div class="map-stations" aria-label="Abrir la ubicación de cada estación en el mapa">
+    <a href="https://www.openstreetmap.org/?mlat=-34.433889&amp;mlon=-58.540000#map=14/-34.433889/-58.540000" target="_blank" rel="noopener noreferrer">📍 San Fernando ↗</a>
+    <a href="https://www.openstreetmap.org/?mlat=-34.628797&amp;mlon=-57.924858#map=14/-34.628797/-57.924858" target="_blank" rel="noopener noreferrer">📍 Pilote Norden ↗</a>
+    <a href="https://www.openstreetmap.org/?mlat=-34.183&amp;mlon=-58.25#map=13/-34.183/-58.25" target="_blank" rel="noopener noreferrer">📍 Martín García (isla) ↗</a>
+  </div>
   <p class="legend map-note">San Fernando y Pilote Norden: posiciones de referencia. Martín García: marcador aproximado de la isla, <strong>no del sensor exacto</strong>. Las alturas del SHN no equivalen al calado disponible.</p>
 </section>
 
@@ -1673,32 +1677,5 @@ setInterval(
 
 </script>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script>
-(function () {
-  if (!window.L) {
-    document.getElementById("mareografos-map").textContent = "Mapa no disponible (sin conexión al servidor de mapas).";
-    return;
-  }
-  const map = L.map("mareografos-map", { scrollWheelZoom: false });
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(map);
-  const sites = [
-    {name: "San Fernando", lat: -34.433889, lon: -58.540000, key: "san_fernando"},
-    {name: "Pilote Norden", lat: -34.628797, lon: -57.924858, key: "pilote_norden"},
-    {name: "Martín García (ubicación aproximada de la isla)", lat: -34.183, lon: -58.25, key: "martin_garcia"}
-  ];
-  const bounds = [];
-  sites.forEach(site => {
-    const marker = L.marker([site.lat, site.lon]).addTo(map);
-    marker.bindPopup("<b>" + site.name + "</b><br>Estación SHN");
-    bounds.push([site.lat, site.lon]);
-  });
-  map.fitBounds(bounds, {padding: [25, 25]});
-  window.addEventListener("load", () => setTimeout(() => map.invalidateSize(), 150));
-})();
-</script>
 </body>
 </html>
