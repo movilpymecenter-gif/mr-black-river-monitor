@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#071827">
 <title>Mr. Black | River Monitor</title>
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzx+0P8T/JOz0pF0cZ6m4A=" crossorigin="" />
 <style>
 :root {
   color-scheme: dark;
@@ -155,12 +156,14 @@ button:disabled { opacity: .6; cursor: wait; }
   border-radius: 10px;
   line-height: 1.6;
 }
-#chart {
+#chart, #chart-pn, #chart-mg {
   display: block;
   width: 100%;
   height: auto;
   min-height: 200px;
 }
+#mareografos-map { height: 390px; border-radius: 14px; margin-top: 14px; background: #123b54; }
+.map-note { margin-top: 12px; }
 .sponsor {
   display: flex;
   align-items: center;
@@ -385,6 +388,24 @@ a { color: var(--cyan); }
       Cargando historial…
     </text>
   </svg>
+</section>
+
+<section class="card wide">
+  <div class="row"><h2>Pilote Norden · evolución reciente</h2>
+    <span class="legend" id="chart-pn-label">Últimas 24 mediciones disponibles</span></div>
+  <svg id="chart-pn" viewBox="0 0 900 300" role="img" aria-label="Gráfico de alturas horarias de Pilote Norden"></svg>
+</section>
+
+<section class="card wide">
+  <div class="row"><h2>Martín García · evolución reciente</h2>
+    <span class="legend" id="chart-mg-label">Últimas 24 mediciones disponibles</span></div>
+  <svg id="chart-mg" viewBox="0 0 900 300" role="img" aria-label="Gráfico de alturas horarias de Martín García"></svg>
+</section>
+
+<section class="card wide">
+  <h2>📍 Ubicación de los mareógrafos</h2>
+  <div id="mareografos-map" aria-label="Mapa de estaciones mareográficas"></div>
+  <p class="legend map-note">San Fernando y Pilote Norden: posiciones de referencia. Martín García: marcador aproximado de la isla, <strong>no del sensor exacto</strong>. Las alturas del SHN no equivalen al calado disponible.</p>
 </section>
 
 <section class="card wide">
@@ -773,8 +794,8 @@ async function getJSON(filename) {
   GRÁFICO DE SAN FERNANDO
 */
 
-function renderChart(items) {
-  const svg = $("chart");
+function renderChart(items, chartId = "chart", labelId = "chart-label") {
+  const svg = $(chartId);
 
   const points = (items || [])
     .filter(item =>
@@ -894,7 +915,7 @@ function renderChart(items) {
 
   svg.innerHTML = html;
 
-  $("chart-label").textContent =
+  $(labelId).textContent =
     points.length +
     " mediciones recientes · hora argentina";
 }
@@ -1068,6 +1089,19 @@ async function loadRiver() {
 
       $("chart-label").textContent =
         "Historial no disponible";
+    }
+
+    for (const [key, chartId, labelId] of [
+      ["pilote_norden", "chart-pn", "chart-pn-label"],
+      ["martin_garcia", "chart-mg", "chart-mg-label"]
+    ]) {
+      try {
+        const history = await getJSON("historial_" + key + ".json");
+        renderChart(history.mediciones, chartId, labelId);
+      } catch (error) {
+        renderChart([], chartId, labelId);
+        $(labelId).textContent = "Historial no disponible";
+      }
     }
 
   } catch (error) {
@@ -1619,6 +1653,33 @@ setInterval(
   5 * 60 * 1000
 );
 
+</script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function () {
+  if (!window.L) {
+    document.getElementById("mareografos-map").textContent = "Mapa no disponible (sin conexión al servidor de mapas).";
+    return;
+  }
+  const map = L.map("mareografos-map", { scrollWheelZoom: false });
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 18,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  const sites = [
+    {name: "San Fernando", lat: -34.433889, lon: -58.540000, key: "san_fernando"},
+    {name: "Pilote Norden", lat: -34.628797, lon: -57.924858, key: "pilote_norden"},
+    {name: "Martín García (ubicación aproximada de la isla)", lat: -34.183, lon: -58.25, key: "martin_garcia"}
+  ];
+  const bounds = [];
+  sites.forEach(site => {
+    const marker = L.marker([site.lat, site.lon]).addTo(map);
+    marker.bindPopup("<b>" + site.name + "</b><br>Estación SHN");
+    bounds.push([site.lat, site.lon]);
+  });
+  map.fitBounds(bounds, {padding: [25, 25]});
+})();
 </script>
 </body>
 </html>
