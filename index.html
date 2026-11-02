@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#071827">
 <title>Mr. Black | River Monitor</title>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzx+0P8T/JOz0pF0cZ6m4A=" crossorigin="" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 :root {
   color-scheme: dark;
@@ -162,7 +162,25 @@ button:disabled { opacity: .6; cursor: wait; }
   height: auto;
   min-height: 200px;
 }
-#mareografos-map { height: 390px; border-radius: 14px; margin-top: 14px; background: #123b54; }
+#mareografos-map {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 390px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 14px;
+  margin-top: 14px;
+  background: #123b54;
+}
+/* Resguardo para que los mosaicos del mapa nunca desborden el panel. */
+#mareografos-map .leaflet-container { width: 100%; height: 100%; }
+#mareografos-map .leaflet-pane,
+#mareografos-map .leaflet-map-pane,
+#mareografos-map .leaflet-tile-pane { position: absolute; left: 0; top: 0; }
+#mareografos-map .leaflet-tile { max-width: none !important; max-height: none !important; }
+@media (max-width: 600px) { #mareografos-map { height: 310px; } }
 .map-note { margin-top: 12px; }
 .sponsor {
   display: flex;
@@ -1679,6 +1697,7 @@ setInterval(
     bounds.push([site.lat, site.lon]);
   });
   map.fitBounds(bounds, {padding: [25, 25]});
+  window.addEventListener("load", () => setTimeout(() => map.invalidateSize(), 150));
 })();
 </script>
 </body>
