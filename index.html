@@ -354,34 +354,10 @@ a { color: var(--cyan); }
   Cargando mediciones oficiales…
 </p>
 
-<section class="grid">
-
-  <article class="card">
-    <div class="tag">INA · DIQUE LUJÁN</div>
-    <div class="reading" id="dique-value">
-      — <small>m</small>
-    </div>
-    <div class="pill" id="dique-pill">
-      Esperando datos
-    </div>
-    <div class="meta" id="dique-meta">
-      Última medición: —
-    </div>
-  </article>
-
-  <article class="card">
-    <div class="tag">SHN · SAN FERNANDO</div>
-    <div class="reading" id="sf-value">
-      — <small>m</small>
-    </div>
-    <div class="pill" id="sf-pill">
-      Esperando datos
-    </div>
-    <div class="meta" id="sf-meta">
-      Última medición: —
-    </div>
-  </article>
-
+<section class="grid" style="grid-template-columns:repeat(auto-fit,minmax(270px,1fr))">
+  <article class="card"><div class="tag">SHN · SAN FERNANDO</div><div class="reading" id="sf-value">— <small>m</small></div><div class="pill" id="sf-pill">Esperando datos</div><div class="meta" id="sf-meta">Última medición: —</div></article>
+  <article class="card"><div class="tag">SHN · PILOTE NORDEN</div><div class="reading" id="pn-value">— <small>m</small></div><div class="pill" id="pn-pill">Esperando datos</div><div class="meta" id="pn-meta">Última medición: —</div></article>
+  <article class="card"><div class="tag">SHN · MARTÍN GARCÍA</div><div class="reading" id="mg-value">— <small>m</small></div><div class="pill" id="mg-pill">Esperando datos</div><div class="meta" id="mg-meta">Última medición: —</div></article>
 </section>
 
 <section class="card wide">
@@ -565,8 +541,7 @@ a { color: var(--cyan); }
 
 <div class="notice">
   <strong>⚠️ Referencia para navegación:</strong>
-  las alturas de San Fernando y Dique Luján corresponden
-  a estaciones diferentes y no indican la profundidad
+  las alturas de las estaciones del SHN no indican la profundidad
   real bajo el barco.
 
   Para Mr. Black se requiere un mínimo de
@@ -577,8 +552,7 @@ a { color: var(--cyan); }
 </div>
 
 <footer>
-  Fuentes: Instituto Nacional del Agua (INA),
-  Servicio de Hidrografía Naval (SHN) y Open-Meteo.
+  Fuentes: Servicio de Hidrografía Naval (SHN) y Open-Meteo.
 
   Las mediciones pueden publicarse con retraso.
   El botón «Actualizar datos» consulta los archivos
@@ -711,146 +685,52 @@ function variationLabel(value) {
   ) + fmt(number) + " m";
 }
 
-/*
-  ALERTAS DE DIQUE LUJÁN
-
-  Prioridad 1:
-  Última altura inferior a 0,50 m -> rojo.
-
-  Prioridad 2:
-  Más de 24 horas sin medición -> rojo.
-
-  Prioridad 3:
-  Más de 60 minutos -> amarillo.
-
-  Solo una medición reciente y por encima
-  del umbral puede mostrar indicador verde.
-
-  IMPORTANTE:
-  El indicador no certifica profundidad navegable.
-*/
-
 function refreshMeasurementIndicators() {
   const data = latestRiverData;
-
   if (!data) return;
-
-  const dique = data.dique_lujan || data;
-  const sf = data.san_fernando;
-
-  // DIQUE LUJÁN
-
-  if (dique && dique.altura_m != null) {
-    const age = minutesSince(dique.fecha_medicion);
-    const height = Number(dique.altura_m);
-
-    let text = "";
-    let kind = "";
-
-    if (height < 0.50) {
-      text = "🔴 Última altura bajo 0,50 m";
-      kind = "danger";
-    } else if (!Number.isFinite(age) || age > 24 * 60) {
-      text = "🔴 Medición muy antigua · " + ageLabel(age);
-      kind = "danger";
-    } else if (age > 60) {
-      text = "⚠ Medición antigua · " + ageLabel(age);
-      kind = "warn";
-    } else {
-      text = "● Medición reciente · " + ageLabel(age);
-      kind = "ok";
+  for (const [clave, prefijo, nombre] of [
+    ["san_fernando", "sf", "San Fernando"],
+    ["pilote_norden", "pn", "Pilote Norden"],
+    ["martin_garcia", "mg", "Martín García"]
+  ]) {
+    const item = data[clave];
+    if (!item || item.altura_m == null) {
+      pill(prefijo + "-pill", "⚠ Sin datos", "warn");
+      $(prefijo + "-meta").textContent =
+        "Sin medición disponible de " + nombre +
+        (data.error_shn ? ". Error de consulta SHN." : ".");
+      continue;
     }
-
-    pill("dique-pill", text, kind);
-
-    const stale = !Number.isFinite(age) || age > 60;
-
-    $("dique-meta").innerHTML =
-      "Medición INA: " + when(dique.fecha_medicion) +
-      "<br>Antigüedad: " + ageLabel(age) +
-      "<br>Tendencia: " + trendLabel(dique.tendencia) +
-      "<br>Variación: " +
-      variationLabel(dique.diferencia_m) +
-      (stale
-        ? "<br>⚠ Dato antiguo: no representa necesariamente el nivel actual."
-        : "") +
-      (height < 0.50
-        ? "<br>⚠ Última altura registrada bajo el umbral de alerta."
-        : "") +
-      (data.error_ina
-        ? "<br>⚠ La última consulta INA falló."
-        : "");
-
-  } else {
-    pill("dique-pill", "⚠ Sin datos", "warn");
-
-    $("dique-meta").textContent =
-      "No hay una medición disponible de Dique Luján.";
-  }
-
-  // SAN FERNANDO
-
-  if (sf && sf.altura_m != null) {
-    const age = minutesSince(sf.fecha_medicion, true);
-
+    const age = minutesSince(item.fecha_medicion, true);
     if (!Number.isFinite(age) || age > 120) {
-      pill(
-        "sf-pill",
-        "🔴 Medición muy antigua · " + ageLabel(age),
-        "danger"
-      );
+      pill(prefijo + "-pill", "🔴 Medición muy antigua · " + ageLabel(age), "danger");
     } else if (age > 60) {
-      pill(
-        "sf-pill",
-        "⚠ Medición antigua · " + ageLabel(age),
-        "warn"
-      );
+      pill(prefijo + "-pill", "⚠ Medición antigua · " + ageLabel(age), "warn");
     } else {
-      pill(
-        "sf-pill",
-        "● Medición actualizada · " + ageLabel(age),
-        "ok"
-      );
+      pill(prefijo + "-pill", "● Medición actualizada · " + ageLabel(age), "ok");
     }
-
-    $("sf-meta").innerHTML =
-      "Medición SHN: " + localWhen(sf.fecha_medicion) +
+    $(prefijo + "-meta").innerHTML =
+      "Medición SHN: " + localWhen(item.fecha_medicion) +
       "<br>Antigüedad: " + ageLabel(age) +
       " (calculada en tiempo real)" +
-      "<br>Tendencia: " + trendLabel(sf.tendencia) +
-      "<br>Variación entre lecturas: " +
-      variationLabel(sf.diferencia_m) +
-      (data.error_shn
-        ? "<br>⚠ La última consulta SHN falló."
-        : "");
-
-  } else {
-    pill("sf-pill", "⚠ Sin datos", "warn");
-
-    $("sf-meta").textContent =
-      "No hay una medición disponible de San Fernando.";
+      "<br>Tendencia: " + trendLabel(item.tendencia) +
+      "<br>Variación entre lecturas: " + variationLabel(item.diferencia_m) +
+      (data.error_shn ? "<br>⚠ La última consulta SHN falló." : "");
   }
 }
 
 function renderRiver(data) {
   latestRiverData = data;
-
-  const dique = data.dique_lujan || data;
-  const sf = data.san_fernando;
-
-  if (dique && dique.altura_m != null) {
-    setValue("dique-value", dique.altura_m);
+  for (const [clave, prefijo] of [
+    ["san_fernando", "sf"],
+    ["pilote_norden", "pn"],
+    ["martin_garcia", "mg"]
+  ]) {
+    setValue(prefijo + "-value", data[clave]?.altura_m ?? null);
   }
-
-  if (sf && sf.altura_m != null) {
-    setValue("sf-value", sf.altura_m);
-  }
-
   refreshMeasurementIndicators();
-
   $("status").textContent =
-    "Última consulta del monitor: " +
-    when(data.consulta_utc) +
+    "Última consulta del monitor: " + when(data.consulta_utc) +
     " · Cada estación muestra la fecha real de su medición.";
 }
 
