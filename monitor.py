@@ -125,7 +125,7 @@ def consultar_estaciones_shn():
         print(f"SHN {nombre}: {ultimo['altura_m']} m; Fecha: {ultimo['fecha']}; Tendencia: {tendencia}")
     if not any(resultado.values()):
         raise RuntimeError("SHN no devolvio mediciones para ninguna de las tres estaciones")
-    return resultado, mediciones["san_fernando"]
+    return resultado, mediciones
 
 
 class LectorTablasSHN(HTMLParser):
@@ -314,20 +314,24 @@ def ejecutar():
 
     fuentes_actualizadas = 0
     try:
-        estaciones, mediciones = consultar_estaciones_shn()
+        estaciones, mediciones_por_estacion = consultar_estaciones_shn()
         for clave, valor in estaciones.items():
             # No publicar datos anteriores si la estación no está en el CSV.
             informe[clave] = valor
         informe["ultima_consulta_shn_utc"] = ahora.isoformat()
         informe["error_shn"] = None
-        HISTORIAL.write_text(
-            json.dumps({
-                "estacion": "San Fernando",
-                "fuente": "Servicio de Hidrografia Naval",
-                "consulta_utc": ahora.isoformat(),
-                "mediciones": mediciones,
-            }, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
+        for clave, nombre in (("san_fernando", "San Fernando"),
+                              ("pilote_norden", "Pilote Norden"),
+                              ("martin_garcia", "Martín García")):
+            ruta = Path(f"historial_{clave}.json")
+            ruta.write_text(
+                json.dumps({
+                    "estacion": nombre,
+                    "fuente": "Servicio de Hidrografia Naval",
+                    "consulta_utc": ahora.isoformat(),
+                    "mediciones": mediciones_por_estacion[clave],
+                }, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
         fuentes_actualizadas += 1
     except Exception as error:
         informe["error_shn"] = str(error)
