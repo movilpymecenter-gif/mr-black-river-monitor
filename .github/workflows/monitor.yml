@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Descargar repositorio
         uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
 
       - name: Configurar Python
         uses: actions/setup-python@v5
@@ -27,29 +30,46 @@ jobs:
         run: python monitor.py
 
       - name: Publicar mediciones, historiales y predicciones
+        shell: bash
         run: |
+          set -e
+
           git config user.name "Mr Black Monitor"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add ultimo_estado.json
+          # Guardar los JSON generados por monitor.py
+          mkdir -p /tmp/mr-black-datos
 
-          for archivo in \
-            historial_san_fernando.json \
-            historial_pilote_norden.json \
-            historial_martin_garcia.json \
+          archivos=(
+            ultimo_estado.json
+            historial_san_fernando.json
+            historial_pilote_norden.json
+            historial_martin_garcia.json
             pronostico_san_fernando.json
-          do
+          )
+
+          for archivo in "${archivos[@]}"; do
             if [ -f "$archivo" ]; then
-              git add "$archivo"
-            else
-              git add -u -- "$archivo"
+              cp "$archivo" "/tmp/mr-black-datos/$archivo"
             fi
           done
 
-          if ! git diff --cached --quiet; then
+          # Obtener la última versión del repositorio
+          git fetch origin main
+          git reset --hard origin/main
+
+          # Restaurar los JSON recién generados
+          for archivo in "${archivos[@]}"; do
+            if [ -f "/tmp/mr-black-datos/$archivo" ]; then
+              cp "/tmp/mr-black-datos/$archivo" "$archivo"
+              git add "$archivo"
+            fi
+          done
+
+          # Publicar solamente si existen cambios
+          if git diff --cached --quiet; then
+            echo "No hay cambios para publicar."
+          else
             git commit -m "Actualizar mediciones e historiales SHN Mr Black"
-
-            git pull --rebase origin main
-
-            git push origin main
+            git push origin HEAD:main
           fi
