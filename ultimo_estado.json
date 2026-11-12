@@ -1,6 +1,6 @@
 {
   "monitor": "Mr. Black River Monitor",
-  "consulta_utc": "2026-11-12T20:55:21.930059+00:00",
+  "consulta_utc": "2026-11-12T21:01:05.470737+00:00",
   "umbral_alerta_m": 0.5,
   "advertencia": "Las alturas de las estaciones SHN no equivalen a la profundidad real disponible para navegar en Canal Villanueva.",
   "san_fernando": {
@@ -11,12 +11,12 @@
     "altura_anterior_m": 0.68,
     "diferencia_m": 0.0,
     "tendencia": "ESTABLE",
-    "antiguedad_min": 10.4,
+    "antiguedad_min": 16.1,
     "medicion_antigua": false,
     "umbral_antiguedad_min": 60,
     "cantidad_mediciones": 240
   },
-  "ultima_consulta_shn_utc": "2026-11-12T20:55:21.930059+00:00",
+  "ultima_consulta_shn_utc": "2026-11-12T21:01:05.470737+00:00",
   "error_shn": null,
   "pilote_norden": {
     "estacion": "Pilote Norden",
@@ -26,7 +26,7 @@
     "altura_anterior_m": 1.09,
     "diferencia_m": 0.13,
     "tendencia": "SUBIENDO",
-    "antiguedad_min": 10.4,
+    "antiguedad_min": 16.1,
     "medicion_antigua": false,
     "umbral_antiguedad_min": 60,
     "cantidad_mediciones": 235
@@ -39,7 +39,7 @@
     "altura_anterior_m": 0.96,
     "diferencia_m": -0.02,
     "tendencia": "BAJANDO",
-    "antiguedad_min": 10.4,
+    "antiguedad_min": 16.1,
     "medicion_antigua": false,
     "umbral_antiguedad_min": 60,
     "cantidad_mediciones": 240
