@@ -1,22 +1,22 @@
 {
   "monitor": "Mr. Black River Monitor",
-  "consulta_utc": "2026-11-12T14:50:32.661464+00:00",
+  "consulta_utc": "2026-11-12T14:55:21.481502+00:00",
   "umbral_alerta_m": 0.5,
   "advertencia": "Las alturas de las estaciones SHN no equivalen a la profundidad real disponible para navegar en Canal Villanueva.",
   "san_fernando": {
     "estacion": "San Fernando",
     "fuente": "Servicio de Hidrografia Naval",
-    "altura_m": 1.15,
-    "fecha_medicion": "2026-11-12T10:45:00",
-    "altura_anterior_m": 1.19,
-    "diferencia_m": -0.04,
+    "altura_m": 1.09,
+    "fecha_medicion": "2026-11-12T11:45:00",
+    "altura_anterior_m": 1.15,
+    "diferencia_m": -0.06,
     "tendencia": "BAJANDO",
-    "antiguedad_min": 65.6,
-    "medicion_antigua": true,
+    "antiguedad_min": 10.4,
+    "medicion_antigua": false,
     "umbral_antiguedad_min": 60,
-    "cantidad_mediciones": 239
+    "cantidad_mediciones": 240
   },
-  "ultima_consulta_shn_utc": "2026-11-12T14:50:32.661464+00:00",
+  "ultima_consulta_shn_utc": "2026-11-12T14:55:21.481502+00:00",
   "error_shn": null,
   "pilote_norden": {
     "estacion": "Pilote Norden",
@@ -26,7 +26,7 @@
     "altura_anterior_m": 1.02,
     "diferencia_m": -0.06,
     "tendencia": "BAJANDO",
-    "antiguedad_min": 65.6,
+    "antiguedad_min": 70.4,
     "medicion_antigua": true,
     "umbral_antiguedad_min": 60,
     "cantidad_mediciones": 234
@@ -34,14 +34,14 @@
   "martin_garcia": {
     "estacion": "Martín García",
     "fuente": "Servicio de Hidrografia Naval",
-    "altura_m": 1.17,
-    "fecha_medicion": "2026-11-12T10:45:00",
-    "altura_anterior_m": 1.11,
-    "diferencia_m": 0.06,
+    "altura_m": 1.18,
+    "fecha_medicion": "2026-11-12T11:45:00",
+    "altura_anterior_m": 1.17,
+    "diferencia_m": 0.01,
     "tendencia": "SUBIENDO",
-    "antiguedad_min": 65.6,
-    "medicion_antigua": true,
+    "antiguedad_min": 10.4,
+    "medicion_antigua": false,
     "umbral_antiguedad_min": 60,
-    "cantidad_mediciones": 239
+    "cantidad_mediciones": 240
   }
 }
