@@ -1,0 +1,12 @@
+{
+  "name": "Mr. Black River Monitor",
+  "short_name": "Mr. Black",
+  "description": "Monitor de niveles del río, mareas y condiciones de navegación en el Delta del Paraná.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1726",
+  "theme_color": "#0b1726",
+  "lang": "es-AR",
+  "orientation": "any"
+}
