@@ -1,8 +1,12 @@
 {
   "estacion": "Pilote Norden",
   "fuente": "Servicio de Hidrografia Naval",
-  "consulta_utc": "2026-11-14T03:55:20.924023+00:00",
+  "consulta_utc": "2026-11-14T04:01:03.775813+00:00",
   "mediciones": [
+    {
+      "fecha": "2026-11-14T00:45:00",
+      "altura_m": 1.03
+    },
     {
       "fecha": "2026-11-13T23:45:00",
       "altura_m": 1.15
