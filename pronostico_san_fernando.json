@@ -2,14 +2,14 @@
   "estacion": "San Fernando",
   "fuente": "Servicio de Hidrografía Naval (SHN)",
   "url_fuente": "https://www.hidro.gov.ar/oceanografia/pronostico.asp",
-  "valido_desde": "2026-11-15T23:00:00-03:00",
-  "valido_hasta": "2026-11-16T11:00:00-03:00",
-  "consulta_utc": "2026-11-16T10:05:26.807510+00:00",
+  "valido_desde": "2026-11-16T07:00:00-03:00",
+  "valido_hasta": "2026-11-16T19:00:00-03:00",
+  "consulta_utc": "2026-11-16T10:10:37.296765+00:00",
   "eventos": [
     {
       "tipo": "BAJAMAR",
-      "fecha": "2026-11-16T19:00:00-03:00",
-      "altura_m": 0.65
+      "fecha": "2026-11-16T20:00:00-03:00",
+      "altura_m": 0.55
     }
   ],
   "advertencia": "Predicción para San Fernando; no equivale a profundidad real en Canal Villanueva."
