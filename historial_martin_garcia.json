@@ -1,8 +1,12 @@
 {
   "estacion": "Martín García",
   "fuente": "Servicio de Hidrografia Naval",
-  "consulta_utc": "2026-11-18T00:01:11.467024+00:00",
+  "consulta_utc": "2026-11-18T00:05:21.952796+00:00",
   "mediciones": [
+    {
+      "fecha": "2026-11-17T20:45:00",
+      "altura_m": 0.86
+    },
     {
       "fecha": "2026-11-17T19:45:00",
       "altura_m": 0.82
