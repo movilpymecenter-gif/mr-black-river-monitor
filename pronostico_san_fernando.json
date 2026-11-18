@@ -4,7 +4,7 @@
   "url_fuente": "https://www.hidro.gov.ar/oceanografia/pronostico.asp",
   "valido_desde": "2026-11-18T07:00:00-03:00",
   "valido_hasta": "2026-11-18T19:00:00-03:00",
-  "consulta_utc": "2026-11-18T16:35:32.447723+00:00",
+  "consulta_utc": "2026-11-18T16:40:41.100009+00:00",
   "eventos": [
     {
       "tipo": "PLEAMAR",
