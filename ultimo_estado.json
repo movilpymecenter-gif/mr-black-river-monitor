@@ -1,22 +1,22 @@
 {
   "monitor": "Mr. Black River Monitor",
-  "consulta_utc": "2026-11-18T22:45:33.904243+00:00",
+  "consulta_utc": "2026-11-18T22:50:39.596182+00:00",
   "umbral_alerta_m": 0.5,
   "advertencia": "Las alturas de las estaciones SHN no equivalen a la profundidad real disponible para navegar en Canal Villanueva.",
   "san_fernando": {
     "estacion": "San Fernando",
     "fuente": "Servicio de Hidrografia Naval",
-    "altura_m": 0.77,
-    "fecha_medicion": "2026-11-18T18:45:00",
-    "altura_anterior_m": 0.86,
+    "altura_m": 0.68,
+    "fecha_medicion": "2026-11-18T19:45:00",
+    "altura_anterior_m": 0.77,
     "diferencia_m": -0.09,
     "tendencia": "BAJANDO",
-    "antiguedad_min": 60.6,
-    "medicion_antigua": true,
+    "antiguedad_min": 5.7,
+    "medicion_antigua": false,
     "umbral_antiguedad_min": 60,
-    "cantidad_mediciones": 239
+    "cantidad_mediciones": 240
   },
-  "ultima_consulta_shn_utc": "2026-11-18T22:45:33.904243+00:00",
+  "ultima_consulta_shn_utc": "2026-11-18T22:50:39.596182+00:00",
   "error_shn": null,
   "pilote_norden": {
     "estacion": "Pilote Norden",
@@ -26,7 +26,7 @@
     "altura_anterior_m": 1.16,
     "diferencia_m": -0.03,
     "tendencia": "BAJANDO",
-    "antiguedad_min": 60.6,
+    "antiguedad_min": 65.7,
     "medicion_antigua": true,
     "umbral_antiguedad_min": 60,
     "cantidad_mediciones": 237
@@ -34,14 +34,14 @@
   "martin_garcia": {
     "estacion": "Martín García",
     "fuente": "Servicio de Hidrografia Naval",
-    "altura_m": 1.22,
-    "fecha_medicion": "2026-11-18T18:45:00",
+    "altura_m": 1.09,
+    "fecha_medicion": "2026-11-18T19:45:00",
     "altura_anterior_m": 1.22,
-    "diferencia_m": 0.0,
-    "tendencia": "ESTABLE",
-    "antiguedad_min": 60.6,
-    "medicion_antigua": true,
+    "diferencia_m": -0.13,
+    "tendencia": "BAJANDO",
+    "antiguedad_min": 5.7,
+    "medicion_antigua": false,
     "umbral_antiguedad_min": 60,
-    "cantidad_mediciones": 239
+    "cantidad_mediciones": 240
   }
 }
