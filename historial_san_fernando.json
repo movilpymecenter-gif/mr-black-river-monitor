@@ -1,8 +1,12 @@
 {
   "estacion": "San Fernando",
   "fuente": "Servicio de Hidrografia Naval",
-  "consulta_utc": "2026-11-24T11:50:35.507089+00:00",
+  "consulta_utc": "2026-11-24T11:55:26.268132+00:00",
   "mediciones": [
+    {
+      "fecha": "2026-11-24T08:45:00",
+      "altura_m": 1.5
+    },
     {
       "fecha": "2026-11-24T07:45:00",
       "altura_m": 1.57
