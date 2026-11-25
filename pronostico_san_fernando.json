@@ -4,7 +4,7 @@
   "url_fuente": "https://www.hidro.gov.ar/oceanografia/pronostico.asp",
   "valido_desde": "2026-11-25T07:00:00-03:00",
   "valido_hasta": "2026-11-25T19:00:00-03:00",
-  "consulta_utc": "2026-11-25T16:20:51.021162+00:00",
+  "consulta_utc": "2026-11-25T16:25:38.211353+00:00",
   "eventos": [
     {
       "tipo": "BAJAMAR",
