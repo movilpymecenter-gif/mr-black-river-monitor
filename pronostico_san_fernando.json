@@ -4,7 +4,7 @@
   "url_fuente": "https://www.hidro.gov.ar/oceanografia/pronostico.asp",
   "valido_desde": "2026-11-26T09:30:00-03:00",
   "valido_hasta": "2026-11-26T19:00:00-03:00",
-  "consulta_utc": "2026-11-26T12:40:46.930876+00:00",
+  "consulta_utc": "2026-11-26T12:45:42.817280+00:00",
   "eventos": [
     {
       "tipo": "BAJAMAR",
@@ -14,7 +14,7 @@
     {
       "tipo": "PLEAMAR",
       "fecha": "2026-11-26T21:30:00-03:00",
-      "altura_m": 1.1
+      "altura_m": 2.1
     }
   ],
   "advertencia": "Predicción para San Fernando; no equivale a profundidad real en Canal Villanueva."
